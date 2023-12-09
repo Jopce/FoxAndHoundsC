@@ -76,11 +76,14 @@ void pawnsMove(char board[n][n], int *row2, int *col2, int direction) {
     }
 }
 
+//Will add more hounds just now I added one I will need to create another select system to select which hound to move for the player
+//Any comments on the code will be ok
+
 int main() {
     char board[n][n];
     int rowW = 7; // Initial position for 'W'
     int colW = 4;
-    int row2 = 0;
+    int row2 = 0; //initial position for 'P'
     int col2 = 4;
     int number = 2;
 
@@ -108,6 +111,9 @@ int main() {
         }else
         {
             printBoard(board);
+
+            //choosePawn();
+            
             printf("Enter a number to move the 'P' (1-2): ");
             scanf("%d", &move);
             pawnsMove(board, &row2, &col2, move);
