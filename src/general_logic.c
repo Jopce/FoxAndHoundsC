@@ -1,3 +1,5 @@
+//working on a better version in realtime will take 2 hours
+
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
