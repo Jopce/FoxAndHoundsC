@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <limits.h>
 #include "opponents.h"
 
@@ -12,7 +13,7 @@ int opponent_move(int board[BOARD_SIZE][BOARD_SIZE], int difficulty)
 // minimax algorithm template i did in C (later add alpha-beta pruning)
 int minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, int is_maximizing_player)
 {
-    if (depth == 0 || isGameOver(board))
+    if (depth == 0 || is_game_over(board))
     {
         return evaluate(board);
     }
@@ -48,9 +49,18 @@ int minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, int is_maximizing_play
     }
 }
 
+// returns 1 if game is over (true), 0 if game is not over (false)
 int is_game_over(int board[BOARD_SIZE][BOARD_SIZE])
 {
-    return 0;
+    // temporary solution (works but might be not the most efficient)
+    if (evaluate(board) == INT_MAX || evaluate(board) == INT_MIN)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 int generate_moves(int board[BOARD_SIZE][BOARD_SIZE], int child_boards[MAX_MOVES][BOARD_SIZE][BOARD_SIZE], int *number_of_moves)
@@ -65,10 +75,83 @@ int generate_moves(int board[BOARD_SIZE][BOARD_SIZE], int child_boards[MAX_MOVES
 // game is checkers: fox and hounds
 int evaluate(int board[BOARD_SIZE][BOARD_SIZE])
 {
-    int score = 0;
+    // evaluate function returns a score based on how favorable
+    // the current board is to either fox (>0) or hounds (<0)
+    // the score is based on how far the fox is from the finish, how many moves it has,
+    // how many hounds are blocking it, and how spread out the hounds are
 
-    // its better when fox has more moves and is closer to the finish line
-    // its worse when hounds are closer to the fox and fox has less moves
+    int score = 0;
+    int fox_moves = 0;
+    int fox_row = 0;
+
+    // get fox position
+    int fox_position[2] = {-1, -1};
+    for (int i = 0; i < BOARD_SIZE; i++)
+    {
+        for (int j = 0; j < BOARD_SIZE; j++)
+        {
+            if (board[i][j] == F)
+            {
+                fox_position[0] = i;
+                fox_position[1] = j;
+                // fox found, break the inner loop
+                break;
+            }
+        }
+        if (fox_position[0] != -1)
+        {
+            // fox found, break the outer loop
+            break;
+        }
+    }
+
+    fox_row = fox_position[0];
+
+    if (fox_row == 0)
+    {
+        // game is won
+        return INT_MAX;
+    }
+
+    // Forward Right Diagonal Move
+    if (fox_position[0] + 1 < BOARD_SIZE && fox_position[1] + 1 < BOARD_SIZE &&
+        board[fox_position[0] + 1][fox_position[1] + 1] == 0)
+    {
+        fox_moves++;
+    }
+
+    // Forward Left Diagonal Move
+    if (fox_position[0] + 1 < BOARD_SIZE && fox_position[1] - 1 >= 0 &&
+        board[fox_position[0] + 1][fox_position[1] - 1] == 0)
+    {
+        fox_moves++;
+    }
+
+    // Backward Right Diagonal Move
+    if (fox_position[0] - 1 >= 0 && fox_position[1] + 1 < BOARD_SIZE &&
+        board[fox_position[0] - 1][fox_position[1] + 1] == 0)
+    {
+        fox_moves++;
+    }
+
+    // Backward Left Diagonal Move
+    if (fox_position[0] - 1 >= 0 && fox_position[1] - 1 >= 0 &&
+        board[fox_position[0] - 1][fox_position[1] - 1] == 0)
+    {
+        fox_moves++;
+    }
+
+    if (fox_moves == 0)
+    {
+        // game is lost
+        return INT_MIN;
+    }
+
+    // add logic about hounds here later after other pieces are done
+
+    // Score calculation logic
+    score += fox_moves * 15;                    // More moves available for the fox increases the score
+    score += ((BOARD_SIZE - 1) - fox_row) * 10; // Closer the fox to the end row, higher the score
 
     return score;
 }
