@@ -69,10 +69,6 @@ int generate_moves(int board[BOARD_SIZE][BOARD_SIZE], int child_boards[MAX_MOVES
     return 0;
 }
 
-// functions to implement: isGameOver, generate_moves, evaluate
-// perhaps in main.c there will be one of them implemented simply since it is vital for game logic?
-
-// game is checkers: fox and hounds
 int evaluate(int board[BOARD_SIZE][BOARD_SIZE])
 {
     // evaluate function returns a score based on how favorable
