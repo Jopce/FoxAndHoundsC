@@ -1,59 +1,83 @@
+// note to self: still need to look into evaluate for hounds and generate moves (and pruning)
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
 #include "opponents.h"
 
-int opponent_move(int board[BOARD_SIZE][BOARD_SIZE], int difficulty)
+// takes in the current board and the selected user difficulty
+// returns the Move struct (defined in opponents.h)
+Move opponent_move(int board[BOARD_SIZE][BOARD_SIZE], int difficulty)
 {
-    // this will be called from main.c when it is the opponents turn
-    // not sure what to return quite yet
-    return 0;
+    // the difficulty is the depth of the minimax algorithm
+    Move optimal_move = minimax(board, difficulty, 0, INT_MIN, INT_MAX);
+    return optimal_move;
 }
 
-// minimax algorithm template i did in C (later add alpha-beta pruning)
-int minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, int is_maximizing_player)
+// minimax algorithm with alpha-beta pruning
+Move minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, int is_maximizing_player, int alpha, int beta)
 {
+    Move new_move;
     if (depth == 0 || is_game_over(board))
     {
-        return evaluate(board);
+        new_move.score = evaluate(board);
+        copy_board(board, new_move.board);
+        return new_move;
     }
 
     // maybe get number of possible moves and then create an array of boards malloc
     int child_boards[MAX_MOVES][BOARD_SIZE][BOARD_SIZE];
     int number_of_moves;
-    generate_moves(board, child_boards, &number_of_moves);
+    generate_moves(board, child_boards, &number_of_moves, is_maximizing_player);
 
     if (is_maximizing_player)
     {
-        int max_eval = INT_MIN;
+        new_move.score = INT_MIN;
 
         for (int i = 0; i < number_of_moves; i++)
         {
-            int eval = minimax(child_boards[i], depth - 1, 0);
-            max_eval = max(max_eval, eval);
-        }
+            Move child_move = minimax(child_boards[i], depth - 1, 0, alpha, beta);
+            if (child_move.score > new_move.score)
+            {
+                new_move.score = child_move.score;
+                copy_board(child_boards[i], new_move.board);
+            }
 
-        return max_eval;
+            alpha = max_of_2(alpha, new_move.score);
+            if (beta <= alpha)
+            {
+                break;
+            }
+        }
     }
     else
     {
-        int min_eval = INT_MAX;
-
+        new_move.score = INT_MAX;
         for (int i = 0; i < number_of_moves; i++)
         {
-            int eval = minimax(child_boards[i], depth - 1, 1);
-            min_eval = min(min_eval, eval);
-        }
+            Move child_move = minimax(child_boards[i], depth - 1, 1, alpha, beta);
+            if (child_move.score < new_move.score)
+            {
+                new_move.score = child_move.score;
+                copy_board(child_boards[i], new_move.board);
+            }
 
-        return min_eval;
+            beta = min_of_2(beta, new_move.score);
+            if (beta <= alpha)
+            {
+                break;
+            }
+        }
     }
+
+    return new_move;
 }
 
 // returns 1 if game is over (true), 0 if game is not over (false)
 int is_game_over(int board[BOARD_SIZE][BOARD_SIZE])
 {
     // temporary solution (works but might be not the most efficient)
-    if (evaluate(board) == INT_MAX || evaluate(board) == INT_MIN)
+    int score = evaluate(board);
+    if (score == INT_MAX || score == INT_MIN)
     {
         return 1;
     }
@@ -63,19 +87,82 @@ int is_game_over(int board[BOARD_SIZE][BOARD_SIZE])
     }
 }
 
-int generate_moves(int board[BOARD_SIZE][BOARD_SIZE], int child_boards[MAX_MOVES][BOARD_SIZE][BOARD_SIZE], int *number_of_moves)
+void copy_board(int source[BOARD_SIZE][BOARD_SIZE], int destination[BOARD_SIZE][BOARD_SIZE])
 {
-
-    return 0;
+    for (int i = 0; i < BOARD_SIZE; i++)
+    {
+        for (int j = 0; j < BOARD_SIZE; j++)
+        {
+            destination[i][j] = source[i][j];
+        }
+    }
 }
 
+void generate_moves(int board[BOARD_SIZE][BOARD_SIZE], int child_boards[MAX_MOVES][BOARD_SIZE][BOARD_SIZE], int *number_of_moves, int is_maximizing_player)
+{
+    *number_of_moves = 0;
+
+    for (int i = 0; i < BOARD_SIZE; i++)
+    {
+        for (int j = 0; j < BOARD_SIZE; j++)
+        {
+            if (is_maximizing_player && board[i][j] == F) // If the piece is a fox
+            {
+                // Check all four possible moves for the fox
+                int dx[4] = {-1, -1, 1, 1};
+                int dy[4] = {-1, 1, -1, 1};
+
+                for (int move = 0; move < 4; move++)
+                {
+                    int new_i = i + dx[move];
+                    int new_j = j + dy[move];
+
+                    // If the move is valid
+                    if (new_i >= 0 && new_i < BOARD_SIZE && new_j >= 0 && new_j < BOARD_SIZE && board[new_i][new_j] == 0)
+                    {
+                        // Copy the current board to a new board
+                        copy_board(board, child_boards[*number_of_moves]);
+
+                        // Apply the move to the new board
+                        child_boards[*number_of_moves][i][j] = 0;
+                        child_boards[*number_of_moves][new_i][new_j] = F;
+
+                        (*number_of_moves)++;
+                    }
+                }
+            }
+            else if (!is_maximizing_player && board[i][j] == H) // If the piece is a hound
+            {
+                // Check both possible moves for the hound
+                int dx[2] = {1, 1};
+                int dy[2] = {-1, 1};
+
+                for (int move = 0; move < 2; move++)
+                {
+                    int new_i = i + dx[move];
+                    int new_j = j + dy[move];
+
+                    // If the move is valid
+                    if (new_i >= 0 && new_i < BOARD_SIZE && new_j >= 0 && new_j < BOARD_SIZE && board[new_i][new_j] == 0)
+                    {
+                        // Copy the current board to a new board
+                        copy_board(board, child_boards[*number_of_moves]);
+
+                        // Apply the move to the new board
+                        child_boards[*number_of_moves][i][j] = 0;
+                        child_boards[*number_of_moves][new_i][new_j] = H;
+
+                        (*number_of_moves)++;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// returns an int of how favorable the board is for the fox
 int evaluate(int board[BOARD_SIZE][BOARD_SIZE])
 {
-    // evaluate function returns a score based on how favorable
-    // the current board is to either fox (>0) or hounds (<0)
-    // the score is based on how far the fox is from the finish, how many moves it has,
-    // how many hounds are blocking it, and how spread out the hounds are
-
     int score = 0;
     int fox_moves = 0;
     int fox_row = 0;
@@ -143,11 +230,27 @@ int evaluate(int board[BOARD_SIZE][BOARD_SIZE])
         return INT_MIN;
     }
 
-    // add logic about hounds here later after other pieces are done
+    int hound_distance = 0;
+    int number_of_hounds = 0;
+
+    for (int i = 0; i < BOARD_SIZE; i++)
+    {
+        for (int j = 0; j < BOARD_SIZE; j++)
+        {
+            if (board[i][j] == H)
+            {
+                hound_distance += abs(i - fox_position[0]) + abs(j - fox_position[1]);
+                number_of_hounds++;
+            }
+        }
+    }
+
+    int average_hound_distance = hound_distance / number_of_hounds;
 
     // Score calculation logic
     score += fox_moves * 15;                    // More moves available for the fox increases the score
     score += ((BOARD_SIZE - 1) - fox_row) * 10; // Closer the fox to the end row, higher the score
+    score -= average_hound_distance * 5;        // Hounds closer to the fox decreases the score
 
     return score;
 }
