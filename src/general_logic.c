@@ -43,13 +43,18 @@ int getUserInput() {
         scanf("%d", &userNumber);
 
         // Check if the entered number is within the specified range
-        if (userNumber >= 0 && userNumber <= 4) {
+        if (userNumber >= 0 && userNumber <= 4)
+        {
+            //if(userNumber == ) //if it isnt equal to any members/number on the board it repeats
             // If the number is within the range, break out of the loop
             break;
-        } else {
+        }
+        else
+        {
             // If the number is outside the range, display an error message
             printf("Error: Please enter a number between 1 and 4.\n");
         }
+
     } while (1); // Infinite loop until a valid input is provided
 
     // Return the entered number
@@ -57,10 +62,13 @@ int getUserInput() {
 
 }
 
-void mover(char board[n][n], int *row, int *col, int direction) {
-    switch (direction) {
+void mover(int board[n][n], int *row, int *col, int direction)
+{
+    switch (direction)
+    {
         case 1: // Up right
-            if (*row > 0 && *col < n - 1) {
+            if (*row > 0 && *col < n - 1)
+            {
                 board[*row][*col] = '0';
                 (*row)--;
                 (*col)++;
@@ -68,7 +76,8 @@ void mover(char board[n][n], int *row, int *col, int direction) {
             }
             break;
         case 2: // Up left
-            if (*row > 0 && *col > 0) {
+            if (*row > 0 && *col > 0)
+            {
                 board[*row][*col] = '0';
                 (*row)--;
                 (*col)--;
@@ -76,7 +85,8 @@ void mover(char board[n][n], int *row, int *col, int direction) {
             }
             break;
         case 3: // Down right
-            if (*row < n - 1 && *col < n - 1) {
+            if (*row < n - 1 && *col < n - 1)
+            {
                 board[*row][*col] = '0';
                 (*row)++;
                 (*col)++;
@@ -84,7 +94,8 @@ void mover(char board[n][n], int *row, int *col, int direction) {
             }
             break;
         case 4: // Down left
-            if (*row < n - 1 && *col > 0) {
+            if (*row < n - 1 && *col > 0)
+            {
                 board[*row][*col] = '0';
                 (*row)++;
                 (*col)--;
@@ -96,8 +107,10 @@ void mover(char board[n][n], int *row, int *col, int direction) {
     }
 }
 
-void printBoard(char board[n][n]) {
-    for (int i = 0; i < n; i++) {
+void printBoard(int board[n][n])
+{
+    for (int i = 0; i < n; i++)
+    {
         for (int j = 0; j < n; j++) {
             printf("%c ", board[i][j]);
         }
@@ -106,10 +119,11 @@ void printBoard(char board[n][n]) {
     printf("\n");
 }
 
-void pawnsMove(char board[n][n], int *rowValue, int *colValue, int direction) {
+void pawnsMove(int board[n][n], int *rowValue, int *colValue, int direction) {
     switch (direction) {
         case 1: // Down right
-            if (*rowValue < n - 1 && *colValue < n - 1) {
+            if (*rowValue < n - 1 && *colValue < n - 1)
+            {
                 board[*rowValue][*colValue] = '0';
                 (*rowValue)++;
                 (*colValue)++;
@@ -117,7 +131,8 @@ void pawnsMove(char board[n][n], int *rowValue, int *colValue, int direction) {
             }
             break;
         case 2: // Down left
-            if (*rowValue < n - 1 && *colValue > 0) {
+            if (*rowValue < n - 1 && *colValue > 0)
+            {
                 board[*rowValue][*colValue] = '0';
                 (*rowValue)++;
                 (*colValue)--;
@@ -130,7 +145,7 @@ void pawnsMove(char board[n][n], int *rowValue, int *colValue, int direction) {
 }
 
 int main() {
-    char board[n][n];
+    int board[n][n];
 
     int rowValue = 0;
     int colValue = 0;
@@ -183,9 +198,10 @@ int main() {
             printBoard(board);
             printf("which pawn to move(1-4): ");
             scanf("%d", &userChoice);
-            generateRowAndColNames(userChoice, &rowValue, &colValue, array2,array3);
+            generateRowAndColNames(userChoice, &rowValue, &colValue, array2, array3);
             printf("Enter a number to move the 'P' (1-2): ");
             scanf("%d", &move);
+            //validify_move(&move); //valids the move
             pawnsMove(board, &rowValue, &colValue, move);
             number++;
         }
