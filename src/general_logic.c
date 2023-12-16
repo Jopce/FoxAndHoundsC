@@ -4,7 +4,7 @@
 
 #define n 8
 
-void generateRowAndColNames(int choice, int *rowValue, int *colValue, int array2[5], int array3[5])
+void generateRowAndColNames(int choice, int *rowValue, int *colValue, int *array2, int *array3)
 {
    switch (choice) {
         case 1:
@@ -25,6 +25,34 @@ void generateRowAndColNames(int choice, int *rowValue, int *colValue, int array2
         case 4:
             *rowValue = array2[3];
             *colValue = array3[3];
+            // which pawn logic for case 4
+            break;
+        default:
+            printf("Invalid choice. Please enter a number between 1 and 4.\n");
+   }
+}
+
+void NewgenerateRowAndColNames(int choice, int *rowValue, int *colValue, int *array2, int *array3)
+{
+   switch (choice) {
+        case 1:
+            array2[0] = *rowValue;
+            array3[0] = *colValue;
+            // which pawn logic for case 1
+            break;
+        case 2:
+            array2[1] = *rowValue;
+            array3[1] = *colValue;
+            // which pawn logic for case 2
+            break;
+        case 3:
+            array2[2] = *rowValue;
+            array3[2] = *colValue;
+            // which pawn logic for case 3
+            break;
+        case 4:
+            array2[3] = *rowValue;
+            array3[3] = *colValue;
             // which pawn logic for case 4
             break;
         default:
@@ -63,7 +91,7 @@ int getUserInput() {
 
 }
 
-void mover(int board[n][n], int *row, int *col, int direction)
+void mover(int **board, int *row, int *col, int direction)
 {
     int valid = 0;
     do
@@ -159,7 +187,7 @@ void mover(int board[n][n], int *row, int *col, int direction)
     }while(valid == 1);
 }
 
-void printBoard(int board[n][n])
+void printBoard(int **board)
 {
     for (int i = 0; i < n; i++)
     {
@@ -172,49 +200,54 @@ void printBoard(int board[n][n])
     printf("\n");
 }
 
-void pawnsMove(int board[n][n], int *rowValue, int *colValue, int direction)
+void pawnsMove(int **board, int *row, int *col, int direction)
 {
-    int valid = 0;
+    int valid = 1;
+
+    int suge = 0;
 
     do
     {
-        if(valid == 1)
+        if(suge == 1)
         {
             printf("Doesn't fit the board:" );
             scanf(" %d", &direction);
         }
         switch (direction) {
         case 1: // Down right
-            board[*rowValue][*colValue] = '0';
-            (*rowValue)++;
-            (*colValue)++;
-            if (*rowValue > n - 1 || *colValue > n - 1)
+            board[*row][*col] = '0';
+            (*row)++;
+            (*col)++;
+            if (*row == n || *col == n)
             {
-                (*rowValue)--;
-                (*colValue)--;
-                valid = 1;
+                (*row)--;
+                (*col)--;
+                suge = 1;
             }
             else
             {
                 valid = 0;
+                suge = 0;
             }
-            board[*rowValue][*colValue] = 'P';
+            board[*row][*col] = 'P';
             break;
         case 2: // Down left
 
-            board[*rowValue][*colValue] = '0';
-            (*rowValue)++;
-            (*colValue)--;
-            if (*rowValue > n - 1 || *colValue < 0)
+            board[*row][*col] = '0';
+            (*row)++;
+            (*col)--;
+            if (*row == n || *col == -1)
             {
-                (*rowValue)--;
-                (*colValue)++;
+                (*row)--;
+                (*col)++;
+                suge = 1;
             }
             else
             {
                 valid = 0;
+                suge = 0;
             }
-            board[*rowValue][*colValue] = 'P';
+            board[*row][*col] = 'P';
             break;
         default:
             printf("Invalid move. Please enter a number from 1 to 2.\n");
@@ -223,7 +256,19 @@ void pawnsMove(int board[n][n], int *rowValue, int *colValue, int direction)
 }
 
 int main() {
-    int board[n][n];
+    int **board = (int **)calloc(n, sizeof(int *));
+    if (board == NULL) {
+        fprintf(stderr, "Memory allocation failed. Exiting...\n");
+        return 1;
+    }
+
+    for (int i = 0; i < n; ++i) {
+        board[i] = (int *)calloc(n, sizeof(int));
+        if (board[i] == NULL) {
+            fprintf(stderr, "Memory allocation failed. Exiting...\n");
+            return 1;
+        }
+    }
 
     int rowValue = 0;
     int colValue = 0;
@@ -311,9 +356,10 @@ int main() {
             generateRowAndColNames(userChoice, &rowValue, &colValue, array2, array3);
             printf("Enter a number to move the 'P' (1-2): ");
             scanf("%d", &move);
-            //validify_move(&move); //valids the move
+
             pawnsMove(board, &rowValue, &colValue, move);
-            number++;
+            NewgenerateRowAndColNames(userChoice, &rowValue, &colValue, array2, array3);
+            number = 2;
         }
 
         // Print the current state of the board after 'P' or 'W' moves
@@ -322,6 +368,12 @@ int main() {
 
     free(array2);
     free(array3);
+
+    for (int i = 0; i < n; ++i)
+    {
+        free(board[i]);
+    }
+    free(board);
 
     return 0;
 }
