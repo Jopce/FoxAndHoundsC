@@ -6,10 +6,10 @@
 
 // takes in the current board and the selected user difficulty
 // returns the Move struct (defined in opponents.h)
-Move opponent_move(int board[BOARD_SIZE][BOARD_SIZE], int difficulty)
+Move opponent_move(int board[BOARD_SIZE][BOARD_SIZE], int difficulty, int is_maximizing_player)
 {
     // the difficulty is the depth of the minimax algorithm
-    Move optimal_move = minimax(board, difficulty, 0, INT_MIN, INT_MAX);
+    Move optimal_move = minimax(board, difficulty, is_maximizing_player, INT_MIN, INT_MAX);
     return optimal_move;
 }
 

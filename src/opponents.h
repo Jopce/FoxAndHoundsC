@@ -5,6 +5,9 @@
 #define MAX_MOVES 12
 #define F 1
 #define H 2
+#define EASY 5
+#define MEDIUM 10
+#define HARD 15
 
 typedef struct
 {
@@ -12,7 +15,7 @@ typedef struct
     int board[BOARD_SIZE][BOARD_SIZE];
 } Move;
 
-Move opponent_move(int board[BOARD_SIZE][BOARD_SIZE], int difficulty);
+Move opponent_move(int board[BOARD_SIZE][BOARD_SIZE], int difficulty, int is_maximizing_player);
 int is_game_over(int board[BOARD_SIZE][BOARD_SIZE]);
 int evaluate(int board[BOARD_SIZE][BOARD_SIZE]);
 void generate_moves(int board[BOARD_SIZE][BOARD_SIZE], int child_boards[MAX_MOVES][BOARD_SIZE][BOARD_SIZE], int *number_of_moves, int is_maximizing_player);
