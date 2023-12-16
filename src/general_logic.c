@@ -4,7 +4,8 @@
 
 #define n 8
 
-void generateRowAndColNames(int choice, int *rowValue, int *colValue, int array2[5], int array3[5]) {
+void generateRowAndColNames(int choice, int *rowValue, int *colValue, int array2[5], int array3[5])
+{
    switch (choice) {
         case 1:
             *rowValue = array2[0];
@@ -64,54 +65,106 @@ int getUserInput() {
 
 void mover(int board[n][n], int *row, int *col, int direction)
 {
-    switch (direction)
+    int valid = 0;
+    do
     {
-        case 1: // Up right
-            if (*row > 0 && *col < n - 1)
-            {
+        if(valid == 1)
+        {
+            printf("the move doesn't fit in the board: ");
+            scanf("%d", &direction);
+        }
+
+        switch (direction)
+        {
+            case 1: // Up right
                 board[*row][*col] = '0';
                 (*row)--;
                 (*col)++;
+                if(*row>n-1 || *col>n-1 || *row<0 || *col<0)
+                {
+
+                    (*row)++;
+                    (*col)--;
+                    valid = 1;
+
+                }
+                else
+                {
+                    valid = 0;
+                }
                 board[*row][*col] = 'W';
-            }
-            break;
-        case 2: // Up left
-            if (*row > 0 && *col > 0)
-            {
+                break;
+            case 2: // Up left
                 board[*row][*col] = '0';
                 (*row)--;
                 (*col)--;
+                if(*row>n-1 || *col>n-1 || *row<0 || *col<0)
+                {
+
+                    (*row)++;
+                    (*col)++;
+                    valid = 1;
+
+                }
+                else
+                {
+                    valid = 0;
+                }
                 board[*row][*col] = 'W';
-            }
-            break;
-        case 3: // Down right
-            if (*row < n - 1 && *col < n - 1)
-            {
+                break;
+            case 3: // Down right
+
                 board[*row][*col] = '0';
                 (*row)++;
                 (*col)++;
+                if(*row>n-1 || *col>n-1 || *row<0 || *col<0)
+                {
+
+                    (*row)--;
+                    (*col)--;
+                    valid = 1;
+
+                }
+                else
+                {
+                    valid = 0;
+                }
                 board[*row][*col] = 'W';
-            }
-            break;
-        case 4: // Down left
-            if (*row < n - 1 && *col > 0)
-            {
+
+                break;
+            case 4: // Down left
+
                 board[*row][*col] = '0';
                 (*row)++;
                 (*col)--;
+                if(*row>n-1 || *col>n-1 || *row<0 || *col<0)
+                {
+
+                    (*row)--;
+                    (*col)++;
+                    valid = 1;
+
+                }
+                else
+                {
+                    valid = 0;
+                }
                 board[*row][*col] = 'W';
-            }
-            break;
-        default:
-            printf("Invalid move. Please enter a number from 1 to 4.\n");
-    }
+
+                break;
+            default:
+                printf("Invalid move. Please enter a number from 1 to 4.\n");
+        }
+
+    }while(valid == 1);
 }
 
 void printBoard(int board[n][n])
 {
     for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < n; j++) {
+        for (int j = 0; j < n; j++)
+        {
             printf("%c ", board[i][j]);
         }
         printf("\n");
@@ -119,29 +172,54 @@ void printBoard(int board[n][n])
     printf("\n");
 }
 
-void pawnsMove(int board[n][n], int *rowValue, int *colValue, int direction) {
-    switch (direction) {
+void pawnsMove(int board[n][n], int *rowValue, int *colValue, int direction)
+{
+    int valid = 0;
+
+    do
+    {
+        if(valid == 1)
+        {
+            printf("Doesn't fit the board:" );
+            scanf(" %d", &direction);
+        }
+        switch (direction) {
         case 1: // Down right
-            if (*rowValue < n - 1 && *colValue < n - 1)
+            board[*rowValue][*colValue] = '0';
+            (*rowValue)++;
+            (*colValue)++;
+            if (*rowValue > n - 1 || *colValue > n - 1)
             {
-                board[*rowValue][*colValue] = '0';
-                (*rowValue)++;
-                (*colValue)++;
-                board[*rowValue][*colValue] = 'P';
+                (*rowValue)--;
+                (*colValue)--;
+                valid = 1;
             }
+            else
+            {
+                valid = 0;
+            }
+            board[*rowValue][*colValue] = 'P';
             break;
         case 2: // Down left
-            if (*rowValue < n - 1 && *colValue > 0)
+
+            board[*rowValue][*colValue] = '0';
+            (*rowValue)++;
+            (*colValue)--;
+            if (*rowValue > n - 1 || *colValue < 0)
             {
-                board[*rowValue][*colValue] = '0';
-                (*rowValue)++;
-                (*colValue)--;
-                board[*rowValue][*colValue] = 'P';
+                (*rowValue)--;
+                (*colValue)++;
             }
+            else
+            {
+                valid = 0;
+            }
+            board[*rowValue][*colValue] = 'P';
             break;
         default:
             printf("Invalid move. Please enter a number from 1 to 2.\n");
-    }
+        }
+    }while(valid == 1);
 }
 
 int main() {
@@ -151,23 +229,54 @@ int main() {
     int colValue = 0;
 
     int userChoice;
-    int row1=0;
-    int row2=0;
-    int row3=0;
-    int row4=0;
-    int array2[4] = {row1,row2, row3, row4}; // Adjust the array size as needed
-    int rowW = 7; // Initial position for 'W'
-    int colW = 4;
     int col1 = 7;
     int col2 = 5;
     int col3 = 3;
     int col4 = 1;
+    int row1=0;
+    int row2=0;
+    int row3=0;
+    int row4=0;
+
+    int *array2;
+    array2 = (int*)calloc(4, sizeof(int));
+
+    if(array2 == NULL )
+    {
+        fprintf(stderr, "didnt work arr2");
+    }
+    else
+    {
+        array2[0] = row1;
+        array2[1] = row2;
+        array2[2] = row3;
+        array2[3] = row4;
+    }
+
+    int *array3;
+    array3 = (int*)calloc(4, sizeof(int));
+
+    if(array3 == NULL )
+    {
+        fprintf(stderr, "didnt work arr2");
+    }
+    else
+    {
+        array3[0] = col1;
+        array3[1] = col2;
+        array3[2] = col3;
+        array3[3] = col4;
+    }
+
+    int rowW = 7; // Initial position for 'W'
+    int colW = 4;
     int number = 2;
-    int array3[4] = {col1,col2,col3,col4};
 
     // Initialize the board with '0'
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
             board[i][j] = '0';
         }
     }
@@ -193,7 +302,8 @@ int main() {
             move = enteredNumber;
             mover(board, &rowW, &colW, move);
             number++;
-        }else
+        }
+        else
         {
             printBoard(board);
             printf("which pawn to move(1-4): ");
@@ -209,6 +319,9 @@ int main() {
         // Print the current state of the board after 'P' or 'W' moves
 
     } while (move >= 1 && move <= 4);
+
+    free(array2);
+    free(array3);
 
     return 0;
 }
