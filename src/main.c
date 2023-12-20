@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "opponents.h"
+#include "file_logic.h"
 // importint .h failus
 
 int main()
