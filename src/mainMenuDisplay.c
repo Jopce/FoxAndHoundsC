@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>
 
 #include "mainMenuDisplay.h"
 
@@ -84,23 +85,30 @@ char* mainMenuField (int counter)
     }
 }
 
-void menuCLI (int whichField)
+int menuCLI ()
 {
+    int game_select = 0;
+
     int counter = 0;
     char spaces[] = "\t\t\t\t\t\t ";
     int temp = 0;
     char text[20] = "";
 
+    //clear console
+    system("cls");
+    //title
+    gameTitle();
+
     //Prints top part of the box
     printf("\n\n");
     printf("%s", spaces);
-    printRowLine(cornerChar[0],  lineChar[0],  lineChar[0],  cornerChar[1]);
+    printRowLine(8*2 +3, cornerChar[0],  lineChar[0],  lineChar[0],  cornerChar[1]);
     printf("\n");
 
     //Prints inside of box
     while(1)
     {
-        switch(whichField)
+        switch(game_select)
         {
         case 0:
             strcpy (text, mainMenuField (counter));
@@ -149,13 +157,46 @@ void menuCLI (int whichField)
 
     //prints bottom section
     printf("%s", spaces);
-    printRowLine( cornerChar[2],  lineChar[0],  lineChar[0],  cornerChar[3]);
+    printRowLine(8*2 +3, cornerChar[2],  lineChar[0],  lineChar[0],  cornerChar[3]);
+
+    //Get user input
+    printf ("\n");
+    printf ("\t\t\t\t\t\t  Select an option: ");
+    scanf ("%d", &game_select);
+
+    return game_select;
 }
 
-void printRowLine (char Lchar, char rowChar, char conChar, char RChar)
+void exitGame()
+{
+    char temp = "";
+
+    system("cls");
+    //setlocale(LC_ALL, "lt_LT"); //Dont work
+
+    printf (" _____           _ _ _          _ \n");
+    printf ("|     |___ ___ _| |_| |_ ___   |_|\n");
+    printf ("|   --|  _| -_| . | |  _|_ -|   _ \n");
+    printf ("|_____|_| |___|___|_|_| |___|  |_|\n");
+
+    printRowLine(8*2 +16, cornerChar[0],  lineCharV2[0],  lineCharV2[0],  cornerChar[1]);
+    printf("\n");
+
+    printf("%c Projektinis darbas paruostas: %c\n", lineCharV2[1], lineCharV2[1]);
+    printf("%c   -Jokubo Petraicio           %c\n", lineCharV2[1], lineCharV2[1]);
+    printf("%c   -Igno Caso,                 %c\n", lineCharV2[1], lineCharV2[1]);
+    printf("%c   -Luko Amos Alvorado         %c\n", lineCharV2[1], lineCharV2[1]);
+
+    printRowLine(8*2 +16, cornerChar[2],  lineCharV2[0],  lineCharV2[0],  cornerChar[3]);
+
+    printf("\n\nPress any button to exit ");
+    scanf("%c", &temp);
+}
+
+void printRowLine (int lenght, char Lchar, char rowChar, char conChar, char RChar)
 {
     printf ("%c", Lchar);
-    for (int row = 1; row < 8*2 +3; ++row)
+    for (int row = 1; row < lenght; ++row)
     {
         if(row%4 != 0)
         {

@@ -1,11 +1,6 @@
-    // isPlayer: 1 if playing VS another player, else 0, foxOrHoundsTurn: 1 if fox, else 0
-    void displayBoard (int board[8][8], int isPlayer, int difficulty, int sidePannelOn, int foxOrHoundsTurn);
-
-    //text[]: text what will be displayed
-    void infoBox (char text[]);
+    // VS_Player: 1 if playing VS another player, else 0, foxOrHoundsTurn: 1 if fox, else 0 hounds
+    int displayBoard (int board[8][8], int VS_Player, int difficulty, int foxOrHoundsTurn);
 
     // Win and lose screens
-    void BOTwinScreen(int points);
-    void BOTloseScreen(int points);
-    void PlayerOneWinScreen(int points);
-    void PlayerTwoWinScreen(int points);
+    //PlayerVSwho: 1 - player, 0 - bots | playerWinVSbot: 1 - win, 0 - lose | playerWinVSplayer: 1 - fox win, 0 - hounds win
+    void results (int points, int PlayerVSwho, int playerWinVSbot, int playerWinVSplayer);

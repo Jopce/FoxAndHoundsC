@@ -1,5 +1,6 @@
-    //title
-    void gameTitle();
-    //whichField: 0 is menu, 1 is diffuculty
-    void menuCLI (int whichField); //whichField:
+    //Function
+    //displays main menu: 0 - menu, 1 - difficulty
+    int menuCLI ();
+    //exits game with credits
+    void exitGame();
 

@@ -97,6 +97,30 @@ char* getPieceSymbol (int value)
         return "[3]";
     case 4:
         return "[4]";
+    case 5:
+        return "[5]";
+    case 6:
+        return "[6]";
+    case 7:
+        return "[7]";
+    case 8:
+        return "[8]";
+    case 9:
+        return "[9]";
+    case 10:
+        return "[10]";
+    case 11:
+        return "[11]";
+    case 12:
+        return "[12]";
+    case 13:
+        return "[13]";
+    case 14:
+        return "[14]";
+    case 15:
+        return "[15]";
+    case 16:
+        return "[16]";
     case H:
         return " H "; // Hounds symbol
     case F:
@@ -107,9 +131,12 @@ char* getPieceSymbol (int value)
 }
 
 // The Main function that displays the board
-void displayBoard (int board[8][8], int isPlayer, int difficulty, int sidePannelOn, int foxOrHoundsTurn)
+int displayBoard (int board[8][8], int isPlayer, int difficulty, int foxOrHoundsTurn)
 {
+    unsigned short int sidePannelOn = 1;
+
     unsigned short int count = 0;
+    unsigned short int move = 0;
 
     system("cls"); //clears console
 
@@ -166,14 +193,35 @@ void displayBoard (int board[8][8], int isPlayer, int difficulty, int sidePannel
         ///-----------------
 
         printf("\n");
+
+    }
+    //infobox
+    infoBox();
+
+    //Take user input
+    printf("Select move: ");
+    return scanf("%d", &move);
+}
+
+void results (int points, int PlayerVSwho, int playerWinVSbot, int playerWinVSplayer)
+{
+    if (PlayerVSwho == 0)// 0 - bots
+    {
+        if (playerWinVSbot == 1) //win
+            BOTwinScreen( points);
+        else BOTloseScreen (points); //lose
+    }
+    else
+    {
+        if (playerWinVSplayer == 1)
+            foxWinScreen (points);
+        else houndsWinScreen (points);
     }
 }
 
-void infoBox (char text[])
+void infoBox ()
 {
-    //check if empty char, if so set it to somethings
-    if(text[0] == '\0')
-        strcpy(text, "Pick a digit in \"[x]\" to move");
+    char text[50] = "Pick a digit in \"[x]\" to move";
 
     int temp = 0;
     //Title of the box
