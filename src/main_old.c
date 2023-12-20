@@ -108,7 +108,7 @@ int main()
     // gives some random digits near the end and stops idk why
     while (!(is_game_over(initial_board)))
     {
-        Move res_board = opponent_move(initial_board, 10, is_maximising);
+        Move res_board = opponent_move(initial_board, 15, is_maximising);
 
         // copy res_board.board
 

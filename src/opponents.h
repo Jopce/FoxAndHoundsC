@@ -18,6 +18,6 @@ typedef struct
 Move opponent_move(int board[BOARD_SIZE][BOARD_SIZE], int difficulty, int is_maximizing_player);
 int is_game_over(int board[BOARD_SIZE][BOARD_SIZE]);
 int evaluate(int board[BOARD_SIZE][BOARD_SIZE]);
-void generate_moves(int board[BOARD_SIZE][BOARD_SIZE], int child_boards[MAX_MOVES][BOARD_SIZE][BOARD_SIZE], int *number_of_moves, int is_maximizing_player);
+void generate_moves(int board[BOARD_SIZE][BOARD_SIZE], int (*child_boards)[BOARD_SIZE][BOARD_SIZE], int *number_of_moves, int is_maximizing_player);
 void copy_board(int source[BOARD_SIZE][BOARD_SIZE], int destination[BOARD_SIZE][BOARD_SIZE]);
 Move minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, int is_maximizing_player, int alpha, int beta);

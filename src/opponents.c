@@ -25,8 +25,14 @@ Move minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, int is_maximizing_pla
     }
 
     // maybe get number of possible moves and then create an array of boards malloc
-    int child_boards[MAX_MOVES][BOARD_SIZE][BOARD_SIZE];
     int number_of_moves;
+    int(*child_boards)[BOARD_SIZE][BOARD_SIZE] = malloc(MAX_MOVES * sizeof(*child_boards));
+    if (child_boards == NULL)
+    {
+        fprintf(stderr, "Failed to allocate memory for child_boards\n");
+        exit(EXIT_FAILURE);
+    }
+
     generate_moves(board, child_boards, &number_of_moves, is_maximizing_player);
 
     if (is_maximizing_player)
@@ -68,6 +74,7 @@ Move minimax(int board[BOARD_SIZE][BOARD_SIZE], int depth, int is_maximizing_pla
             }
         }
     }
+    free(child_boards);
 
     return new_move;
 }
@@ -98,7 +105,7 @@ void copy_board(int source[BOARD_SIZE][BOARD_SIZE], int destination[BOARD_SIZE][
     }
 }
 
-void generate_moves(int board[BOARD_SIZE][BOARD_SIZE], int child_boards[MAX_MOVES][BOARD_SIZE][BOARD_SIZE], int *number_of_moves, int is_maximizing_player)
+void generate_moves(int board[BOARD_SIZE][BOARD_SIZE], int (*child_boards)[BOARD_SIZE][BOARD_SIZE], int *number_of_moves, int is_maximizing_player)
 {
     *number_of_moves = 0;
 
