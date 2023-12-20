@@ -60,7 +60,7 @@ int main()
 
     do
     {                   //Reikia informacijos -: VS_Player: 1 if playing VS another player, else 0 | foxOrHoundsTurn: 1 if fox, else 0 hounds
-        int new_move = displayBoard (board[8][8], VS_Player, difficulty, foxOrHoundsTurn); // igno funkcija kuri grazina skaiciuka kur paejo Fox
+        int new_move = displayBoard (game_board, VS_Player, difficulty, foxOrHoundsTurn); // igno funkcija kuri grazina skaiciuka kur paejo Fox
 
         make_a_move(&game_board, new_move); // luko funkcija kuri grazina nauja boarda su padarytu ejimu
 
