@@ -55,31 +55,29 @@ void BOTloseScreen(int points)
     printf ("\nPoints scored: %d", points);
 }
 
-void PlayerOneWinScreen(int points)
+void houndsWinScreen(int points)
 {
-    printRow (8*4 + 22, cornerCharV2[0], lineCharV2[0], lineCharV2[0], cornerCharV2[1]);
+    printRow (8*4 + 15, cornerCharV2[0], lineCharV2[0], lineCharV2[0], cornerCharV2[1]);
     printf ("\n");
-    printf ("%c _____ _                    ___      _ _ _ _         %c\n", lineCharV2[1], lineCharV2[1]);
-    printf ("%c|  _  | |___ _ _ ___ ___   |_  |    | | | |_|___ ___ %c\n", lineCharV2[1], lineCharV2[1]);
-    printf ("%c|   __| | .'| | | -_|  _|   _| |_   | | | | |   |_ -|%c\n", lineCharV2[1], lineCharV2[1]);
-    printf ("%c|__|  |_|__,|_  |___|_|    |_____|  |_____|_|_|_|___|%c\n", lineCharV2[1], lineCharV2[1]);
-    printf ("%c            |___|                                    %c\n", lineCharV2[1], lineCharV2[1]);
-    printRow (8*4 + 22, cornerCharV2[2], lineCharV2[0], lineCharV2[0], cornerCharV2[3]);
+    printf ("%c _____               _        _ _ _ _         %c\n", lineCharV2[1], lineCharV2[1]);
+    printf ("%c|  |  |___ _ _ ___ _| |___   | | | |_|___ ___ %c\n", lineCharV2[1], lineCharV2[1]);
+    printf ("%c|     | . | | |   | . |_ -|  | | | | |   |_ -|%c\n", lineCharV2[1], lineCharV2[1]);
+    printf ("%c|__|__|___|___|_|_|___|___|  |_____|_|_|_|___|%c\n", lineCharV2[1], lineCharV2[1]);
+    printRow (8*4 + 15, cornerCharV2[2], lineCharV2[0], lineCharV2[0], cornerCharV2[3]);
 
     printf ("\nPoints scored: %d", points);
 }
 
 
-void PlayerTwoWinScreen(int points)
+void foxWinScreen(int points)
 {
-    printRow (8*4 + 20, cornerCharV2[0], lineCharV2[0], lineCharV2[0], cornerCharV2[1]);
+    printRow (8*4 + 3, cornerCharV2[0], lineCharV2[0], lineCharV2[0], cornerCharV2[1]);
     printf ("\n");
-    printf ("%c _____ _                    ___    _ _ _ _         %c\n", lineCharV2[1], lineCharV2[1]);
-    printf ("%c|  _  | |___ _ _ ___ ___   |_  |  | | | |_|___ ___ %c\n", lineCharV2[1], lineCharV2[1]);
-    printf ("%c|   __| | .'| | | -_|  _|  |  _|  | | | | |   |_ -|%c\n", lineCharV2[1], lineCharV2[1]);
-    printf ("%c|__|  |_|__,|_  |___|_|    |___|  |_____|_|_|_|___|%c\n", lineCharV2[1], lineCharV2[1]);
-    printf ("%c            |___|                                  %c\n", lineCharV2[1], lineCharV2[1]);
-    printRow (8*4 + 20, cornerCharV2[2], lineCharV2[0], lineCharV2[0], cornerCharV2[3]);
+    printf ("%c _____            _ _ _ _         %c\n", lineCharV2[1], lineCharV2[1]);
+    printf ("%c|   __|___ _ _   | | | |_|___ ___ %c\n", lineCharV2[1], lineCharV2[1]);
+    printf ("%c|   __| . |_'_|  | | | | |   |_ -|%c\n", lineCharV2[1], lineCharV2[1]);
+    printf ("%c|__|  |___|_,_|  |_____|_|_|_|___|%c\n", lineCharV2[1], lineCharV2[1]);
+    printRow (8*4 + 3, cornerCharV2[2], lineCharV2[0], lineCharV2[0], cornerCharV2[3]);
 
     printf ("\nPoints scored: %d", points);
 }
