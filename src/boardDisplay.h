@@ -1,18 +1,11 @@
-    //Corner symbols
-    char cornerChar[4] = {201, 187, 200, 188};
-    char cornerCharV2[4] = {218, 191, 192, 217};
+    // isPlayer: 1 if playing VS another player, else 0, foxOrHoundsTurn: 1 if fox, else 0
+    void displayBoard (int board[8][8], int isPlayer, int difficulty, int sidePannelOn, int foxOrHoundsTurn);
 
-    //Row and column symbols
-    char lineChar[2] = {205, 186}; // 0 - row and 1 - column
-    char lineCharV2[2] = {196, 179}; // 0 - row and 1 - column
+    //text[]: text what will be displayed
+    void infoBox (char text[]);
 
-    //Side connection symbols
-    char sideChar[2] = {185, 204}; //other values - 180, 195
-
-    //Top and bottom connection symbols
-    char TnBChar[2] = {203, 202}; //0 - connection from top to bottom, 1 - connection from bottom to top
-    //other values - 194, 193
-
-    //All connection symbol
-    char conAllChar = 206;
-    char conAllCharV2 = 197;
+    // Win and lose screens
+    void BOTwinScreen(int points);
+    void BOTloseScreen(int points);
+    void PlayerOneWinScreen(int points);
+    void PlayerTwoWinScreen(int points);
