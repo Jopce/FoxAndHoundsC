@@ -6,10 +6,11 @@
 #include <time.h>
 
 #define n 8
-void save_game(int *array2,int *array3, int *rowW, int *colW)
+
+void save_game(int *array2,int *array3, int *rowW, int *colW, int *player)
 {
     int choice;
-    printf("Save progress 1-5, don't 0");
+    printf("Save progress 1-5, or don't 0: ");
     scanf("%d", &choice);
     if(choice == 0)
     {
@@ -30,6 +31,9 @@ void save_game(int *array2,int *array3, int *rowW, int *colW)
             sprintf(fileName, "%d.txt", choice);
             break;
         case 4:
+            sprintf(fileName, "%d.txt", choice);
+            break;
+        case 5:
             sprintf(fileName, "%d.txt", choice);
             break;
 
@@ -57,6 +61,7 @@ void save_game(int *array2,int *array3, int *rowW, int *colW)
     // Write the rowW to the file
     fprintf(file, "\n%d", *rowW);
     fprintf(file, "\n%d", *colW);
+    fprintf(file, "\n%d", *player);
 
     // Close the file
     fclose(file);
@@ -95,7 +100,8 @@ void displayLastModifiedTime()
     // Close the directory
     closedir(dir);
 }
-void processInput(int *save, int *array2, int *array3, int *rowW, int *colW) {
+void processInput(int *save, int *array2, int *array3, int *rowW, int *colW, int *player)
+{
     FILE *file;
     char fileName[5];
 
@@ -119,6 +125,7 @@ void processInput(int *save, int *array2, int *array3, int *rowW, int *colW) {
             }
             fscanf(file, "%d", &(*rowW));
             fscanf(file, "%d", &(*colW));
+            fscanf(file, "%d", &(*player));
 
             // Close the file
             fclose(file);
@@ -147,6 +154,7 @@ void processInput(int *save, int *array2, int *array3, int *rowW, int *colW) {
             }
             fscanf(file, "%d", &(*rowW));
             fscanf(file, "%d", &(*colW));
+            fscanf(file, "%d", &(*player));
 
             // Close the file
             fclose(file);
@@ -172,6 +180,7 @@ void processInput(int *save, int *array2, int *array3, int *rowW, int *colW) {
             }
             fscanf(file, "%d", &(*rowW));
             fscanf(file, "%d", &(*colW));
+            fscanf(file, "%d", &(*player));
 
             // Close the file
             fclose(file);
@@ -194,6 +203,7 @@ void processInput(int *save, int *array2, int *array3, int *rowW, int *colW) {
             }
             fscanf(file, "%d", &(*rowW));
             fscanf(file, "%d", &(*colW));
+            fscanf(file, "%d", &(*player));
 
             // Close the file
             fclose(file);
@@ -216,6 +226,7 @@ void processInput(int *save, int *array2, int *array3, int *rowW, int *colW) {
             }
             fscanf(file, "%d", &(*rowW));
             fscanf(file, "%d", &(*colW));
+            fscanf(file, "%d", &(*player));
 
             // Close the file
             fclose(file);
@@ -226,11 +237,24 @@ void processInput(int *save, int *array2, int *array3, int *rowW, int *colW) {
 }
 
 
-void check_lose(int **board, int *row, int *col, int *win, int *lose)
+void check_lose(int **board, int *row, int *col, int *win, int *lose, int *player)
 {
-    if (*row == 0) {
-        *win = 1;
-    } else {
+    if (*player == 1)
+    {
+        if(*row == 0)
+        {
+            *win = 1;
+        }
+    }
+    else if(*player == 2)
+    {
+        if(*row == 7)
+        {
+            *win = 1;
+        }
+    }
+    else
+    {
         if (*col + 1 > n - 1 || *row - 1 < 0 || board[*row - 1][*col + 1] == 'H') {
             (*lose)++;
         }
@@ -339,7 +363,7 @@ int getUserInput() {
 
 }
 
-void mover(int **board, int *row, int *col, int direction)
+void mover(int **board, int *row, int *col, int direction, int *player)
 {
     int valid = 0;
     do
@@ -352,86 +376,171 @@ void mover(int **board, int *row, int *col, int direction)
 
         switch (direction)
         {
-            case 1: // Up right
-                board[*row][*col] = '0';
-                (*row)--;
-                (*col)++;
-                if( *col>n-1 || *row<0 || board[*row][*col] == 'H')
+            case 1: // Up right or if flipped down left
+                if(*player == 1)
                 {
-
-                    (*row)++;
-                    (*col)--;
-                    valid = 1;
-
-                }
-                else
-                {
-                    valid = 0;
-                }
-                board[*row][*col] = 'F';
-                break;
-            case 2: // Up left
-                board[*row][*col] = '0';
-                (*row)--;
-                (*col)--;
-                if(board[*row][*col] == 'H' || *row<0 || *col<0)
-                {
-
-                    (*row)++;
-                    (*col)++;
-                    valid = 1;
-
-                }
-                else
-                {
-                    valid = 0;
-                }
-                board[*row][*col] = 'F';
-                break;
-            case 3: // Down right
-
-                board[*row][*col] = '0';
-                (*row)++;
-                (*col)++;
-                if(*row>n-1 || *col>n-1 || board[*row][*col] == 'H')
-                {
-
-                    (*row)--;
-                    (*col)--;
-                    valid = 1;
-
-                }
-                else
-                {
-                    valid = 0;
-                }
-                board[*row][*col] = 'F';
-
-                break;
-            case 4: // Down left
-
-                board[*row][*col] = '0';
-                (*row)++;
-                (*col)--;
-                if(*row>n-1 || *col<0 || board[*row][*col] == 'H')
-                {
-
+                    board[*row][*col] = '0';
                     (*row)--;
                     (*col)++;
-                    valid = 1;
+                    if( *col>n-1 || *row<0 || board[*row][*col] == 'H')
+                    {
 
+                        (*row)++;
+                        (*col)--;
+                        valid = 1;
+
+                    }
+                    else
+                    {
+                        valid = 0;
+                    }
+                    board[*row][*col] = 'F';
                 }
                 else
                 {
-                    valid = 0;
+                    board[*row][*col] = '0';
+                    (*row)++;
+                    (*col)--;
+                    if(*row>n-1 || *col<0 || board[*row][*col] == 'H')
+                    {
+
+                        (*row)--;
+                        (*col)++;
+                        valid = 1;
+
+                    }
+                    else
+                    {
+                        valid = 0;
+                    }
+                    board[*row][*col] = 'F';
                 }
-                board[*row][*col] = 'F';
+                break;
+            case 2: // Up left flipped down right
+                if(*player == 1)
+                {
+                    board[*row][*col] = '0';
+                    (*row)--;
+                    (*col)--;
+                    if(board[*row][*col] == 'H' || *row<0 || *col<0)
+                    {
+
+                        (*row)++;
+                        (*col)++;
+                        valid = 1;
+
+                    }
+                    else
+                    {
+                        valid = 0;
+                    }
+                    board[*row][*col] = 'F';
+                }
+                else
+                {
+                     board[*row][*col] = '0';
+                    (*row)++;
+                    (*col)++;
+                    if(*row>n-1 || *col>n-1 || board[*row][*col] == 'H')
+                    {
+
+                        (*row)--;
+                        (*col)--;
+                        valid = 1;
+
+                    }
+                    else
+                    {
+                        valid = 0;
+                    }
+                    board[*row][*col] = 'F';
+                }
+                break;
+            case 3: // Down right flipped up left
+                if(*player == 1)
+                {
+                    board[*row][*col] = '0';
+                    (*row)++;
+                    (*col)++;
+                    if(*row>n-1 || *col>n-1 || board[*row][*col] == 'H')
+                    {
+
+                        (*row)--;
+                        (*col)--;
+                        valid = 1;
+
+                    }
+                    else
+                    {
+                        valid = 0;
+                    }
+                    board[*row][*col] = 'F';
+                }
+                else
+                {
+                     board[*row][*col] = '0';
+                    (*row)++;
+                    (*col)++;
+                    if(*row>n-1 || *col>n-1 || board[*row][*col] == 'H')
+                    {
+
+                        (*row)--;
+                        (*col)--;
+                        valid = 1;
+
+                    }
+                    else
+                    {
+                        valid = 0;
+                    }
+                    board[*row][*col] = 'F';
+                }
+
+                break;
+            case 4: // Down left flipped up right
+                if(*player == 1)
+                {
+                    board[*row][*col] = '0';
+                    (*row)++;
+                    (*col)--;
+                    if(*row>n-1 || *col<0 || board[*row][*col] == 'H')
+                    {
+
+                        (*row)--;
+                        (*col)++;
+                        valid = 1;
+
+                    }
+                    else
+                    {
+                        valid = 0;
+                    }
+                    board[*row][*col] = 'F';
+                }
+                else
+                {
+                    board[*row][*col] = '0';
+                    (*row)--;
+                    (*col)++;
+                    if( *col>n-1 || *row<0 || board[*row][*col] == 'H')
+                    {
+
+                        (*row)++;
+                        (*col)--;
+                        valid = 1;
+
+                    }
+                    else
+                    {
+                        valid = 0;
+                    }
+                    board[*row][*col] = 'F';
+                }
 
                 break;
             default:
                 printf("Invalid move. Please enter a number from 1 to 4.\n");
         }
-
     }while(valid == 1);
 }
 
@@ -448,7 +557,7 @@ void printBoard(int **board)
     printf("\n");
 }
 
-void pawnsMove(int **board, int *row, int *col, int direction)
+void pawnsMove(int **board, int *row, int *col, int direction, int *player)
 {
     int valid = 1;
 
@@ -462,40 +571,83 @@ void pawnsMove(int **board, int *row, int *col, int direction)
             scanf(" %d", &direction);
         }
         switch (direction) {
-        case 1: // Down right
-            board[*row][*col] = '0';
-            (*row)++;
-            (*col)++;
-            if (*row == n || *col == n || board[*row][*col] == 'H' || board[*row][*col] == 'F')
+        case 1: // Down right flipped up left
+            if(*player == 1)
             {
+                board[*row][*col] = '0';
+                (*row)++;
+                (*col)++;
+                if (*row == n || *col == n || board[*row][*col] == 'H' || board[*row][*col] == 'F')
+                {
+                    (*row)--;
+                    (*col)--;
+                    suge = 1;
+                }
+                else
+                {
+                    valid = 0;
+                    suge = 0;
+                }
+                board[*row][*col] = 'H';
+            }
+            else
+            {
+                board[*row][*col] = '0';
                 (*row)--;
                 (*col)--;
-                suge = 1;
+                if (*row == n || *col == n || board[*row][*col] == 'H' || board[*row][*col] == 'F')
+                {
+                    (*row)++;
+                    (*col)++;
+                    suge = 1;
+                }
+                else
+                {
+                    valid = 0;
+                    suge = 0;
+                }
+                board[*row][*col] = 'H';
+
+            }
+            break;
+        case 2: // Down left flipped up right
+            if(*player == 1)
+            {
+                board[*row][*col] = '0';
+                (*row)++;
+                (*col)--;
+                if (*row == n || *col == -1 || board[*row][*col] == 'H' || board[*row][*col] == 'F')
+                {
+                    (*row)--;
+                    (*col)++;
+                    suge = 1;
+                }
+                else
+                {
+                    valid = 0;
+                    suge = 0;
+                }
+                board[*row][*col] = 'H';
             }
             else
             {
-                valid = 0;
-                suge = 0;
-            }
-            board[*row][*col] = 'H';
-            break;
-        case 2: // Down left
-
-            board[*row][*col] = '0';
-            (*row)++;
-            (*col)--;
-            if (*row == n || *col == -1 || board[*row][*col] == 'H' || board[*row][*col] == 'F')
-            {
+                board[*row][*col] = '0';
                 (*row)--;
                 (*col)++;
-                suge = 1;
+                if (*row == n || *col == n || board[*row][*col] == 'H' || board[*row][*col] == 'F')
+                {
+                    (*row)++;
+                    (*col)--;
+                    suge = 1;
+                }
+                else
+                {
+                    valid = 0;
+                    suge = 0;
+                }
+                board[*row][*col] = 'H';
+
             }
-            else
-            {
-                valid = 0;
-                suge = 0;
-            }
-            board[*row][*col] = 'H';
             break;
         default:
             printf("Invalid move. Please enter a number from 1 to 2.\n");
@@ -503,8 +655,9 @@ void pawnsMove(int **board, int *row, int *col, int direction)
     }while(valid == 1);
 }
 
-int main() {
-
+int main()
+{
+    int rowW, colW, col1,col2,col3,col4,row1,row2,row3,row4;
 
     int **board = (int **)calloc(n, sizeof(int *));
     if (board == NULL) {
@@ -524,17 +677,7 @@ int main() {
     int colValue = 0;
 
     int userChoice;
-    int col1 = 7;
-    int col2 = 5;
-    int col3 = 3;
-    int col4 = 1;
-    int row1=0;
-    int row2=0;
-    int row3=0;
-    int row4=0;
-
-    int rowW = 7; // Initial position for 'F'
-    int colW = 4;
+    int player = 0;
 
     int number = 2; //priority value
 
@@ -554,7 +697,43 @@ int main() {
         displayLastModifiedTime();
         printf("\n Which save you want to open \n");
         scanf("%d", &save);
-        processInput(&save, array2, array3, &rowW, &colW);
+        processInput(&save, array2, array3, &rowW, &colW, &player);
+    }
+
+    if(player == 0)
+    {
+        printf("Fox 1 or Haund 2: ");
+        scanf("%d", &player);
+    }
+
+    if(save == 2)
+    {
+        if(player == 1)
+        {
+            rowW = 7;
+            colW = 4;
+            col1 = 7;
+            col2 = 5;
+            col3 = 3;
+            col4 = 1;
+            row1 = 0;
+            row2 = 0;
+            row3 = 0;
+            row4 = 0;
+        }
+        else
+        {
+            rowW = 0;
+            colW = 3;
+            col1 = 0;
+            col2 = 2;
+            col3 = 4;
+            col4 = 6;
+            row1 = 7;
+            row2 = 7;
+            row3 = 7;
+            row4 = 7;
+        }
     }
 
     if(array2 == NULL )
@@ -624,12 +803,13 @@ int main() {
 
     int move;
 
+
     do {
 
         if(number % 2 == 0)
         {
             printBoard(board);
-            check_lose(board, &rowW, &colW, &win, &lose);
+            check_lose(board, &rowW, &colW, &win, &lose, &player);
 
             if(win == 1 || lose == 4)
             {
@@ -640,17 +820,17 @@ int main() {
 
             if(enteredNumber == 0)
             {
-                save_game(array2, array3, &rowW, &colW);
+                save_game(array2, array3, &rowW, &colW, &player);
                 break;
             }
             move = enteredNumber;
-            mover(board, &rowW, &colW, move);
+            mover(board, &rowW, &colW, move, &player);
             number++;
         }
         else
         {
             printBoard(board);
-            check_lose(board, &rowW, &colW, &win, &lose);
+            check_lose(board, &rowW, &colW, &win, &lose, &player);
             if(win == 1 || lose == 1)
             {
                 break;
@@ -661,7 +841,7 @@ int main() {
             printf("Enter a number to move the 'H' (1-2): ");
             scanf("%d", &move);
 
-            pawnsMove(board, &rowValue, &colValue, move);
+            pawnsMove(board, &rowValue, &colValue, move, &player);
             NewgenerateRowAndColNames(userChoice, &rowValue, &colValue, array2, array3);
             number = 2;
 
