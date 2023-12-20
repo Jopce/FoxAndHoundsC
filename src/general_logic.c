@@ -1,8 +1,230 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <dirent.h>
+#include <sys/stat.h>
+#include <time.h>
 
 #define n 8
+void save_game(int *array2,int *array3, int *rowW, int *colW)
+{
+    int choice;
+    printf("Save progress 1-5, don't 0");
+    scanf("%d", &choice);
+    if(choice == 0)
+    {
+        return;
+    }
+    FILE *file;
+    char fileName[20];
+
+    switch (choice) {
+        case 1:
+            sprintf(fileName, "%d.txt", choice);
+            break;
+
+        case 2:
+            sprintf(fileName, "%d.txt", choice);
+            break;
+        case 3:
+            sprintf(fileName, "%d.txt", choice);
+            break;
+        case 4:
+            sprintf(fileName, "%d.txt", choice);
+            break;
+
+        default:
+            printf("Invalid choice\n");
+            return;
+    }
+
+    // Open the file for writing
+    file = fopen(fileName, "w");
+    if (file == NULL) {
+        perror("Error opening file for writing");
+        return;
+    }
+
+    for (int i = 0; i < 4; ++i) {
+        fprintf(file, "%d ", array2[i]);
+    }
+    fprintf(file,"\n");
+
+     for (int i = 0; i < 4; ++i) {
+        fprintf(file, "%d ", array3[i]);
+    }
+
+    // Write the rowW to the file
+    fprintf(file, "\n%d", *rowW);
+    fprintf(file, "\n%d", *colW);
+
+    // Close the file
+    fclose(file);
+
+    printf("Save file written %s\n", fileName);
+}
+void displayLastModifiedTime()
+{
+    // Open the current directory
+    DIR *dir = opendir(".");
+    if (dir == NULL) {
+        perror("Error opening directory");
+        exit(EXIT_FAILURE);
+    }
+
+    struct dirent *entry;
+    int count = 0;
+
+    // Loop through the directory entries
+    while ((entry = readdir(dir)) != NULL && count < 5) {
+        // Check if the entry is a regular file with the format %d.txt
+        if (entry->d_type == DT_REG && sscanf(entry->d_name, "%d.txt", &count) == 1) {
+            // Get the last modified time
+            struct stat fileStat;
+            stat(entry->d_name, &fileStat);
+
+            // Convert the last modified time to a readable format
+            char timeString[20];
+            strftime(timeString, sizeof(timeString), "%Y-%m-%d %H:%M:%S", localtime(&fileStat.st_mtime));
+
+            // Display the information
+            printf("File: %s, Last Modified: %s\n", entry->d_name, timeString);
+        }
+    }
+
+    // Close the directory
+    closedir(dir);
+}
+void processInput(int *save, int *array2, int *array3, int *rowW, int *colW) {
+    FILE *file;
+    char fileName[5];
+
+    switch (*save) {
+        case 1:
+            sprintf(fileName, "%d.txt", *save);
+
+            // Open the file
+            file = fopen(fileName, "r");
+            if (file == NULL) {
+                perror("Error opening file");
+                return;
+            }
+
+            // Read data into arrays and integers
+            for (int i = 0; i < 4; ++i) {
+                fscanf(file, "%d", &array2[i]);
+            }
+            for (int i = 0; i < 4; ++i) {
+                fscanf(file, "%d", &array3[i]);
+            }
+            fscanf(file, "%d", &(*rowW));
+            fscanf(file, "%d", &(*colW));
+
+            // Close the file
+            fclose(file);
+
+            // Process the data as needed
+            // (You can add your processing logic here)
+
+            break;
+
+        case 2:
+            sprintf(fileName, "%d.txt", *save);
+
+            // Open the file
+            file = fopen(fileName, "r");
+            if (file == NULL) {
+                perror("Error opening file");
+                return;
+            }
+
+            // Read data into arrays and integers
+            for (int i = 0; i < 4; ++i) {
+                fscanf(file, "%d", &array2[i]);
+            }
+            for (int i = 0; i < 4; ++i) {
+                fscanf(file, "%d", &array3[i]);
+            }
+            fscanf(file, "%d", &(*rowW));
+            fscanf(file, "%d", &(*colW));
+
+            // Close the file
+            fclose(file);
+
+
+            break;
+        case 3:
+            sprintf(fileName, "%d.txt", *save);
+
+            // Open the file
+            file = fopen(fileName, "r");
+            if (file == NULL) {
+                perror("Error opening file");
+                return;
+            }
+
+            // Read data into arrays and integers
+            for (int i = 0; i < 4; ++i) {
+                fscanf(file, "%d", &array2[i]);
+            }
+            for (int i = 0; i < 4; ++i) {
+                fscanf(file, "%d", &array3[i]);
+            }
+            fscanf(file, "%d", &(*rowW));
+            fscanf(file, "%d", &(*colW));
+
+            // Close the file
+            fclose(file);
+        case 4:
+            sprintf(fileName, "%d.txt", *save);
+
+            // Open the file
+            file = fopen(fileName, "r");
+            if (file == NULL) {
+                perror("Error opening file");
+                return;
+            }
+
+            // Read data into arrays and integers
+            for (int i = 0; i < 4; ++i) {
+                fscanf(file, "%d", &array2[i]);
+            }
+            for (int i = 0; i < 4; ++i) {
+                fscanf(file, "%d", &array3[i]);
+            }
+            fscanf(file, "%d", &(*rowW));
+            fscanf(file, "%d", &(*colW));
+
+            // Close the file
+            fclose(file);
+        case 5:
+            sprintf(fileName, "%d.txt", *save);
+
+            // Open the file
+            file = fopen(fileName, "r");
+            if (file == NULL) {
+                perror("Error opening file");
+                return;
+            }
+
+            // Read data into arrays and integers
+            for (int i = 0; i < 4; ++i) {
+                fscanf(file, "%d", &array2[i]);
+            }
+            for (int i = 0; i < 4; ++i) {
+                fscanf(file, "%d", &array3[i]);
+            }
+            fscanf(file, "%d", &(*rowW));
+            fscanf(file, "%d", &(*colW));
+
+            // Close the file
+            fclose(file);
+
+        default:
+            printf("Invalid save proceed with default game\n");
+    }
+}
+
 
 void check_lose(int **board, int *row, int *col, int *win, int *lose)
 {
@@ -94,10 +316,8 @@ int getUserInput() {
 
     // Check if the entered number is within the specified range
     do {
-        // Prompt the user for input
-        printf("Enter a number between 1 and 4 or to pause 0: ");
+        printf("Enter a number between 1 and 4 or to save 0: ");
 
-        // Read the user input
         scanf("%d", &userNumber);
 
         // Check if the entered number is within the specified range
@@ -109,7 +329,7 @@ int getUserInput() {
         else
         {
             // If the number is outside the range, display an error message
-            printf("Error: Please enter a number between 1 and 4.\n");
+            printf("Error to move need 1 and 4.\n");
         }
 
     } while (1); // Infinite loop until a valid input is provided
@@ -284,6 +504,8 @@ void pawnsMove(int **board, int *row, int *col, int direction)
 }
 
 int main() {
+
+
     int **board = (int **)calloc(n, sizeof(int *));
     if (board == NULL) {
         fprintf(stderr, "Memory allocation failed. Exiting...\n");
@@ -311,8 +533,29 @@ int main() {
     int row3=0;
     int row4=0;
 
+    int rowW = 7; // Initial position for 'F'
+    int colW = 4;
+
+    int number = 2; //priority value
+
     int *array2;
     array2 = (int*)calloc(4, sizeof(int));
+
+    int *array3;
+    array3 = (int*)calloc(4, sizeof(int));
+
+    int save = 0;
+
+    printf("Continue from save 1 no 2: \n");
+    scanf("%d", &save);
+
+    if(save == 1)
+    {
+        displayLastModifiedTime();
+        printf("\n Which save you want to open \n");
+        scanf("%d", &save);
+        processInput(&save, array2, array3, &rowW, &colW);
+    }
 
     if(array2 == NULL )
     {
@@ -320,14 +563,22 @@ int main() {
     }
     else
     {
-        array2[0] = row1;
-        array2[1] = row2;
-        array2[2] = row3;
-        array2[3] = row4;
+        if(save == 2)
+        {
+            array2[0] = row1;
+            array2[1] = row2;
+            array2[2] = row3;
+            array2[3] = row4;
+        }
+        else
+        {
+            row1 = array2[0];
+            row2 = array2[1];
+            row3 = array2[2];
+            row4 = array2[3];
+        }
     }
 
-    int *array3;
-    array3 = (int*)calloc(4, sizeof(int));
 
     if(array3 == NULL )
     {
@@ -335,16 +586,22 @@ int main() {
     }
     else
     {
-        array3[0] = col1;
-        array3[1] = col2;
-        array3[2] = col3;
-        array3[3] = col4;
+        if(save == 2)
+        {
+            array3[0] = col1;
+            array3[1] = col2;
+            array3[2] = col3;
+            array3[3] = col4;
+        }
+        else
+        {
+            col1 = array3[0];
+            col2 = array3[1];
+            col3 = array3[2];
+            col4 = array3[3];
+        }
     }
 
-    int rowW = 7; // Initial position for 'F'
-    int colW = 4;
-
-    int number = 2; //priority value
 
     // Initialize the board with '0'
     for (int i = 0; i < n; i++)
@@ -354,6 +611,7 @@ int main() {
             board[i][j] = '0';
         }
     }
+
 
     board[rowW][colW] = 'F';
     board[row1][col1] = 'H';
@@ -382,6 +640,7 @@ int main() {
 
             if(enteredNumber == 0)
             {
+                save_game(array2, array3, &rowW, &colW);
                 break;
             }
             move = enteredNumber;
@@ -411,7 +670,6 @@ int main() {
         // Print the current state of the board after 'H' or 'F' moves
 
     } while (1);
-
 
 
     free(array2);
