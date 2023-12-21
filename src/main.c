@@ -57,9 +57,9 @@ int main()
         // luko funkcija kuri is save file paima boarda ir difficulty
         // jeigu jo nera tai tsg grazina default boarda
         displayLastModifiedTime();
-        printf("\n Which save you want to open \n");
+        printf("\n Which save you want to open \n ");
         scanf("%d", &save);
-        processInput(&save, array2, array3, &rowW, &colW, &player);
+        processInput(&save, array2, array3, &rowW, &colW, &player, &difficulti); //I have not added difficulty but I can add it
 
         Structas save_data = get_save_data(); // luko kazkokia funkcija kuri grazina structa kazkoki kur yra {int difficulty, int board[8][8]}
 
