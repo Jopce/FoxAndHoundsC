@@ -30,7 +30,6 @@ static char TnBChar[2] = {203, 202}; //0 - connection from top to bottom, 1 - co
 //static char conAllChar = 206;
 static char conAllCharV2 = 197;
 
-
 //when win
 void BOTwinScreen(int points)
 {
@@ -86,6 +85,26 @@ void foxWinScreen(int points)
     printf ("\nPoints scored: %d", points);
 }
 
+int checkMove(char move_char[])
+{
+    if(strlen(move_char) > 1)
+        return 49379;
+
+    switch (move_char[0])
+    {
+    case '1':
+        return 1;
+    case '2':
+        return 2;
+    case '3':
+        return 3;
+    case '4':
+        return 4;
+    default:
+        return 49379;
+    }
+}
+
 // Function that converts integers to chars
 char* getPieceSymbol (int value)
 {
@@ -120,73 +139,90 @@ char* getPieceSymbol (int value)
 int displayBoard (int board[8][8], int isPlayer, int difficulty, int foxOrHoundsTurn)
 {
     unsigned short int sidePannelOn = 1;
-
-    unsigned short int count = 0;
+    unsigned short int illegalMove = 0;
     unsigned short int move = 0;
+    unsigned short int count;
 
-    system("cls"); //clears console
+    char move_char[50] = ""; //place to store users imput
 
-    ///Printing:
-
-    //Prints the top row of the board
-    printRow (8*4, cornerChar[0], lineChar[0], TnBChar[0], cornerChar[1]);
-    printf ("\n");
-
-    //prints sides and the game pieces symbols
-    for (int row = 0; row < 8; ++row)
+    while(1)
     {
-        printf ("%c", lineChar[1]);
-        //Prints the inside of boxes, the symbols of play pieces
-        for (int col = 0; col < 8; ++col)
-        {
-            printf ("%s", getPieceSymbol(board[row][col])); //displays piece symbol on the board //
-            if (col != 7)
-            {
-                printf ("%c", lineCharV2[1]);
-            }
-            else
-            {
-                printf ("%c", lineChar[1]);
-            }
-        }
+        count = 0;
+        system("cls"); //clears console
 
-        ///List printing pt1
-        if(sidePannelOn)
-        {
-            printf ("\t\t\t%c", lineCharV2[1]);
-            sidePannel (count, isPlayer, difficulty, foxOrHoundsTurn);
-            count++;
-        }
-        ///-----------------
+        ///Printing:
+
+        //Prints the top row of the board
+        printRow (8*4, cornerChar[0], lineChar[0], TnBChar[0], cornerChar[1]);
         printf ("\n");
 
-
-        if (row != 7)
+        //prints sides and the game pieces symbols
+        for (int row = 0; row < 8; ++row)
         {
-            printRow (8*4, sideChar[1], lineCharV2[0], conAllCharV2, sideChar[0]); //Prints the inside rows
+            printf ("%c", lineChar[1]);
+            //Prints the inside of boxes, the symbols of play pieces
+            for (int col = 0; col < 8; ++col)
+            {
+                printf ("%s", getPieceSymbol(board[row][col])); //displays piece symbol on the board //
+                if (col != 7)
+                {
+                    printf ("%c", lineCharV2[1]);
+                }
+                else
+                {
+                    printf ("%c", lineChar[1]);
+                }
+            }
+
+            ///List printing pt1
+            if(sidePannelOn)
+            {
+                printf ("\t\t\t%c", lineCharV2[1]);
+                sidePannel (count, isPlayer, difficulty, foxOrHoundsTurn);
+                count++;
+            }
+            ///-----------------
+            printf ("\n");
+
+
+            if (row != 7)
+            {
+                printRow (8*4, sideChar[1], lineCharV2[0], conAllCharV2, sideChar[0]); //Prints the inside rows
+            }
+            else
+                printRow (8*4, cornerChar[2], lineChar[0], TnBChar[1], cornerChar[3]); //Prints the bottom row
+
+
+            ///List printing pt2
+            if(sidePannelOn)
+            {
+                printf ("\t\t\t%c", lineCharV2[1]);
+                sidePannel (count, isPlayer, difficulty, foxOrHoundsTurn);
+                count++;
+            }
+            ///-----------------
+
+            printf("\n");
+
         }
-        else
-            printRow (8*4, cornerChar[2], lineChar[0], TnBChar[1], cornerChar[3]); //Prints the bottom row
+        //infobox
+        infoBox(foxOrHoundsTurn);
 
+        //Take user input
+        if(illegalMove == 1) printf("Illegal move, please select a new move: ");
+        else printf("Select a move: ");
 
-        ///List printing pt2
-        if(sidePannelOn)
+        scanf("%s", move_char);
+
+        //checks users input
+        move = checkMove(move_char);
+
+        if(move == 49379)
         {
-            printf ("\t\t\t%c", lineCharV2[1]);
-            sidePannel (count, isPlayer, difficulty, foxOrHoundsTurn);
-            count++;
+            illegalMove = 1;
         }
-        ///-----------------
-
-        printf("\n");
-
+        else return move;
     }
-    //infobox
-    infoBox(foxOrHoundsTurn);
-
-    //Take user input
-    printf("Select move: ");
-    return scanf("%d", &move);
 }
 
 void results (int points, int PlayerVSwho, int playerWinVSbot, int playerWinVSplayer)
@@ -210,11 +246,11 @@ void infoBox (int foxOrHoundsTurn)
 
     char text[50] = "Pick a digit in \"[x]\" to move";
 
-    if (foxOrHoundsTurn == 1) //fox turn
+    if (foxOrHoundsTurn == 0) //hounds turn
     {
-        strcpy(text, "Pick a digit in [x] to move there");
+        strcpy(text, "Pick a hounds number to choose it");
     }
-    else strcpy(text, "Pick a hounds number to choose it");
+    else strcpy(text, "Pick a digit in \"[x]\" to move");
 
     int temp = 0;
     //Title of the box
@@ -366,12 +402,12 @@ void sidePannel (int counter, int isPlayer, int difficulty, int foxOrHoundsTurn)
     case 10:
         printf      ("| Board:           |");
         printAlighned("8x8", alighment);
-            printf("| |");
+        printf("| |");
         break;
     case 11:
         printf ("| Playing against: |");
         printAlighned(isPlayerChar, alighment);
-            printf("| |");
+        printf("| |");
         break;
     case 12:
         if(isPlayer)
@@ -390,7 +426,7 @@ void sidePannel (int counter, int isPlayer, int difficulty, int foxOrHoundsTurn)
     case 13:
         printf      ("| Difficulty:      |");
         printAlighned(difficultyChar, alighment);
-            printf("| |");
+        printf("| |");
         break;
     case 14:
         printf ("+-------------------------------------+");
