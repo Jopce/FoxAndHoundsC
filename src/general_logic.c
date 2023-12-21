@@ -11,24 +11,24 @@ typedef int** Board;
 
 void Pwin_lose(int *win, int *lose, int *number)
 {
-    if(number %2 == 0)
+    if(*number %2 == 0)
     {
-        if(win == 1)
+        if(*win == 1)
         {
             printf("You Win!\n");
         }
-        else if(lose == 4)
+        else if(*lose == 4)
         {
             printf("You lose!\n");
         }
     }
-    else if(number %2 != 0)
+    else if(*number %2 != 0)
     {
-        if(win == 1)
+        if(*win == 1)
         {
             printf("You lose!\n");
         }
-        else if(lose == 4)
+        else if(*lose == 4)
         {
             printf("You win!\n");
         }
