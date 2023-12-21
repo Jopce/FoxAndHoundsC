@@ -678,7 +678,7 @@ void pawnsMove(Board board, int *row, int *col, int direction, int *player)
                 board[*row][*col] = '0';
                 (*row)--;
                 (*col)--;
-                if (*row == n || *col == n || board[*row][*col] == 'H' || board[*row][*col] == 'F')
+                if (*row <0 || *col < n || board[*row][*col] == 'H' || board[*row][*col] == 'F')
                 {
                     (*row)++;
                     (*col)++;
@@ -717,7 +717,7 @@ void pawnsMove(Board board, int *row, int *col, int direction, int *player)
                 board[*row][*col] = '0';
                 (*row)--;
                 (*col)++;
-                if (*row == n || *col == n || board[*row][*col] == 'H' || board[*row][*col] == 'F')
+                if (*row < 0 || *col == n || board[*row][*col] == 'H' || board[*row][*col] == 'F')
                 {
                     (*row)++;
                     (*col)--;
