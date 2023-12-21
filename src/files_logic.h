@@ -2,6 +2,8 @@
 
 typedef int** Board;
 
+void Pwin_lose(int *win, int *lose, int *number);
+
 void freeMemory(Board board, int *array2, int *array3);
 
 Board allocateBoard();
