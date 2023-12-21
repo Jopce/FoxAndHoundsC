@@ -7,6 +7,22 @@
 
 int main()
 {
+    int rowW, colW, col1,col2,col3,col4,row1,row2,row3,row4;
+
+    Board board = allocateBoard();
+
+    int rowValue = 0;
+    int colValue = 0;
+
+    int userChoice;
+    int player = 0;
+
+    int number = 2; //priority value
+
+    int *array2 = (int*)calloc(4, sizeof(int));
+    int *array3 = (int*)calloc(4, sizeof(int));
+
+    int save = 0;
 
     int game_board[BOARD_SIZE][BOARD_SIZE] = {{0, H, 0, H, 0, H, 0, H},
                                               {0, 0, 0, 0, 0, 0, 0, 0},
@@ -40,6 +56,10 @@ int main()
     {
         // luko funkcija kuri is save file paima boarda ir difficulty
         // jeigu jo nera tai tsg grazina default boarda
+        displayLastModifiedTime();
+        printf("\n Which save you want to open \n");
+        scanf("%d", &save);
+        processInput(&save, array2, array3, &rowW, &colW, &player);
 
         Structas save_data = get_save_data(); // luko kazkokia funkcija kuri grazina structa kazkoki kur yra {int difficulty, int board[8][8]}
 
