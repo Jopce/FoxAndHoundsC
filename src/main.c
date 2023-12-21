@@ -74,6 +74,7 @@ int main()
     }
     else
     {
+        freeMemory(board, array2, array3);
         exitGame(); // igno funkcija kuri isjungia programa
         return 0;
     }
@@ -86,6 +87,8 @@ int main()
 
     } while (!luko_game_over_function()); // luko funkcija kuri tikrina ar game over
 
+    freeMemory(board, array2, array3);
+    
     //display_result(game_board); /// igno funkcija kuri paziuri kas laimejo ir isveda rezultata
     ///Reikia informacijos -: PlayerVSwho: 1 - player, 0 - bots | playerWinVSbot: 1 - win, 0 - lose | playerWinVSplayer: 1 - fox win, 0 - hounds win <--------- need variables
     results (points, PlayerVSwho, playerWinVSbot, playerWinVSplayer);
