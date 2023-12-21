@@ -4,8 +4,12 @@
 
 #include "boardDisplay.h"
 
-#define H 17
-#define F 18
+#define F 5
+#define H1 6
+#define H2 7
+#define H3 8
+#define H4 9
+
 
 //Corner symbols
 static char cornerChar[4] = {201, 187, 200, 188};
@@ -97,34 +101,16 @@ char* getPieceSymbol (int value)
         return "[3]";
     case 4:
         return "[4]";
-    case 5:
-        return "[5]";
-    case 6:
-        return "[6]";
-    case 7:
-        return "[7]";
-    case 8:
-        return "[8]";
-    case 9:
-        return "[9]";
-    case 10:
-        return "[10]";
-    case 11:
-        return "[11]";
-    case 12:
-        return "[12]";
-    case 13:
-        return "[13]";
-    case 14:
-        return "[14]";
-    case 15:
-        return "[15]";
-    case 16:
-        return "[16]";
-    case H:
-        return " H "; // Hounds symbol
     case F:
         return " F "; // Fox symbol
+    case H1:
+        return "1H1"; // Hounds symbol
+    case H2:
+        return "2H2"; // Hounds symbol
+    case H3:
+        return "3H3"; // Hounds symbol
+    case H4:
+        return "4H4"; // Hounds symbol
     default:
         return " ? "; // unexpected value
     }
@@ -153,7 +139,7 @@ int displayBoard (int board[8][8], int isPlayer, int difficulty, int foxOrHounds
         //Prints the inside of boxes, the symbols of play pieces
         for (int col = 0; col < 8; ++col)
         {
-            printf ("%s", getPieceSymbol(board[row][col])); //displays piece symbol on the board
+            printf ("%s", getPieceSymbol(board[row][col])); //displays piece symbol on the board //
             if (col != 7)
             {
                 printf ("%c", lineCharV2[1]);
@@ -196,7 +182,7 @@ int displayBoard (int board[8][8], int isPlayer, int difficulty, int foxOrHounds
 
     }
     //infobox
-    infoBox();
+    infoBox(foxOrHoundsTurn);
 
     //Take user input
     printf("Select move: ");
@@ -219,9 +205,16 @@ void results (int points, int PlayerVSwho, int playerWinVSbot, int playerWinVSpl
     }
 }
 
-void infoBox ()
+void infoBox (int foxOrHoundsTurn)
 {
+
     char text[50] = "Pick a digit in \"[x]\" to move";
+
+    if (foxOrHoundsTurn == 1) //fox turn
+    {
+        strcpy(text, "Pick a digit in [x] to move there");
+    }
+    else strcpy(text, "Pick a hounds number to choose it");
 
     int temp = 0;
     //Title of the box
@@ -270,26 +263,43 @@ void printRow (int lenght, char Lchar, char rowChar, char conChar, char RChar)
     printf ("%c", RChar);
 }
 
-void sidePannel (int counter, int isPlayer, int difficulty, int foxOrHoundsTurn)
+void printAlighned(char text[], int spaces)
 {
-    char difficultyChar[10] = "";
-    char isPlayerChar[10] = "";
-    char playingAs[10] = "";
+    ///example: [][][][][] [][][][][] -  10 spaces are awailable and I want to print the word in the middle
+    //for the code to run: should be more space then than the word and spaces should be an equal number
 
+    unsigned short int temp = spaces - strlen(text); //get how much empty space is awilable
+
+    for(int i = 0; i< temp/2 -1; i++)
+    {
+        printf(" ");
+    }
+    printf("%s", text);
+
+    for(int i = 0; i< temp/2 -1; i++)
+    {
+        printf(" ");
+
+    }
+    if(temp%2 != 0) printf(" "); //if the word is odd anothe " " is required.
+}
+
+void determineField(char difficultyChar[], char isPlayerChar[], char playingAs[], int isPlayer, int difficulty, int foxOrHoundsTurn)
+{
     //checks if there is 1 or 2 players
     if (isPlayer == 1)
     {
-        strcpy (isPlayerChar, "Player");
+        strcpy (isPlayerChar,   "Player");
     }
-    else strcpy (isPlayerChar, "BOT");
+    else strcpy (isPlayerChar,  "BOT");
 
     //check whos turn
     if (foxOrHoundsTurn == 1) //fox = 1, hounds = 0
-        strcpy (playingAs, "FOX");
+        strcpy (playingAs,      "FOX");
     else
-        strcpy (playingAs, "HOUNDS");
+        strcpy (playingAs,      "HOUNDS");
 
-        //checks difficulty
+    //checks difficulty
     switch (difficulty)
     {
     case 0:
@@ -308,7 +318,18 @@ void sidePannel (int counter, int isPlayer, int difficulty, int foxOrHoundsTurn)
         strcpy (difficultyChar, "Custom");
         break;
     }
+}
 
+void sidePannel (int counter, int isPlayer, int difficulty, int foxOrHoundsTurn)
+{
+    unsigned short int alighment = 18; //based on the largest string
+
+    char difficultyChar[30] = "";
+    char isPlayerChar[30] = "";
+    char playingAs[30] = "";
+
+    //3 options on the pannel will change
+    determineField(difficultyChar, isPlayerChar, playingAs, isPlayer, difficulty, foxOrHoundsTurn);
 
     //Text that will be displayed
     switch (counter)
@@ -317,33 +338,62 @@ void sidePannel (int counter, int isPlayer, int difficulty, int foxOrHoundsTurn)
         printf ("Game Rules: ");
         break;
     case 1:
-        printf ("The Fox (F) moves diagonally to empty adjacent cell.");
+        printf (" - The Fox (F) moves diagonally to any empty adjacent cell.");
         break;
     case 2:
-        printf ("Hounds (H) move diagonally forward to empty adjacent cell.");
+        printf (" - Hounds (H) move diagonally to any empty adjacent cell.");
         break;
     case 3:
-        printf ("Only one Hound (H) can move per turn.");
+        printf (" - Hounds (H) can only move forward.");
         break;
     case 4:
-        printf ("The Fox (F) gets trapped when surrounded by Hounds (H).");
+        printf (" - Only one Hound (H) moves per turn.");
         break;
     //-------------------
+    case 5:
+        printf (" - Hounds (H) win by surrounding the Fox (F).");
+        break;
     case 6:
+        printf (" - The Fox (F) wins by reaching the other side of the board.");
+        break;
+    //-------------------
+    case 8:
         printf ("Information: ");
         break;
-    case 7:
-        printf ("Board: 8x8 checkerboard");
-        break;
-    case 8:
-        printf ("Playing against: %s", isPlayerChar);
-        break;
     case 9:
-            if(isPlayer) printf ("Turn: %s", playingAs);
-            else printf ("Playing as: %s", playingAs);
+        printf ("+-------------------------------------+");
         break;
     case 10:
-        printf ("Difficulty: %s", difficultyChar);
+        printf      ("| Board:           |");
+        printAlighned("8x8", alighment);
+            printf("| |");
+        break;
+    case 11:
+        printf ("| Playing against: |");
+        printAlighned(isPlayerChar, alighment);
+            printf("| |");
+        break;
+    case 12:
+        if(isPlayer)
+        {
+            printf ("| Turn:            |");
+            printAlighned(playingAs, alighment);
+            printf("| |");
+        }
+        else
+        {
+            printf  ("|Playing as:      |");
+            printAlighned(playingAs, alighment);
+            printf("| |");
+        }
+        break;
+    case 13:
+        printf      ("| Difficulty:      |");
+        printAlighned(difficultyChar, alighment);
+            printf("| |");
+        break;
+    case 14:
+        printf ("+-------------------------------------+");
         break;
     default:
         printf (" ");
