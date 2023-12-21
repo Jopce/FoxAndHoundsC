@@ -6,6 +6,8 @@ void freeMemory(Board board, int *array2, int *array3);
 
 Board allocateBoard();
 
+void save_game(int *array2,int *array3, int *rowW, int *colW, int *player);
+
 void processInput(int *save, int *array2, int *array3, int *rowW, int *colW, int *player);
 
 void displayLastModifiedTime();
