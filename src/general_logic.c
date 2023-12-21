@@ -7,6 +7,42 @@
 
 #define n 8
 
+typedef int** Board;
+
+void freeMemory(Board board, int *array2, int *array3)
+{
+    free(array2);
+    free(array3);
+
+    for (int i = 0; i < n; ++i)
+    {
+        free(board[i]);
+    }
+    free(board);
+}
+
+Board allocateBoard()
+{
+    Board board = (int **)calloc(n, sizeof(int *));
+    if (board == NULL)
+    {
+        fprintf(stderr, "Memory allocation failed. Exiting...\n");
+        exit(1);
+    }
+
+    for (int i = 0; i < n; ++i) {
+        board[i] = (int *)calloc(n, sizeof(int));
+        if (board[i] == NULL)
+        {
+            fprintf(stderr, "Memory allocation failed. Exiting...\n");
+            exit(1);
+        }
+    }
+
+    return board;
+}
+
+
 void save_game(int *array2,int *array3, int *rowW, int *colW, int *player)
 {
     int choice;
@@ -44,17 +80,20 @@ void save_game(int *array2,int *array3, int *rowW, int *colW, int *player)
 
     // Open the file for writing
     file = fopen(fileName, "w");
-    if (file == NULL) {
+    if (file == NULL)
+    {
         perror("Error opening file for writing");
         return;
     }
 
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 4; ++i)
+    {
         fprintf(file, "%d ", array2[i]);
     }
     fprintf(file,"\n");
 
-     for (int i = 0; i < 4; ++i) {
+     for (int i = 0; i < 4; ++i) 
+    {
         fprintf(file, "%d ", array3[i]);
     }
 
@@ -72,7 +111,8 @@ void displayLastModifiedTime()
 {
     // Open the current directory
     DIR *dir = opendir(".");
-    if (dir == NULL) {
+    if (dir == NULL)
+    {
         perror("Error opening directory");
         exit(EXIT_FAILURE);
     }
@@ -81,9 +121,11 @@ void displayLastModifiedTime()
     int count = 0;
 
     // Loop through the directory entries
-    while ((entry = readdir(dir)) != NULL && count < 5) {
+    while ((entry = readdir(dir)) != NULL && count < 5) 
+    {
         // Check if the entry is a regular file with the format %d.txt
-        if (entry->d_type == DT_REG && sscanf(entry->d_name, "%d.txt", &count) == 1) {
+        if (entry->d_type == DT_REG && sscanf(entry->d_name, "%d.txt", &count) == 1) 
+        {
             // Get the last modified time
             struct stat fileStat;
             stat(entry->d_name, &fileStat);
@@ -105,22 +147,26 @@ void processInput(int *save, int *array2, int *array3, int *rowW, int *colW, int
     FILE *file;
     char fileName[5];
 
-    switch (*save) {
+    switch (*save)
+    {
         case 1:
             sprintf(fileName, "%d.txt", *save);
 
             // Open the file
             file = fopen(fileName, "r");
-            if (file == NULL) {
+            if (file == NULL) 
+            {
                 perror("Error opening file");
                 return;
             }
 
             // Read data into arrays and integers
-            for (int i = 0; i < 4; ++i) {
+            for (int i = 0; i < 4; ++i) 
+            {
                 fscanf(file, "%d", &array2[i]);
             }
-            for (int i = 0; i < 4; ++i) {
+            for (int i = 0; i < 4; ++i) 
+            {
                 fscanf(file, "%d", &array3[i]);
             }
             fscanf(file, "%d", &(*rowW));
@@ -130,9 +176,6 @@ void processInput(int *save, int *array2, int *array3, int *rowW, int *colW, int
             // Close the file
             fclose(file);
 
-            // Process the data as needed
-            // (You can add your processing logic here)
-
             break;
 
         case 2:
@@ -140,16 +183,19 @@ void processInput(int *save, int *array2, int *array3, int *rowW, int *colW, int
 
             // Open the file
             file = fopen(fileName, "r");
-            if (file == NULL) {
+            if (file == NULL) 
+            {
                 perror("Error opening file");
                 return;
             }
 
             // Read data into arrays and integers
-            for (int i = 0; i < 4; ++i) {
+            for (int i = 0; i < 4; ++i)
+            {
                 fscanf(file, "%d", &array2[i]);
             }
-            for (int i = 0; i < 4; ++i) {
+            for (int i = 0; i < 4; ++i) 
+            {
                 fscanf(file, "%d", &array3[i]);
             }
             fscanf(file, "%d", &(*rowW));
@@ -166,16 +212,19 @@ void processInput(int *save, int *array2, int *array3, int *rowW, int *colW, int
 
             // Open the file
             file = fopen(fileName, "r");
-            if (file == NULL) {
+            if (file == NULL)
+            {
                 perror("Error opening file");
                 return;
             }
 
             // Read data into arrays and integers
-            for (int i = 0; i < 4; ++i) {
+            for (int i = 0; i < 4; ++i) 
+            {
                 fscanf(file, "%d", &array2[i]);
             }
-            for (int i = 0; i < 4; ++i) {
+            for (int i = 0; i < 4; ++i) 
+            {
                 fscanf(file, "%d", &array3[i]);
             }
             fscanf(file, "%d", &(*rowW));
@@ -189,16 +238,19 @@ void processInput(int *save, int *array2, int *array3, int *rowW, int *colW, int
 
             // Open the file
             file = fopen(fileName, "r");
-            if (file == NULL) {
+            if (file == NULL) 
+            {
                 perror("Error opening file");
                 return;
             }
 
             // Read data into arrays and integers
-            for (int i = 0; i < 4; ++i) {
+            for (int i = 0; i < 4; ++i)
+            {
                 fscanf(file, "%d", &array2[i]);
             }
-            for (int i = 0; i < 4; ++i) {
+            for (int i = 0; i < 4; ++i)
+            {
                 fscanf(file, "%d", &array3[i]);
             }
             fscanf(file, "%d", &(*rowW));
@@ -212,16 +264,19 @@ void processInput(int *save, int *array2, int *array3, int *rowW, int *colW, int
 
             // Open the file
             file = fopen(fileName, "r");
-            if (file == NULL) {
+            if (file == NULL)
+            {
                 perror("Error opening file");
                 return;
             }
 
             // Read data into arrays and integers
-            for (int i = 0; i < 4; ++i) {
+            for (int i = 0; i < 4; ++i)
+            {
                 fscanf(file, "%d", &array2[i]);
             }
-            for (int i = 0; i < 4; ++i) {
+            for (int i = 0; i < 4; ++i)
+            {
                 fscanf(file, "%d", &array3[i]);
             }
             fscanf(file, "%d", &(*rowW));
@@ -237,7 +292,7 @@ void processInput(int *save, int *array2, int *array3, int *rowW, int *colW, int
 }
 
 
-void check_lose(int **board, int *row, int *col, int *win, int *lose, int *player)
+void check_lose(Board board, int *row, int *col, int *win, int *lose, int *player)
 {
     if (*player == 1)
     {
@@ -335,7 +390,8 @@ void NewgenerateRowAndColNames(int choice, int *rowValue, int *colValue, int *ar
    }
 }
 
-int getUserInput() {
+int getUserInput()
+{
     int userNumber;
 
     // Check if the entered number is within the specified range
@@ -363,7 +419,7 @@ int getUserInput() {
 
 }
 
-void mover(int **board, int *row, int *col, int direction, int *player)
+void mover(Board board, int *row, int *col, int direction, int *player)
 {
     int valid = 0;
     do
@@ -544,7 +600,7 @@ void mover(int **board, int *row, int *col, int direction, int *player)
     }while(valid == 1);
 }
 
-void printBoard(int **board)
+void printBoard(Board board)
 {
     for (int i = 0; i < n; i++)
     {
@@ -557,7 +613,7 @@ void printBoard(int **board)
     printf("\n");
 }
 
-void pawnsMove(int **board, int *row, int *col, int direction, int *player)
+void pawnsMove(Board board, int *row, int *col, int direction, int *player)
 {
     int valid = 1;
 
@@ -659,19 +715,7 @@ int main()
 {
     int rowW, colW, col1,col2,col3,col4,row1,row2,row3,row4;
 
-    int **board = (int **)calloc(n, sizeof(int *));
-    if (board == NULL) {
-        fprintf(stderr, "Memory allocation failed. Exiting...\n");
-        return 1;
-    }
-
-    for (int i = 0; i < n; ++i) {
-        board[i] = (int *)calloc(n, sizeof(int));
-        if (board[i] == NULL) {
-            fprintf(stderr, "Memory allocation failed. Exiting...\n");
-            return 1;
-        }
-    }
+    Board board = allocateBoard();
 
     int rowValue = 0;
     int colValue = 0;
@@ -681,15 +725,12 @@ int main()
 
     int number = 2; //priority value
 
-    int *array2;
-    array2 = (int*)calloc(4, sizeof(int));
-
-    int *array3;
-    array3 = (int*)calloc(4, sizeof(int));
+    int *array2 = (int*)calloc(4, sizeof(int));
+    int *array3 = (int*)calloc(4, sizeof(int));
 
     int save = 0;
 
-    printf("Continue from save 1 no 2: \n");
+    printf("Continue from save 1 no 0: \n");
     scanf("%d", &save);
 
     if(save == 1)
@@ -706,7 +747,7 @@ int main()
         scanf("%d", &player);
     }
 
-    if(save == 2)
+    if(save == 0)
     {
         if(player == 1)
         {
@@ -736,13 +777,13 @@ int main()
         }
     }
 
-    if(array2 == NULL )
+     if(array2 == NULL )
     {
         fprintf(stderr, "didnt work arr2");
     }
     else
     {
-        if(save == 2)
+        if(save == 0)
         {
             array2[0] = row1;
             array2[1] = row2;
@@ -765,7 +806,7 @@ int main()
     }
     else
     {
-        if(save == 2)
+        if(save == 0)
         {
             array3[0] = col1;
             array3[1] = col2;
@@ -780,7 +821,6 @@ int main()
             col4 = array3[3];
         }
     }
-
 
     // Initialize the board with '0'
     for (int i = 0; i < n; i++)
@@ -852,14 +892,7 @@ int main()
     } while (1);
 
 
-    free(array2);
-    free(array3);
-
-    for (int i = 0; i < n; ++i)
-    {
-        free(board[i]);
-    }
-    free(board);
+   freeMemory(board, array2, array3);
 
     if(win == 1)
     {
