@@ -59,7 +59,7 @@ int main()
         displayLastModifiedTime();
         printf("\n Which save you want to open \n ");
         scanf("%d", &save);
-        processInput(&save, array2, array3, &rowW, &colW, &player, &difficulti); //I have not added difficulty but I can add it
+        processInput(&save, array2, array3, &rowW, &colW, &player, &difficulty); //I have not added difficulty but I can add it
 
         Structas save_data = get_save_data(); // luko kazkokia funkcija kuri grazina structa kazkoki kur yra {int difficulty, int board[8][8]}
 
