@@ -9,6 +9,32 @@
 
 typedef int** Board;
 
+void Pwin_lose(int *win, int *lose, int *number)
+{
+    if(number %2 == 0)
+    {
+        if(win == 1)
+        {
+            printf("You Win!\n");
+        }
+        else if(lose == 4)
+        {
+            printf("You lose!\n");
+        }
+    }
+    else if(number %2 != 0)
+    {
+        if(win == 1)
+        {
+            printf("You lose!\n");
+        }
+        else if(lose == 4)
+        {
+            printf("You win!\n");
+        }
+    }
+}
+
 void freeMemory(Board board, int *array2, int *array3)
 {
     free(array2);
@@ -908,14 +934,7 @@ int main()
 
    freeMemory(board, array2, array3);
 
-    if(win == 1)
-    {
-        printf("You won!\n");
-    }
-    else if(lose == 4)
-    {
-        printf("You lost\n");
-    }
+    Pwin_lose(int *win, int *lose, int *number);
 
     return 0;
 }
