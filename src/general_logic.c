@@ -844,6 +844,14 @@ int main()
 
     int move;
 
+    if (player == 1)
+    {
+        number = 2;
+    }
+    else
+    {
+        number = 3;
+    }
 
     do {
 
@@ -878,6 +886,11 @@ int main()
             }
             printf("which pawn to move(1-4): ");
             scanf("%d", &userChoice);
+            if(userChoice == 0)
+            {
+                save_game(array2, array3, &rowW, &colW, &player);
+                break;
+            }
             generateRowAndColNames(userChoice, &rowValue, &colValue, array2, array3);
             printf("Enter a number to move the 'H' (1-2): ");
             scanf("%d", &move);
