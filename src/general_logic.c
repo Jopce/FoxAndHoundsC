@@ -30,7 +30,8 @@ Board allocateBoard()
         exit(1);
     }
 
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i)
+    {
         board[i] = (int *)calloc(n, sizeof(int));
         if (board[i] == NULL)
         {
