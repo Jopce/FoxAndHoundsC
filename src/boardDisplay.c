@@ -71,7 +71,6 @@ void houndsWinScreen(int points)
     printf ("\nPoints scored: %d", points);
 }
 
-
 void foxWinScreen(int points)
 {
     printRow (8*4 + 3, cornerCharV2[0], lineCharV2[0], lineCharV2[0], cornerCharV2[1]);
@@ -138,10 +137,10 @@ char* getPieceSymbol (int value)
 // The Main function that displays the board
 int displayBoard (int board[8][8], int isPlayer, int difficulty, int foxOrHoundsTurn)
 {
+    unsigned short int count;
     unsigned short int sidePannelOn = 1;
     unsigned short int illegalMove = 0;
     unsigned short int move = 0;
-    unsigned short int count;
 
     char move_char[50] = ""; //place to store users imput
 
@@ -150,8 +149,7 @@ int displayBoard (int board[8][8], int isPlayer, int difficulty, int foxOrHounds
         count = 0;
         system("cls"); //clears console
 
-        ///Printing:
-
+        ///Printing
         //Prints the top row of the board
         printRow (8*4, cornerChar[0], lineChar[0], TnBChar[0], cornerChar[1]);
         printf ("\n");
@@ -192,7 +190,6 @@ int displayBoard (int board[8][8], int isPlayer, int difficulty, int foxOrHounds
             else
                 printRow (8*4, cornerChar[2], lineChar[0], TnBChar[1], cornerChar[3]); //Prints the bottom row
 
-
             ///List printing pt2
             if(sidePannelOn)
             {
@@ -203,7 +200,6 @@ int displayBoard (int board[8][8], int isPlayer, int difficulty, int foxOrHounds
             ///-----------------
 
             printf("\n");
-
         }
         //infobox
         infoBox(foxOrHoundsTurn);
@@ -225,6 +221,7 @@ int displayBoard (int board[8][8], int isPlayer, int difficulty, int foxOrHounds
     }
 }
 
+//prints the win screen
 void results (int points, int PlayerVSwho, int playerWinVSbot, int playerWinVSplayer)
 {
     if (PlayerVSwho == 0)// 0 - bots
@@ -241,6 +238,7 @@ void results (int points, int PlayerVSwho, int playerWinVSbot, int playerWinVSpl
     }
 }
 
+//infobox
 void infoBox (int foxOrHoundsTurn)
 {
 

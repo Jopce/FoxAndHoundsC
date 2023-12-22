@@ -5,24 +5,24 @@
 
 #include "mainMenuDisplay.h"
 
-    //Corner symbols
-     static char cornerChar[4] = {201, 187, 200, 188};
-    // static char cornerCharV2[4] = {218, 191, 192, 217};
+//Corner symbols
+static char cornerChar[4] = {201, 187, 200, 188};
+// static char cornerCharV2[4] = {218, 191, 192, 217};
 
-    //Row and column symbols
-     static char lineChar[2] = {205, 186}; // 0 - row and 1 - column
-     static char lineCharV2[2] = {196, 179}; // 0 - row and 1 - column
+//Row and column symbols
+static char lineChar[2] = {205, 186}; // 0 - row and 1 - column
+static char lineCharV2[2] = {196, 179}; // 0 - row and 1 - column
 
-    //Side connection symbols
-    // static char sideChar[2] = {185, 204}; //other values - 180, 195
+//Side connection symbols
+// static char sideChar[2] = {185, 204}; //other values - 180, 195
 
-    //Top and bottom connection symbols
-    // static char TnBChar[2] = {203, 202}; //0 - connection from top to bottom, 1 - connection from bottom to top
-    //other values - 194, 193
+//Top and bottom connection symbols
+// static char TnBChar[2] = {203, 202}; //0 - connection from top to bottom, 1 - connection from bottom to top
+//other values - 194, 193
 
-    //All connection symbol
-    // static char conAllChar = 206;
-     //static char conAllCharV2 = 197;
+//All connection symbol
+// static char conAllChar = 206;
+//static char conAllCharV2 = 197;
 
 void gameTitle()
 {
@@ -85,88 +85,6 @@ char* mainMenuField (int counter)
     }
 }
 
-int menuCLI ()
-{
-    int game_select = 0;
-
-    int counter = 0;
-    char spaces[] = "\t\t\t\t\t\t ";
-    int temp = 0;
-    char text[20] = "";
-
-    //clear console
-    system("cls");
-    //title
-    gameTitle();
-
-    //Prints top part of the box
-    printf("\n\n");
-    printf("%s", spaces);
-    printRowLine(8*2 +3, cornerChar[0],  lineChar[0],  lineChar[0],  cornerChar[1]);
-    printf("\n");
-
-    //Prints inside of box
-    while(1)
-    {
-        switch(game_select)
-        {
-        case 0:
-            strcpy (text, mainMenuField (counter));
-            break;
-        case 1:
-            strcpy (text, difficultyField (counter));
-            break;
-        default:
-            strcpy (text, mainMenuField (counter));
-            break;
-        }
-
-        if(text[0] == '\0') break; //checks if there is a text to display
-
-        //prints the left side of the section
-        printf("%s", spaces);
-        printf("%c", lineCharV2[1]);
-
-        //prints the middle section
-        for(int i = 0; i < 15 +3; i++)
-        {
-            if(i < 31 && temp != 1)
-            {
-                //Checks if text has ended
-                if(text[i] == '\0')
-                {
-                    temp = 1;
-                }
-                printf("%c", text[i]);
-            }
-            else printf(" ");
-        }
-
-        if(temp)
-        {
-            printf(" ");
-            temp = 0;
-        }
-
-        //prints the right side of the section
-        printf("%c", lineCharV2[1]);
-        printf("\n");
-
-        (counter)++;
-    }
-
-    //prints bottom section
-    printf("%s", spaces);
-    printRowLine(8*2 +3, cornerChar[2],  lineChar[0],  lineChar[0],  cornerChar[3]);
-
-    //Get user input
-    printf ("\n");
-    printf ("\t\t\t\t\t\t  Select an option: ");
-    scanf ("%d", &game_select);
-
-    return game_select;
-}
-
 void exitGame()
 {
     char temp = "";
@@ -193,6 +111,120 @@ void exitGame()
     scanf("%c", &temp);
 }
 
+int menuCLI ()
+{
+    unsigned short int ilegalInput;
+    unsigned short int counter;
+    unsigned short int game_select = 0;
+    unsigned short int temp = 0;
+
+    char spaces[] = "\t\t\t\t\t\t ";
+    char text[20] = "";
+    char input[50] = "";
+
+    while(1)
+    {
+        ilegalInput = 0;
+        counter = 0;
+
+        //clear console
+        system("cls");
+        ///title
+        gameTitle();
+
+        ///Prints top part of the box
+        printf("\n\n");
+        printf("%s", spaces);
+        printRowLine(8*2 +3, cornerChar[0],  lineChar[0],  lineChar[0],  cornerChar[1]);
+        printf("\n");
+
+        //Prints inside of box
+        while(1)
+        {
+            switch(game_select)
+            {
+            case 0:
+                strcpy (text, mainMenuField (counter));
+                break;
+            case 1:
+                strcpy (text, difficultyField (counter));
+                break;
+            default:
+                strcpy (text, mainMenuField (counter));
+                break;
+            }
+
+            if(text[0] == '\0') break; //checks if there is a text to display
+
+            //prints the left side of the section
+            printf("%s", spaces);
+            printf("%c", lineCharV2[1]);
+
+            //prints the middle section
+            for(int i = 0; i < 15 +3; i++)
+            {
+                if(i < 31 && temp != 1)
+                {
+                    //Checks if text has ended
+                    if(text[i] == '\0')
+                    {
+                        temp = 1;
+                    }
+                    printf("%c", text[i]);
+                }
+                else printf(" ");
+            }
+
+            if(temp)
+            {
+                printf(" ");
+                temp = 0;
+            }
+
+            //prints the right side of the section
+            printf("%c", lineCharV2[1]);
+            printf("\n");
+            (counter)++;
+        }
+        //prints bottom section
+        printf("%s", spaces);
+        printRowLine(8*2 +3, cornerChar[2],  lineChar[0],  lineChar[0],  cornerChar[3]);
+
+        ///Get user input
+        if(ilegalInput == 1) printf("Illegal move, please select a new move: ");
+        else printf("\n\t\t\t\t\t\t  Select an option: ");
+
+        scanf("%s", &input);
+
+        //checks users input
+        game_select = checkInput(input);
+
+        if(game_select == 49379)
+            ilegalInput = 1;
+        else return game_select;
+    }
+}
+
+int checkInput(char input[])
+{
+    if(strlen(input) > 1)
+        return 49379;
+
+    switch (input[0])
+    {
+    case '1':
+        return 1;
+    case '2':
+        return 2;
+    case '3':
+        return 3;
+    case '4':
+        return 4;
+    default:
+        return 49379;
+    }
+}
+
 void printRowLine (int lenght, char Lchar, char rowChar, char conChar, char RChar)
 {
     printf ("%c", Lchar);
@@ -207,3 +239,5 @@ void printRowLine (int lenght, char Lchar, char rowChar, char conChar, char RCha
     }
     printf ("%c", RChar);
 }
+
+
