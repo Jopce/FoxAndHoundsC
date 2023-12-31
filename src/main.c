@@ -35,9 +35,9 @@ int main()
 
     int game_select = menuCLI();; // igno kazkokia funkcija
 
-    if (game_select == 1)
+    if (game_select == 1) //start new game
     {
-        int difficulty = menuCLI(); // igno kazkokia funkcija
+        int difficulty = menuCLI(); // igno difficulty and player choosing what character to play
 
         switch (difficulty)
         {
@@ -52,12 +52,12 @@ int main()
             break;
         }
     }
-    else if (game_select == 2)
+    else if (game_select == 2) //continue
     {
         // luko funkcija kuri is save file paima boarda ir difficulty
         // jeigu jo nera tai tsg grazina default boarda
         displayLastModifiedTime();
-        printf("\n Which save you want to open \n ");
+        printf("\n Which save you want to open \n "); // ***ingai please CLI this one
         scanf("%d", &save);
         processInput(&save, array2, array3, &rowW, &colW, &player, &difficulty); //I have not added difficulty but I can add it
 
@@ -72,13 +72,20 @@ int main()
             }
         }
     }
-    else
+    else //exit
     {
         freeMemory(board, array2, array3);
         exitGame(); // igno funkcija kuri isjungia programa
         return 0;
     }
 
+    if(save == 0)
+    {if(player == 1){rowW=7;colW=4;}else{col1=0;row1=7;col2=0;row2=7;col3=0;row3=7;col4=0;row4=7;}}
+
+    if(player == 2) //if it is hound these are values if it is loading new values or existing in the save file
+    {if(save == 0){array2[0]=row1;array2[1]=row2;array2[2]=row3;array2[3]=row4;array3[0]=col1;array3[1]=col2;array3[2]=col3;array3[3]=col4;}
+    else{row1=array2[0];row2=array2[1];row3=array2[2];row4=array2[3];col1=array3[0];col2=array3[1];col3=array3[2];col4=array3[3];}}
+    
     do
     {                   //Reikia informacijos -: VS_Player: 1 if playing VS another player, else 0 | foxOrHoundsTurn: 1 if fox, else 0 hounds
         int new_move = displayBoard (game_board, VS_Player, difficulty, foxOrHoundsTurn); // igno funkcija kuri grazina skaiciuka kur paejo Fox
@@ -88,6 +95,7 @@ int main()
     } while (!luko_game_over_function()); // luko funkcija kuri tikrina ar game over
 
     freeMemory(board, array2, array3);
+    Pwin_lose(&win, &lose, &player);
     
     //display_result(game_board); /// igno funkcija kuri paziuri kas laimejo ir isveda rezultata
     ///Reikia informacijos -: PlayerVSwho: 1 - player, 0 - bots | playerWinVSbot: 1 - win, 0 - lose | playerWinVSplayer: 1 - fox win, 0 - hounds win <--------- need variables
