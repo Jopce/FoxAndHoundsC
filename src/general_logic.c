@@ -738,7 +738,7 @@ void pawnsMove(Board board, int *row, int *col, int direction, int *player)
     }while(valid == 1);
 }
 
-int main()
+/*int main()
 {
     int rowW, colW, col1,col2,col3,col4,row1,row2,row3,row4;
 
@@ -938,3 +938,4 @@ int main()
 
     return 0;
 }
+*/
