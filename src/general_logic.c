@@ -9,9 +9,9 @@
 
 typedef int** Board;
 
-void Pwin_lose(int *win, int *lose, int *number)
+void Pwin_lose(int *win, int *lose, int *player)
 {
-    if(*number %2 == 0)
+    if(*player == 1)
     {
         if(*win == 1)
         {
@@ -22,7 +22,7 @@ void Pwin_lose(int *win, int *lose, int *number)
             printf("You lose!\n");
         }
     }
-    else if(*number %2 != 0)
+    else if(*player == 2)
     {
         if(*win == 1)
         {
