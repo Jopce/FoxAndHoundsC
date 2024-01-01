@@ -70,7 +70,7 @@ Board allocateBoard()
 }
 
 
-void save_game(int *array2,int *array3, int *rowW, int *colW, int *player)
+void save_game(int *array2,int *array3, int *rowW, int *colW, int *player, int *difficulty, int *)
 {
     int choice;
     printf("Save progress 1-5, or don't 0: ");
@@ -113,21 +113,51 @@ void save_game(int *array2,int *array3, int *rowW, int *colW, int *player)
         return;
     }
 
-    for (int i = 0; i < 4; ++i)
-    {
-        fprintf(file, "%d ", array2[i]);
-    }
-    fprintf(file,"\n");
 
-     for (int i = 0; i < 4; ++i) 
+    if(*player == 1 || *player == 3) // player 3 is PvP mode
     {
-        fprintf(file, "%d ", array3[i]);
+        fprintf(file, "\n%d", *rowW);
+        fprintf(file, "\n%d", *colW);
+    }
+    
+    if(*player == 2 || *player == 3)
+    {
+        for (int i = 0; i < 4; ++i)
+        {
+            fprintf(file, "%d ", array2[i]);
+        }
+        fprintf(file,"\n");
+    
+         for (int i = 0; i < 4; ++i) 
+        {
+            fprintf(file, "%d ", array3[i]);
+        }
     }
 
-    // Write the rowW to the file
-    fprintf(file, "\n%d", *rowW);
-    fprintf(file, "\n%d", *colW);
+    if(*player == 1)
+    {
+        for(int i = 0;i<8;i++)
+        {
+            for(int j = 0;j<8;j++)
+            {
+                fprintf(file, "%d", board[i][j]);
+            }
+        }
+    }
+    else if(*player == 2)
+    {
+        for(int i = 0;i<8;i++)
+        {
+            for(int j = 0;j<8;j++)
+            {
+                fprintf(file, "%d", game_board[i][j]);
+            }
+        }
+    }
+
+    // important info
     fprintf(file, "\n%d", *player);
+    fprintf(file, "\n%d", *difficulty);
 
     // Close the file
     fclose(file);
