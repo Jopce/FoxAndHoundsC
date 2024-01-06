@@ -90,7 +90,23 @@ int main()
     {                   //Reikia informacijos -: VS_Player: 1 if playing VS another player, else 0 | foxOrHoundsTurn: 1 if fox, else 0 hounds
         int new_move = displayBoard (game_board, VS_Player, difficulty, foxOrHoundsTurn); // igno funkcija kuri grazina skaiciuka kur paejo Fox
 
-        make_a_move(&game_board, new_move); // luko funkcija kuri grazina nauja boarda su padarytu ejimu
+       if(player == 0 || player == 2) //fox = 0 hound = 1 pvp = 2
+       {
+           mover(); //player moves
+       }
+        else
+       {
+           //bot moves 
+       }
+        
+       if(player == 0)
+       {
+           //bot moves
+       }
+        else if(player == 1 || player == 2)
+       {
+           pawnMove();
+       }
 
     } while (!luko_game_over_function()); // luko funkcija kuri tikrina ar game over
 
