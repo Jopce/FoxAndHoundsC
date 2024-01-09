@@ -476,7 +476,7 @@ int getUserInput()
 
 }
 
-void mover(Board board, int *row, int *col, int direction, int *player)
+void fMove(Board board, int *row, int *col, int direction, int *player)
 {
     int valid = 0;
     do
@@ -670,7 +670,7 @@ void printBoard(Board board)
     printf("\n");
 }
 
-void pawnsMove(Board board, int *row, int *col, int direction, int *player)
+void hMove(Board board, int *row, int *col, int direction, int *player)
 {
     int valid = 1;
 
@@ -708,7 +708,7 @@ void pawnsMove(Board board, int *row, int *col, int direction, int *player)
                 board[*row][*col] = '0';
                 (*row)--;
                 (*col)--;
-                if (*row <0 || *col < n || board[*row][*col] == 'H' || board[*row][*col] == 'F')
+                if (*row <0 || *col < 0 || board[*row][*col] == 'H' || board[*row][*col] == 'F')
                 {
                     (*row)++;
                     (*col)++;
