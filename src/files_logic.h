@@ -22,8 +22,8 @@ void NewgenerateRowAndColNames(int choice, int *rowValue, int *colValue, int *ar
 
 int getUserInput();
 
-void mover(Board board, int *row, int *col, int direction, int *player);
+void fMove(Board board, int *row, int *col, int direction, int *player);
 
 void printBoard(Board board);
 
-void pawnsMove(Board board, int *row, int *col, int direction, int *player);
+void hMove(Board board, int *row, int *col, int direction, int *player);
