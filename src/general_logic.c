@@ -285,46 +285,38 @@ void processInput(int *save, int *array2, int *array3, int *rowW, int *colW, int
 }
 
 
-void check_lose(Board board, int *row, int *col, int *win, int *lose, int *player)
+void check_lose(Board board, int *row, int *col, int *win, int *lose)
 {
-    if (*player == 1)
+    
+    if(*row == 0)
     {
-        if(*row == 0)
-        {
-            *win = 1;
-        }
+        *win = 1;
     }
-    else if(*player == 2)
-    {
-        if(*row == 7)
-        {
-            *win = 1;
-        }
+
+    
+
+    if (*col + 1 > n - 1 || *row - 1 < 0 || board[*row - 1][*col + 1] == 'H') {
+        (*lose)++;
     }
-    else
-    {
-        if (*col + 1 > n - 1 || *row - 1 < 0 || board[*row - 1][*col + 1] == 'H') {
-            (*lose)++;
-        }
 
-        if (board[*row - 1][*col - 1] == 'H' || *row - 1 < 0 || *col - 1 < 0) {
-            (*lose)++;
-        }
-
-        if (*row + 1 > n - 1 || *col + 1 > n - 1 || board[*row + 1][*col + 1] == 'H') {
-            (*lose)++;
-        }
-
-        if (*row + 1 > n - 1 || *col - 1 < 0 || board[*row + 1][*col - 1] == 'H') {
-            (*lose)++;
-        }
-
-        if (*lose >= 4) {
-            *lose = 4; // To ensure *lose does not exceed 4
-        } else if (*lose != 4) {
-            *lose = 0;
-        }
+    if (board[*row - 1][*col - 1] == 'H' || *row - 1 < 0 || *col - 1 < 0) {
+        (*lose)++;
     }
+
+    if (*row + 1 > n - 1 || *col + 1 > n - 1 || board[*row + 1][*col + 1] == 'H') {
+        (*lose)++;
+    }
+
+    if (*row + 1 > n - 1 || *col - 1 < 0 || board[*row + 1][*col - 1] == 'H') {
+        (*lose)++;
+    }
+
+    if (*lose == 4) {
+        *lose = 4; // To ensure *lose does not exceed 4
+    } else if (*lose != 4) {
+        *lose = 0;
+    }
+
 }
 
 void generateRowAndColNames(int choice, int *rowValue, int *colValue, int *array2, int *array3)
