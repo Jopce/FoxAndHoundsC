@@ -152,6 +152,67 @@ char* characterField (int counter)
     }
 }
 
+int pauseMenu()
+{
+    char input[50] = "";
+    char spaces[8] = "\t\t\t\t\t\t ";
+    unsigned short int optionSelect;
+
+    while (1)
+    {
+        //clear console
+        system("cls");
+
+        ///top of the box
+        printf ("\n\n");
+        printf ("%s", spaces);
+        printRowLine(8*2 +10, cornerChar[0],  lineChar[0],  lineChar[0],  cornerChar[1]);
+        printf ("\n");
+
+        ///middle of the box
+        printf ("%s%c       Pause Menu        %c\n", spaces, lineCharV2[1], lineCharV2[1]);
+        printf ("%s%c ----------------------- %c\n", spaces, lineCharV2[1], lineCharV2[1]);
+        printf ("%s%c Continue            (1) %c\n", spaces, lineCharV2[1], lineCharV2[1]);
+        printf ("%s%c Exit and save       (2) %c\n", spaces, lineCharV2[1], lineCharV2[1]);
+        printf ("%s%c Exit without saving (3) %c\n", spaces, lineCharV2[1], lineCharV2[1]);
+
+        //bottom of the box
+        printf ("%s", spaces);
+        printRowLine (8*2 +10, cornerChar[2],  lineChar[0],  lineChar[0],  cornerChar[3]);
+
+        ///check user input
+        printf ("\n%s Select an option: ", spaces);
+        scanf ("%s", &input);
+
+        optionSelect = checkInput (input);
+
+        if (optionSelect != 49379)
+        {
+            switch (optionSelect)
+            {
+            case 1:
+                optionSelect = 1;
+                break;
+            case 2:
+                optionSelect = 2;
+                break;
+            case 3:
+                optionSelect = 3;
+                break;
+            default:
+                optionSelect = 49379;
+                 break;
+            }
+
+            if (optionSelect != 49379)
+            {
+                return optionSelect;
+            }
+        }
+    }
+}
+
+
 void exitGame()
 {
     char temp = "";
