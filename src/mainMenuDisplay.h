@@ -1,6 +1,6 @@
     //Function
-    //displays main menu: 0 - menu, 1 - difficulty
-    int menuCLI ();
-    //exits game with credits
-    void exitGame();
+    //displays main menu
+    int menuCLI (int game_select, int filesSaved); //game_select - which field, filesSaved - number of files saved by the user
+    //exits game
+    void exitGame(); //exits game with credits
 

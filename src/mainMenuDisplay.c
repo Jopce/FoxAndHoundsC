@@ -13,17 +13,6 @@ static char cornerChar[4] = {201, 187, 200, 188};
 static char lineChar[2] = {205, 186}; // 0 - row and 1 - column
 static char lineCharV2[2] = {196, 179}; // 0 - row and 1 - column
 
-//Side connection symbols
-// static char sideChar[2] = {185, 204}; //other values - 180, 195
-
-//Top and bottom connection symbols
-// static char TnBChar[2] = {203, 202}; //0 - connection from top to bottom, 1 - connection from bottom to top
-//other values - 194, 193
-
-//All connection symbol
-// static char conAllChar = 206;
-//static char conAllCharV2 = 197;
-
 void gameTitle()
 {
     printf("\t\t\t\t  _____                      _    _____               _      \n");
@@ -32,56 +21,134 @@ void gameTitle()
     printf("\t\t\t\t |__|  |___|_,_|  |__,|_|_|___|  |__|__|___|___|_|_|___|___| \n");
 }
 
-char* difficultyField (int counter)
-{
-    switch (counter)
-    {
-    case 0:
-        return (" Easy         (1)");
-        break;
-    case 1:
-        return (" Medium       (2)");
-        break;
-    case 2:
-        return (" Hard         (3)");
-        break;
-    case 3:
-        return (" Custom       (4)");
-        break;
-    case 4:
-        return (" ---------------- ");
-        break;
-    case 5:
-        return (" Back to Menu (5)");
-        break;
-    default:
-        return ("");
-        break;
-    }
-}
-
 char* mainMenuField (int counter)
 {
     switch (counter)
     {
     case 0:
-        return (" New  Game    (1)");
-        break;
+        return ("  < Main  Menu > ");
     case 1:
-        return (" Continue     (2)");
-        break;
+        return (" ----------------");
     case 2:
-        return (" Difficulty   (3)");
-        break;
+        return (" New  Game    (1)");
     case 3:
-        return (" ---------------- ");
-        break;
+        return (" Continue     (2)");
     case 4:
-        return (" Exit         (4)");
-        break;
+        return (" ----------------");
+    case 5:
+        return (" Exit         (3)");
     default:
         return ("");
-        break;
+    }
+}
+
+char* gameField (int counter)
+{
+    switch (counter)
+    {
+    case 0:
+        return ("Starting game...");
+    default:
+        return ("");
+    }
+}
+
+char* savesField (unsigned short int *counter, int filesSaved, unsigned short int *savesCheck)
+{
+
+    if(filesSaved == 0)
+    {
+        switch(*counter)
+        {
+        case 0:
+            return (" No saved games...");
+        case 1:
+            return (" ---------------- ");
+        case 2:
+            return (" Back to Menu (1) ");
+        default:
+            return ("");
+        }
+    }
+    else
+    {
+        if(filesSaved < *counter-1 && *savesCheck != 1)
+        {
+            *counter = 7;
+            *savesCheck = 1;
+        }
+
+        switch (*counter)
+        {
+        case 0:
+            return (" Pick saved game: ");
+        case 1:
+            return (" ---------------- ");
+        case 2:
+            return (" Save nr.     (1) ");
+        case 3:
+            return (" Save nr.     (2) ");
+        case 4:
+            return (" Save nr.     (3) ");
+        case 5:
+            return (" Save nr.     (4) ");
+        case 6:
+            return (" Save nr.     (5) ");
+        case 7:
+            return (" ---------------- ");
+        case 8:
+            return (" Back to Menu (6) ");
+        default:
+            return ("");
+        }
+    }
+}
+
+char* difficultyField (int counter)
+{
+    switch (counter)
+    {
+    case 0:
+        return (" Pick difficulty: ");
+    case 1:
+        return (" ---------------- ");
+    case 2:
+        return (" Easy         (1) ");
+    case 3:
+        return (" Medium       (2) ");
+    case 4:
+        return (" Hard         (3) ");
+    case 5:
+        return (" Custom       (4) ");
+    case 6:
+        return (" ---------------- ");
+    case 7:
+        return (" Back to Menu (5) ");
+    default:
+        return ("");
+    }
+}
+
+char* characterField (int counter)
+{
+    switch (counter)
+    {
+    case 0:
+        return (" Pick character: ");
+    case 1:
+        return (" ---------------- ");
+    case 2:
+        return (" Fox          (1) ");
+    case 3:
+        return (" Hound        (2) ");
+    case 4:
+        return (" PvP          (3) ");
+    case 5:
+        return (" ---------------- ");
+    case 6:
+        return (" Back to Menu (4) ");
+    default:
+        return ("");
     }
 }
 
@@ -111,11 +178,11 @@ void exitGame()
     scanf("%c", &temp);
 }
 
-int menuCLI ()
+int menuCLI (int game_select, int filesSaved)
 {
-    unsigned short int ilegalInput;
+    unsigned short int field_Select;
     unsigned short int counter;
-    unsigned short int game_select = 0;
+    unsigned short int savesCheck = 0;
     unsigned short int temp = 0;
 
     char spaces[] = "\t\t\t\t\t\t ";
@@ -124,12 +191,11 @@ int menuCLI ()
 
     while(1)
     {
-        ilegalInput = 0;
         counter = 0;
 
         //clear console
-        system("cls");
-        ///title
+        //system("cls");
+        //title
         gameTitle();
 
         ///Prints top part of the box
@@ -144,13 +210,22 @@ int menuCLI ()
             switch(game_select)
             {
             case 0:
-                strcpy (text, mainMenuField (counter));
+                strcpy (text, mainMenuField (counter)); //main menu option
                 break;
             case 1:
-                strcpy (text, difficultyField (counter));
+                strcpy (text, gameField (counter)); ///should start game
+                break;
+            case 2:
+                strcpy (text, savesField (&counter, filesSaved, &savesCheck)); //saved progress options
+                break;
+            case 3:
+                strcpy (text, difficultyField (counter)); //difficulty option
+                break;
+            case 4:
+                strcpy (text, characterField (counter)); //character options
                 break;
             default:
-                strcpy (text, mainMenuField (counter));
+                strcpy (text, mainMenuField (counter)); //default option
                 break;
             }
 
@@ -160,7 +235,7 @@ int menuCLI ()
             printf("%s", spaces);
             printf("%c", lineCharV2[1]);
 
-            //prints the middle section
+            ///prints the middle section
             for(int i = 0; i < 15 +3; i++)
             {
                 if(i < 31 && temp != 1)
@@ -186,32 +261,97 @@ int menuCLI ()
             printf("\n");
             (counter)++;
         }
-        //prints bottom section
+        ///prints bottom section
         printf("%s", spaces);
         printRowLine(8*2 +3, cornerChar[2],  lineChar[0],  lineChar[0],  cornerChar[3]);
 
-        ///Get user input
-        if(ilegalInput == 1) printf("Illegal move, please select a new move: ");
-        else printf("\n\t\t\t\t\t\t  Select an option: ");
-
+        //Get user input
+        printf("\n\t\t\t\t\t\t  Select an option: ");
         scanf("%s", &input);
 
         //checks users input
-        game_select = checkInput(input);
+        field_Select = checkInput(input);
 
-        if(game_select == 49379)
-            ilegalInput = 1;
-        else return game_select;
+        if(field_Select != 49379)
+        {
+            field_Select = OptAvailability(game_select, field_Select);
+
+            if(field_Select != 49379)
+            {
+                return field_Select;
+            }
+        }
     }
 }
 
-int checkInput(char input[])
+int OptAvailability (int game_select, int field_Select, int filesSaved) /// /////SUTVARKYK <---
 {
+    //check if different options are in the fields are available
+    switch (game_select)
+    {
+
+    case 0: //main menu
+        if (field_Select >= 1 && field_Select <= 3)
+        {
+            return field_Select;
+        }
+        else
+        {
+            return 49379;
+        }
+    case 1: //new game
+        return field_Select;
+
+    case 2: //continue
+        if (field_Select >= 1 && field_Select <= filesSaved) ///check if exists
+        {
+            return field_Select-1;
+        }
+        else if (field_Select == 6)
+        {
+            return field_Select;
+        }
+        else
+        {
+            return 49379;
+        }
+    case 3: //difficulty
+        if (field_Select >= 1 && field_Select <= 5)
+        {
+            return field_Select;
+        }
+        else
+        {
+            return 49379;
+        }
+
+    case 4: //character
+        if (field_Select >= 1 && field_Select <= 4)
+        {
+            return field_Select;
+        }
+        else
+        {
+            return 49379;
+        }
+
+    default:
+        return 49379;
+        break;
+    }
+}
+
+int checkInput (char input[])
+{
+    //checks if the string is one symbol length
     if(strlen(input) > 1)
         return 49379;
 
+    //checks if the input is from 0 to 5
     switch (input[0])
     {
+    case '0':
+        return 0;
     case '1':
         return 1;
     case '2':
@@ -220,15 +360,17 @@ int checkInput(char input[])
         return 3;
     case '4':
         return 4;
+    case '5':
+        return 5;
     default:
         return 49379;
     }
 }
 
-void printRowLine (int lenght, char Lchar, char rowChar, char conChar, char RChar)
+void printRowLine (int length, char Lchar, char rowChar, char conChar, char RChar)
 {
     printf ("%c", Lchar);
-    for (int row = 1; row < lenght; ++row)
+    for (int row = 1; row < length; ++row)
     {
         if(row%4 != 0)
         {
@@ -239,5 +381,3 @@ void printRowLine (int lenght, char Lchar, char rowChar, char conChar, char RCha
     }
     printf ("%c", RChar);
 }
-
-
