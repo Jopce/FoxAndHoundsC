@@ -114,13 +114,13 @@ void save_game(int *array2,int *array3, int *rowW, int *colW, int *player, int *
     }
 
 
-    if(*player == 1 || *player == 3) // player 3 is PvP mode
+    if(*player == 0 || *player == 2) // player 2 is PvP mode
     {
         fprintf(file, "\n%d", *rowW);
         fprintf(file, "\n%d", *colW);
     }
     
-    if(*player == 2 || *player == 3)
+    if(*player == 1 || *player == 2)
     {
         for (int i = 0; i < 4; ++i)
         {
@@ -134,24 +134,15 @@ void save_game(int *array2,int *array3, int *rowW, int *colW, int *player, int *
         }
     }
 
-    if(*player == 1)
+    if(*player == 0 || *player == 1)
     {
         for(int i = 0;i<8;i++)
         {
             for(int j = 0;j<8;j++)
             {
-                fprintf(file, "%d", board[i][j]);
+                fprintf(file, "%c ", board[i][j]);
             }
-        }
-    }
-    else if(*player == 2)
-    {
-        for(int i = 0;i<8;i++)
-        {
-            for(int j = 0;j<8;j++)
-            {
-                fprintf(file, "%d", game_board[i][j]);
-            }
+            fprintf(file,"\n");
         }
     }
 
@@ -218,17 +209,35 @@ void processInput(int *save, int *array2, int *array3, int *rowW, int *colW, int
             }
 
             // Read data into arrays and integers
-            for (int i = 0; i < 4; ++i) 
-            {
-                fscanf(file, "%d", &array2[i]);
-            }
-            for (int i = 0; i < 4; ++i) 
-            {
-                fscanf(file, "%d", &array3[i]);
-            }
-            fscanf(file, "%d", &(*rowW));
-            fscanf(file, "%d", &(*colW));
             fscanf(file, "%d", &(*player));
+            if(*player == 1 || *player == 2)
+            {
+                for (int i = 0; i < 4; ++i)
+                {
+                    fscanf(file, "%d", &array2[i]);
+                }
+                for (int i = 0; i < 4; ++i) 
+                {
+                    fscanf(file, "%d", &array3[i]);
+                }
+            }
+
+            if(*player == 0 || *player == 2)
+            {
+                fscanf(file, "%d", &(*rowW));
+                fscanf(file, "%d", &(*colW));
+            }
+
+            if(*player == 0 || *player == 1)
+            {
+                for(int i = 0;i<n;i++)
+                {
+                    for(int j =0;j<n;j++)
+                    {
+                        fscanf(file, "%d ", board[i][j]);
+                    }
+                }
+            }
 
             // Close the file
             fclose(file);
