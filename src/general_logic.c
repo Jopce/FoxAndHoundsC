@@ -70,7 +70,7 @@ Board allocateBoard()
 }
 
 
-void save_game(int *array2,int *array3, int *rowW, int *colW, int *player, int *difficulty, int *)
+void save_game(int *array2,int *array3, int *rowW, int *colW, int *player, int *difficulty, Board board)
 {
     int choice;
     printf("Save progress 1-5, or don't 0: ");
@@ -192,7 +192,7 @@ void displayLastModifiedTime()
     // Close the directory
     closedir(dir);
 }
-void processInput(int *save, int *array2, int *array3, int *rowW, int *colW, int *player)
+void processInput(int *save, int *array2, int *array3, int *rowW, int *colW, int *player, int *difficulty, Board board)
 {
     FILE *file;
     char fileName[5];
