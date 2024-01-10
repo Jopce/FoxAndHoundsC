@@ -64,7 +64,7 @@ int main()
         //scanf("%d", &save);
         save = menuCLI(game_select, filesSaved);
         
-        processInput(&save, array2, array3, &rowW, &colW, &player, &difficulty); //I have not added difficulty but I can add it
+        processInput(&save, array2, array3, &rowW, &colW, &player, &difficulty, board); //I have not added difficulty but I can add it
 
         Structas save_data = get_save_data(); // luko kazkokia funkcija kuri grazina structa kazkoki kur yra {int difficulty, int board[8][8]}
 
