@@ -11,7 +11,7 @@ typedef int** Board;
 
 void Pwin_lose(int *win, int *lose, int *player)
 {
-    if(*player == 1)
+    if(*player == 0)
     {
         if(*win == 1)
         {
@@ -22,7 +22,7 @@ void Pwin_lose(int *win, int *lose, int *player)
             printf("You lose!\n");
         }
     }
-    else if(*player == 2)
+    else if(*player == 1)
     {
         if(*win == 1)
         {
@@ -31,6 +31,17 @@ void Pwin_lose(int *win, int *lose, int *player)
         else if(*lose == 4)
         {
             printf("You win!\n");
+        }
+    }
+    else if(*player == 2)
+    {
+        if(*win == 1)
+        {
+            printf("Fox wins, Hounds lose!");
+        }
+        else if(*lose == 4)
+        {
+            printf("Hounds win, Fox loses!");
         }
     }
 }
