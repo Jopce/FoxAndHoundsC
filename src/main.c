@@ -33,11 +33,14 @@ int main()
                                               {0, 0, 0, 0, 0, 0, 0, 0},
                                               {F, 0, 0, 0, 0, 0, 0, 0}};
 
-    int game_select = menuCLI();; // igno kazkokia funkcija
+    int game_select = 0;
+    int filesSaved = 0;
+    game_select = menuCLI(game_select, filesSaved);; // igno kazkokia funkcija // filesSaved - kiek filu yra isaugota
 
     if (game_select == 1) //start new game
     {
-        int difficulty = menuCLI(); // igno difficulty and player choosing what character to play
+        int difficulty = menuCLI(3, filesSaved); // igno difficulty and player choosing what character to play
+        //int playerSelect = menuCLI(4, filesSaved); // choosing what character to play
 
         switch (difficulty)
         {
@@ -57,8 +60,10 @@ int main()
         // luko funkcija kuri is save file paima boarda ir difficulty
         // jeigu jo nera tai tsg grazina default boarda
         displayLastModifiedTime();
-        printf("\n Which save you want to open \n "); // ***ingai please CLI this one
-        scanf("%d", &save);
+        //printf("\n Which save you want to open \n "); // ***Ignai please CLI this one
+        //scanf("%d", &save);
+        save = menuCLI(game_select, filesSaved);
+        
         processInput(&save, array2, array3, &rowW, &colW, &player, &difficulty); //I have not added difficulty but I can add it
 
         Structas save_data = get_save_data(); // luko kazkokia funkcija kuri grazina structa kazkoki kur yra {int difficulty, int board[8][8]}
