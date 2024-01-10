@@ -10,6 +10,28 @@
 
 typedef int** Board;
 
+void transferBoard(Board board, int game_board[n][n])
+{
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            game_board[i][j] = board[i][j];
+        }
+    }
+}
+
+void boardTransfer(Board board, int game_board[n][n])
+{
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<n;j++)
+        {
+            board[i][j] = game_board[i][j];
+        }
+    }
+}
+
 void Pwin_lose(int *win, int *lose, int *player)
 {
     if(*player == 0)
