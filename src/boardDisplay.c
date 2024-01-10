@@ -91,6 +91,8 @@ int checkMove(char move_char[])
 
     switch (move_char[0])
     {
+    case '0':
+        return 0;
     case '1':
         return 1;
     case '2':
@@ -428,6 +430,9 @@ void sidePannel (int counter, int isPlayer, int difficulty, int foxOrHoundsTurn)
         break;
     case 14:
         printf ("+-------------------------------------+");
+        break;
+    case 15:
+        printf ("To pause the game, press the number \"0\".");
         break;
     default:
         printf (" ");
