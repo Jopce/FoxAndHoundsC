@@ -92,7 +92,7 @@ int main()
 
        if(player == 0 || player == 2) //fox = 0 hound = 1 pvp = 2
        {
-           mover(); //player moves
+           fMove(); //player moves
        }
         else
        {
@@ -105,7 +105,7 @@ int main()
        }
         else if(player == 1 || player == 2)
        {
-           pawnMove();
+           hMove();
        }
 
     } while (!luko_game_over_function()); // luko funkcija kuri tikrina ar game over
