@@ -87,12 +87,72 @@ int main()
         return 0;
     }
 
-    if(save == 0)
-    {if(player == 0){rowW=7;colW=4;}else{col1=0;row1=7;col2=0;row2=7;col3=0;row3=7;col4=0;row4=7;}}
+    //this is to start new game ima need help and time
 
-    if(player == 1) //if it is hound these are values if it is loading new values or existing in the save file
-    {if(save == 0){array2[0]=row1;array2[1]=row2;array2[2]=row3;array2[3]=row4;array3[0]=col1;array3[1]=col2;array3[2]=col3;array3[3]=col4;}
-    else{row1=array2[0];row2=array2[1];row3=array2[2];row4=array2[3];col1=array3[0];col2=array3[1];col3=array3[2];col4=array3[3];}}
+    if(save == 0)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                board[i][j] = '0';
+            }
+        }
+
+        if(player == 0 || player == 3)
+        {
+            rowW = 7;
+            colW = 4;
+            col1 = 7;
+            col2 = 5;
+            col3 = 3;
+            col4 = 1;
+            row1 = 0;
+            row2 = 0;
+            row3 = 0;
+            row4 = 0;
+        }
+        else if(player == 1)
+        {
+            rowW = 0;
+            colW = 3;
+            col1 = 0;
+            col2 = 2;
+            col3 = 4;
+            col4 = 6;
+            row1 = 7;
+            row2 = 7;
+            row3 = 7;
+            row4 = 7;
+        }
+        board[rowW][colW] = 'F';
+        board[row1][col1] = 'H';
+        board[row2][col2] = 'H';
+        board[row3][col3] = 'H';
+        board[row4][col4] = 'H';
+        array2[1] = row2;
+        array2[2] = row3;
+        array2[3] = row4;
+        array3[0] = col1;
+        array3[1] = col2;
+        array3[2] = col3;
+        array3[3] = col4;
+    }
+    else
+    {
+        if(player == 1 || player == 2)
+        {
+            row1 = array2[0];
+            row2 = array2[1];
+            row3 = array2[2];
+            row4 = array2[3];
+            col1 = array3[0];
+            col2 = array3[1];
+            col3 = array3[2];
+            col4 = array3[3];
+        }
+    }
+
     
     do
     {                   //Reikia informacijos -: VS_Player: 1 if playing VS another player, else 0 | foxOrHoundsTurn: 1 if fox, else 0 hounds
@@ -100,20 +160,84 @@ int main()
 
        if(player == 0 || player == 2) //fox = 0 hound = 1 pvp = 2
        {
+           printBoard(board);
+           check_lose();
+           if(win==1 || lose == 4)
+           {
+               break
+           }
+           int enterNumber = getUserInput();
+           if(enterNumber == 0)
+           {
+               save_game();
+               break;
+           }
+           move = enterNumber;
            fMove(); //player moves
+           if(player == 0)
+           {
+               boardTransfer(board, game_board);
+           }
+           
        }
         else
        {
-           //bot moves 
+           boardTransfer(board, game_board);
+           printBoard(board);
+           
+           //bot moves
+
+           transferBoard(board, game_board);
        }
         
        if(player == 0)
        {
+           printBoard(board);
+           boardTransfer(board, game_board);
+           check_lose();
+           
+           if(win == 1 || lose == 4) 
+           {
+               break;
+           }
            //bot moves
+
+           transferBoard(board, game_board);
        }
         else if(player == 1 || player == 2)
        {
-           hMove();
+           printBoard(board);
+           if(player == 1)
+           {
+               //jokubo check lose funkc.
+               //jokubai galesi pritaikyt savo kazkaip nzn ir kad grazintu lose = 4 ir win = 1 jei salygos priimtos
+           }
+           else
+           {
+               check_lose();
+               
+               if(win == 1 || lose == 4) 
+               {
+                   break;
+               }
+           }
+
+            printf("Hound to move 1-4 or save 0: "); //Ignai tavo CLI
+            scanf("%d", &userChoice);
+           
+           if(userChoice == 0)
+            {
+                save_game(array2, array3, &rowW, &colW, &player, board);
+                break;
+            }
+            generateRowAndColNames(userChoice, &rowValue, &colValue, array2, array3);
+           
+            printf("Enter a number to move the 'H' (1-2): "); // tavo CLI ignai
+            scanf("%d", &move);
+
+            hMove(board, &rowValue, &colValue, move);
+            NewgenerateRowAndColNames(userChoice, &rowValue, &colValue, array2, array3);
+            
        }
 
     } while (!luko_game_over_function()); // luko funkcija kuri tikrina ar game over
