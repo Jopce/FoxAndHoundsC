@@ -123,7 +123,26 @@ char* difficultyField (int counter)
     case 6:
         return (" ---------------- ");
     case 7:
-        return (" Back to Menu (5) ");
+        return (" Go Back      (5) ");
+    default:
+        return ("");
+    }
+}
+
+char* customDifficultyField(int counter)
+{
+    switch (counter)
+    {
+    case 0:
+        return (" Difficulty:     ");
+    case 1:
+        return (" ---------------- ");
+    case 2:
+        return (" Choose 1 to 15   ");
+    case 3:
+        return (" ---------------- ");
+    case 4:
+        return (" Go back      (0) ");
     default:
         return ("");
     }
@@ -201,7 +220,7 @@ int pauseMenu()
                 break;
             default:
                 optionSelect = 49379;
-                 break;
+                break;
             }
 
             if (optionSelect != 49379)
@@ -284,6 +303,9 @@ int menuCLI (int game_select, int filesSaved)
                 break;
             case 4:
                 strcpy (text, characterField (counter)); //character options
+                break;
+            case 5:
+                strcpy (text, customDifficultyField (counter)); //custom difficulty options
                 break;
             default:
                 strcpy (text, mainMenuField (counter)); //default option
@@ -396,36 +418,34 @@ int OptAvailability (int game_select, int field_Select, int filesSaved) /// ////
             return 49379;
         }
 
+    case 5: //custom difficulty
+        if (field_Select >= 0 && field_Select <= 15)
+        {
+            return field_Select;
+        }
+        else
+        {
+            return 49379;
+        }
+
     default:
         return 49379;
-        break;
     }
 }
 
-int checkInput (char input[])
+int checkInput(char input[])
 {
-    //checks if the string is one symbol length
-    if(strlen(input) > 1)
+    //check if the string is one symbol length
+    if (strlen(input) > 1)
         return 49379;
 
-    //checks if the input is from 0 to 5
-    switch (input[0])
-    {
-    case '0':
-        return 0;
-    case '1':
-        return 1;
-    case '2':
-        return 2;
-    case '3':
-        return 3;
-    case '4':
-        return 4;
-    case '5':
-        return 5;
-    default:
+    int num = atoi(input); //convert input string to integer using atoi()
+
+    //check if the input is from 0 to 15
+    if (num >= 0 && num <= 15)
+        return num;
+    else
         return 49379;
-    }
 }
 
 void printRowLine (int length, char Lchar, char rowChar, char conChar, char RChar)
