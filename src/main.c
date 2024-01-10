@@ -31,14 +31,67 @@ int main()
                                               {F, 0, 0, 0, 0, 0, 0, 0}};
 
     int game_select = 0;
-    int filesSaved = 0;
-    game_select = menuCLI(game_select, filesSaved);; // igno kazkokia funkcija // filesSaved - kiek filu yra isaugota
+    unsigned short int filesSaved = 0; //how many files has the user saved //Need for menuCLI
+    unsigned short int foxOrHoundsTurn = 0; //Stores whoewers turn it is //1 if fox, 0 if hounds
+    unsigned short int isPvP = 0; //is the mode selected PvP
+    unsigned short int breakOut = 0; //int for breaking from Ignas loops
+
+    //loop'ai kad zaidejas galetu sokineti tarp pasirinkimu, juos keisti
+    while(1) //Igno loop'as
+    {
+        game_select = menuCLI (game_select, filesSaved); // igno kazkokia funkcija
+
+        if(game_select != 1) break;
+
+        while(1)
+        {
+            playerSelect = menuCLI(4, filesSaved);
+            if(playerSelect == 4) break;
+
+            if(playerSelect == 3) isPvP = 1;
+
+            while(1)
+            {
+                difficulty = menuCLI(3, filesSaved);// igno difficulty and player choosing - what character to play
+                if(difficulty == 5) break;
+
+                if(difficulty == 4)
+                {
+                    //custom difficulty options
+                    while(1)
+                    {
+                        difficulty = menuCLI(5, filesSaved);
+                        if(difficulty == 0) break;
+                        else
+                        {
+                            breakOut = 1;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    breakOut = 1;
+                    break;
+                }
+                if(breakOut) break;
+            }
+            if(breakOut) break;
+        }
+        if(breakOut) break;
+        game_select = 0;
+    }
+    
+    //Does this above in Ignas loop
+    //game_select = menuCLI(game_select, filesSaved);; // igno kazkokia funkcija // filesSaved - kiek filu yra isaugota
 
     if (game_select == 1) //start new game
     {
+        //Does this above in Ignas loop
+        /*
         int difficulty = menuCLI(3, filesSaved); // igno difficulty and player choosing what character to play
-        //int playerSelect = menuCLI(4, filesSaved); // choosing what character to play
-
+        int playerSelect = menuCLI(4, filesSaved); // choosing what character to play
+        */
         switch (difficulty)
         {
         case 1:
@@ -52,10 +105,9 @@ int main()
             break;
         }
 
+        //Does this above in Ignas loop
         //select character game mode 0 fox 1 hound 2 pvp
-    
         //igno CLI
-        
         //player turi buti 0-2 intervale
     }
     else if (game_select == 2) //continue
@@ -155,8 +207,8 @@ int main()
 
     
     do
-    {                   //Reikia informacijos -: VS_Player: 1 if playing VS another player, else 0 | foxOrHoundsTurn: 1 if fox, else 0 hounds
-        int new_move = displayBoard (game_board, VS_Player, difficulty, foxOrHoundsTurn); // igno funkcija kuri grazina skaiciuka kur paejo Fox
+    {                   //Reikia informacijos -: isPvP: 1 if playing VS another player, else 0 | foxOrHoundsTurn: 1 if fox, else 0 hounds
+        int new_move = displayBoard (game_board, isPvP, difficulty, foxOrHoundsTurn); // igno funkcija kuri grazina skaiciuka kur paejo Fox
 
        if(player == 0 || player == 2) //fox = 0 hound = 1 pvp = 2
        {
