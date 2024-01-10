@@ -426,165 +426,77 @@ void fMove(Board board, int *row, int *col, int direction, int *player)
         switch (direction)
         {
             case 1: // Up right or if flipped down left
-                if(*player == 1)
+                board[*row][*col] = '0';
+                (*row)--;
+                (*col)++;
+                if( *col>n-1 || *row<0 || board[*row][*col] == 'H')
                 {
-                    board[*row][*col] = '0';
-                    (*row)--;
-                    (*col)++;
-                    if( *col>n-1 || *row<0 || board[*row][*col] == 'H')
-                    {
 
-                        (*row)++;
-                        (*col)--;
-                        valid = 1;
+                    (*row)++;
+                    (*col)--;
+                    valid = 1;
 
-                    }
-                    else
-                    {
-                        valid = 0;
-                    }
-                    board[*row][*col] = 'F';
                 }
                 else
                 {
-                    board[*row][*col] = '0';
-                    (*row)++;
-                    (*col)--;
-                    if(*row>n-1 || *col<0 || board[*row][*col] == 'H')
-                    {
-
-                        (*row)--;
-                        (*col)++;
-                        valid = 1;
-
-                    }
-                    else
-                    {
-                        valid = 0;
-                    }
-                    board[*row][*col] = 'F';
+                    valid = 0;
                 }
+                board[*row][*col] = 'F';
                 break;
             case 2: // Up left flipped down right
-                if(*player == 1)
+                board[*row][*col] = '0';
+                (*row)--;
+                (*col)--;
+                if(board[*row][*col] == 'H' || *row<0 || *col<0)
                 {
-                    board[*row][*col] = '0';
-                    (*row)--;
-                    (*col)--;
-                    if(board[*row][*col] == 'H' || *row<0 || *col<0)
-                    {
 
-                        (*row)++;
-                        (*col)++;
-                        valid = 1;
+                    (*row)++;
+                    (*col)++;
+                    valid = 1;
 
-                    }
-                    else
-                    {
-                        valid = 0;
-                    }
-                    board[*row][*col] = 'F';
                 }
                 else
                 {
-                     board[*row][*col] = '0';
-                    (*row)++;
-                    (*col)++;
-                    if(*row>n-1 || *col>n-1 || board[*row][*col] == 'H')
-                    {
-
-                        (*row)--;
-                        (*col)--;
-                        valid = 1;
-
-                    }
-                    else
-                    {
-                        valid = 0;
-                    }
-                    board[*row][*col] = 'F';
+                    valid = 0;
                 }
+                board[*row][*col] = 'F';
                 break;
             case 3: // Down right flipped up left
-                if(*player == 1)
+                board[*row][*col] = '0';
+                (*row)++;
+                (*col)++;
+                if(*row>n-1 || *col>n-1 || board[*row][*col] == 'H')
                 {
-                    board[*row][*col] = '0';
-                    (*row)++;
-                    (*col)++;
-                    if(*row>n-1 || *col>n-1 || board[*row][*col] == 'H')
-                    {
 
-                        (*row)--;
-                        (*col)--;
-                        valid = 1;
+                    (*row)--;
+                    (*col)--;
+                    valid = 1;
 
-                    }
-                    else
-                    {
-                        valid = 0;
-                    }
-                    board[*row][*col] = 'F';
                 }
                 else
                 {
-                     board[*row][*col] = '0';
-                    (*row)++;
-                    (*col)++;
-                    if(*row>n-1 || *col>n-1 || board[*row][*col] == 'H')
-                    {
-
-                        (*row)--;
-                        (*col)--;
-                        valid = 1;
-
-                    }
-                    else
-                    {
-                        valid = 0;
-                    }
-                    board[*row][*col] = 'F';
+                    valid = 0;
                 }
+                board[*row][*col] = 'F';
 
                 break;
             case 4: // Down left flipped up right
-                if(*player == 1)
+                board[*row][*col] = '0';
+                (*row)++;
+                (*col)--;
+                if(*row>n-1 || *col<0 || board[*row][*col] == 'H')
                 {
-                    board[*row][*col] = '0';
-                    (*row)++;
-                    (*col)--;
-                    if(*row>n-1 || *col<0 || board[*row][*col] == 'H')
-                    {
 
-                        (*row)--;
-                        (*col)++;
-                        valid = 1;
+                    (*row)--;
+                    (*col)++;
+                    valid = 1;
 
-                    }
-                    else
-                    {
-                        valid = 0;
-                    }
-                    board[*row][*col] = 'F';
                 }
                 else
                 {
-                    board[*row][*col] = '0';
-                    (*row)--;
-                    (*col)++;
-                    if( *col>n-1 || *row<0 || board[*row][*col] == 'H')
-                    {
-
-                        (*row)++;
-                        (*col)--;
-                        valid = 1;
-
-                    }
-                    else
-                    {
-                        valid = 0;
-                    }
-                    board[*row][*col] = 'F';
+                    valid = 0;
                 }
+                board[*row][*col] = 'F';
 
                 break;
             default:
@@ -621,82 +533,38 @@ void hMove(Board board, int *row, int *col, int direction, int *player)
         }
         switch (direction) {
         case 1: // Down right flipped up left
-            if(*player == 1)
+            board[*row][*col] = '0';
+            (*row)--;
+            (*col)--;
+            if (*row <0 || *col < 0 || board[*row][*col] == 'H' || board[*row][*col] == 'F')
             {
-                board[*row][*col] = '0';
                 (*row)++;
                 (*col)++;
-                if (*row == n || *col == n || board[*row][*col] == 'H' || board[*row][*col] == 'F')
-                {
-                    (*row)--;
-                    (*col)--;
-                    suge = 1;
-                }
-                else
-                {
-                    valid = 0;
-                    suge = 0;
-                }
-                board[*row][*col] = 'H';
+                suge = 1;
             }
             else
             {
-                board[*row][*col] = '0';
-                (*row)--;
-                (*col)--;
-                if (*row <0 || *col < 0 || board[*row][*col] == 'H' || board[*row][*col] == 'F')
-                {
-                    (*row)++;
-                    (*col)++;
-                    suge = 1;
-                }
-                else
-                {
-                    valid = 0;
-                    suge = 0;
-                }
-                board[*row][*col] = 'H';
-
+                valid = 0;
+                suge = 0;
             }
+            board[*row][*col] = 'H';
             break;
         case 2: // Down left flipped up right
-            if(*player == 1)
+            board[*row][*col] = '0';
+            (*row)--;
+            (*col)++;
+            if (*row < 0 || *col == n || board[*row][*col] == 'H' || board[*row][*col] == 'F')
             {
-                board[*row][*col] = '0';
                 (*row)++;
                 (*col)--;
-                if (*row == n || *col == -1 || board[*row][*col] == 'H' || board[*row][*col] == 'F')
-                {
-                    (*row)--;
-                    (*col)++;
-                    suge = 1;
-                }
-                else
-                {
-                    valid = 0;
-                    suge = 0;
-                }
-                board[*row][*col] = 'H';
+                suge = 1;
             }
             else
             {
-                board[*row][*col] = '0';
-                (*row)--;
-                (*col)++;
-                if (*row < 0 || *col == n || board[*row][*col] == 'H' || board[*row][*col] == 'F')
-                {
-                    (*row)++;
-                    (*col)--;
-                    suge = 1;
-                }
-                else
-                {
-                    valid = 0;
-                    suge = 0;
-                }
-                board[*row][*col] = 'H';
-
+                valid = 0;
+                suge = 0;
             }
+            board[*row][*col] = 'H';
             break;
         default:
             printf("Invalid move. Please enter a number from 1 to 2.\n");
