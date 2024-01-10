@@ -214,234 +214,74 @@ void processInput(int *save, int *array2, int *array3, int *rowW, int *colW, int
             sprintf(fileName, "%d.txt", *save);
 
             // Open the file
-            file = fopen(fileName, "r");
-            if (file == NULL) 
-            {
-                perror("Error opening file");
-                return;
-            }
-
-            // Read data into arrays and integers
-            fscanf(file, "%d", &(*player));
-            if(*player == 1 || *player == 2)
-            {
-                for (int i = 0; i < 4; ++i)
-                {
-                    fscanf(file, "%d", &array2[i]);
-                }
-                for (int i = 0; i < 4; ++i) 
-                {
-                    fscanf(file, "%d", &array3[i]);
-                }
-            }
-
-            if(*player == 0 || *player == 2)
-            {
-                fscanf(file, "%d", &(*rowW));
-                fscanf(file, "%d", &(*colW));
-            }
-
-            if(*player == 0 || *player == 1)
-            {
-                for(int i = 0;i<n;i++)
-                {
-                    for(int j =0;j<n;j++)
-                    {
-                        fscanf(file, "%d ", &(board[i][j]));
-                    }
-                }
-                fscanf(file,"%d", &(*difficulty));
-            }
-
-            // Close the file
-            fclose(file);
-
             break;
 
         case 2:
             sprintf(fileName, "%d.txt", *save);
 
             // Open the file
-            file = fopen(fileName, "r");
-            if (file == NULL) 
-            {
-                perror("Error opening file");
-                return;
-            }
-
-            // Read data into arrays and integers
-            fscanf(file, "%d", &(*player));
-            if(*player == 1 || *player == 2)
-            {
-                for (int i = 0; i < 4; ++i)
-                {
-                    fscanf(file, "%d", &array2[i]);
-                }
-                for (int i = 0; i < 4; ++i) 
-                {
-                    fscanf(file, "%d", &array3[i]);
-                }
-            }
-
-            if(*player == 0 || *player == 2)
-            {
-                fscanf(file, "%d", &(*rowW));
-                fscanf(file, "%d", &(*colW));
-            }
-
-            if(*player == 0 || *player == 1)
-            {
-                for(int i = 0;i<n;i++)
-                {
-                    for(int j =0;j<n;j++)
-                    {
-                        fscanf(file, "%d ", &(board[i][j]));
-                    }
-                }
-                fscanf(file,"%d", &(*difficulty));
-            }
-            
-            // Close the file
-            fclose(file);
-
-
             break;
         case 3:
             sprintf(fileName, "%d.txt", *save);
 
             // Open the file
-            file = fopen(fileName, "r");
-            if (file == NULL)
-            {
-                perror("Error opening file");
-                return;
-            }
-
-            // Read data into arrays and integers
-            fscanf(file, "%d", &(*player));
-            if(*player == 1 || *player == 2)
-            {
-                for (int i = 0; i < 4; ++i)
-                {
-                    fscanf(file, "%d", &array2[i]);
-                }
-                for (int i = 0; i < 4; ++i) 
-                {
-                    fscanf(file, "%d", &array3[i]);
-                }
-            }
-
-            if(*player == 0 || *player == 2)
-            {
-                fscanf(file, "%d", &(*rowW));
-                fscanf(file, "%d", &(*colW));
-            }
-
-            if(*player == 0 || *player == 1)
-            {
-                for(int i = 0;i<n;i++)
-                {
-                    for(int j =0;j<n;j++)
-                    {
-                        fscanf(file, "%d ", &(board[i][j]));
-                    }
-                }
-                fscanf(file,"%d", &(*difficulty));
-            }
-            // Close the file
-            fclose(file);
+            break;
         case 4:
             sprintf(fileName, "%d.txt", *save);
 
             // Open the file
-            file = fopen(fileName, "r");
-            if (file == NULL) 
-            {
-                perror("Error opening file");
-                return;
-            }
-
-            // Read data into arrays and integers
-            fscanf(file, "%d", &(*player));
-            if(*player == 1 || *player == 2)
-            {
-                for (int i = 0; i < 4; ++i)
-                {
-                    fscanf(file, "%d", &array2[i]);
-                }
-                for (int i = 0; i < 4; ++i) 
-                {
-                    fscanf(file, "%d", &array3[i]);
-                }
-            }
-
-            if(*player == 0 || *player == 2)
-            {
-                fscanf(file, "%d", &(*rowW));
-                fscanf(file, "%d", &(*colW));
-            }
-
-            if(*player == 0 || *player == 1)
-            {
-                for(int i = 0;i<n;i++)
-                {
-                    for(int j =0;j<n;j++)
-                    {
-                        fscanf(file, "%d ", &(board[i][j]));
-                    }
-                }
-                fscanf(file,"%d", &(*difficulty));
-            }
-            // Close the file
-            fclose(file);
+            break;
         case 5:
             sprintf(fileName, "%d.txt", *save);
 
             // Open the file
-            file = fopen(fileName, "r");
-            if (file == NULL)
-            {
-                perror("Error opening file");
-                return;
-            }
-
-            // Read data into arrays and integers
-            fscanf(file, "%d", &(*player));
-            if(*player == 1 || *player == 2)
-            {
-                for (int i = 0; i < 4; ++i)
-                {
-                    fscanf(file, "%d", &array2[i]);
-                }
-                for (int i = 0; i < 4; ++i) 
-                {
-                    fscanf(file, "%d", &array3[i]);
-                }
-            }
-
-            if(*player == 0 || *player == 2)
-            {
-                fscanf(file, "%d", &(*rowW));
-                fscanf(file, "%d", &(*colW));
-            }
-
-            if(*player == 0 || *player == 1)
-            {
-                for(int i = 0;i<n;i++)
-                {
-                    for(int j =0;j<n;j++)
-                    {
-                        fscanf(file, "%d ", &(board[i][j]));
-                    }
-                }
-                fscanf(file,"%d", &(*difficulty));
-            }
-            // Close the file
-            fclose(file);
+            break;
 
         default:
             printf("Invalid save proceed with default game\n");
     }
+    
+    file = fopen(fileName, "r");
+    if (file == NULL) 
+    {
+        perror("Error opening file");
+        return;
+    }
+
+    // Read data into arrays and integers
+    fscanf(file, "%d", &(*player));
+    if(*player == 1 || *player == 2)
+    {
+        for (int i = 0; i < 4; ++i)
+        {
+            fscanf(file, "%d", &array2[i]);
+        }
+        for (int i = 0; i < 4; ++i) 
+        {
+            fscanf(file, "%d", &array3[i]);
+        }
+    }
+
+    if(*player == 0 || *player == 2)
+    {
+        fscanf(file, "%d", &(*rowW));
+        fscanf(file, "%d", &(*colW));
+    }
+
+    if(*player == 0 || *player == 1)
+    {
+        for(int i = 0;i<n;i++)
+        {
+            for(int j =0;j<n;j++)
+            {
+                fscanf(file, "%d ", &(board[i][j]));
+            }
+        }
+        fscanf(file,"%d", &(*difficulty));
+    }
+
+    // Close the file
+    fclose(file);
 }
 
 
