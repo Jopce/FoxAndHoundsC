@@ -29,5 +29,3 @@ void printBoard(Board board);
 void hMove(Board board, int *row, int *col, int direction);
 
 void boardTransfer(Board board, game_board[n][n]);
-
-void transferBoard(Board board, game_board[n][n]);
