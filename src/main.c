@@ -15,10 +15,7 @@ int main()
     int colValue = 0;
 
     int userChoice;
-    int player = 0;
-
-    int number = 2; //priority value
-
+    int player = -1;
     int *array2 = (int*)calloc(4, sizeof(int));
     int *array3 = (int*)calloc(4, sizeof(int));
 
@@ -54,6 +51,12 @@ int main()
             difficulty = HARD;
             break;
         }
+
+        //select character game mode 0 fox 1 hound 2 pvp
+    
+        //igno CLI
+        
+        //player turi buti 0-2 intervale
     }
     else if (game_select == 2) //continue
     {
@@ -85,9 +88,9 @@ int main()
     }
 
     if(save == 0)
-    {if(player == 1){rowW=7;colW=4;}else{col1=0;row1=7;col2=0;row2=7;col3=0;row3=7;col4=0;row4=7;}}
+    {if(player == 0){rowW=7;colW=4;}else{col1=0;row1=7;col2=0;row2=7;col3=0;row3=7;col4=0;row4=7;}}
 
-    if(player == 2) //if it is hound these are values if it is loading new values or existing in the save file
+    if(player == 1) //if it is hound these are values if it is loading new values or existing in the save file
     {if(save == 0){array2[0]=row1;array2[1]=row2;array2[2]=row3;array2[3]=row4;array3[0]=col1;array3[1]=col2;array3[2]=col3;array3[3]=col4;}
     else{row1=array2[0];row2=array2[1];row3=array2[2];row4=array2[3];col1=array3[0];col2=array3[1];col3=array3[2];col4=array3[3];}}
     
