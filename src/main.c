@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <limits.h>
+#include <stdlib.h>
 #include "opponents.h"
-#include "file_logic.h"
+#include "files_logic.h"
 #include "mainMenuDisplay.h"
 #include "boardDisplay.h"
 // importint .h failus
@@ -11,6 +12,12 @@ int main()
     int rowW, colW, col1,col2,col3,col4,row1,row2,row3,row4;
 
     Board board = allocateBoard();
+
+    int move;
+    int win = 0;
+    int lose = 0;
+    int difficulty = 0;
+    int playerSelect = 0;
 
     int rowValue = 0;
     int colValue = 0;
@@ -33,8 +40,6 @@ int main()
 
     int game_select = 0;
     int isPaused = 0;
-    int difficulty = 0;
-    int playerSelect = 0;
     unsigned short int filesSaved = 0; //how many files has the user saved //Need for menuCLI
     unsigned short int foxOrHoundsTurn = 0; //Stores whoewers turn it is //1 if fox, 0 if hounds
     unsigned short int isPvP = 0; //is the mode selected PvP
@@ -125,16 +130,6 @@ int main()
         
         processInput(&save, array2, array3, &rowW, &colW, &player, &difficulty, board); //I have not added difficulty but I can add it
 
-        Structas save_data = get_save_data(); // luko kazkokia funkcija kuri grazina structa kazkoki kur yra {int difficulty, int board[8][8]}
-
-        int difficulty = save_data.difficulty;
-        for (int i = 0; i < BOARD_SIZE; i++)
-        {
-            for (int j = 0; j < BOARD_SIZE; j++)
-            {
-                game_board[i][j] = save_data.board[i][j];
-            }
-        }
     }
     else //exit
     {
@@ -217,19 +212,19 @@ int main()
        if(player == 0 || player == 2) //fox = 0 hound = 1 pvp = 2
        {
            printBoard(board);
-           check_lose();
+           check_lose(board, &rowW, &colW, &win, &lose);
            if(win==1 || lose == 4)
            {
-               break
+               break;
            }
            int enterNumber = getUserInput();
            if(enterNumber == 0)
            {
-               save_game();
+               save_game(array2, array3, &rowW, &colW, &player, &difficulty, board);
                break;
            }
            move = enterNumber;
-           fMove(); //player moves
+           fMove(board, &rowW, &colW, move); //player moves
            if(player == 0)
            {
                boardTransfer(board, game_board);
@@ -250,7 +245,7 @@ int main()
        {
            printBoard(board);
            boardTransfer(board, game_board);
-           check_lose();
+           check_lose(board, &rowW, &colW, &win, &lose);
            
            if(win == 1 || lose == 4) 
            {
@@ -279,7 +274,7 @@ int main()
            }
            else
            {
-               check_lose();
+               check_lose(board, &rowW, &colW, &win, &lose);
                
                if(win == 1 || lose == 4) 
                {
@@ -316,7 +311,7 @@ int main()
            
            if(userChoice == 0)
             {
-                save_game(array2, array3, &rowW, &colW, &player, board);
+                save_game(array2, array3, &rowW, &colW, &player, &difficulty, board);
                 break;
             }
             generateRowAndColNames(userChoice, &rowValue, &colValue, array2, array3);
@@ -331,12 +326,9 @@ int main()
             
        }
 
-    } while (!luko_game_over_function()); // luko funkcija kuri tikrina ar game over
+    } while (1); // luko funkcija kuri tikrina ar game over
 
     freeMemory(board, array2, array3);
     Pwin_lose(&win, &lose, &player);
     
-    //display_result(game_board); /// igno funkcija kuri paziuri kas laimejo ir isveda rezultata
-    ///Reikia informacijos -: PlayerVSwho: 1 - player, 0 - bots | playerWinVSbot: 1 - win, 0 - lose | playerWinVSplayer: 1 - fox win, 0 - hounds win <--------- need variables
-    results (points, PlayerVSwho, playerWinVSbot, playerWinVSplayer);
 }

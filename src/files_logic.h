@@ -2,7 +2,7 @@
 
 typedef int** Board;
 
-void Pwin_lose(int *win, int *lose);
+void Pwin_lose(int *win, int *lose, int *player);
 
 void freeMemory(Board board, int *array2, int *array3);
 
@@ -28,6 +28,6 @@ void printBoard(Board board);
 
 void hMove(Board board, int *row, int *col, int direction);
 
-void boardTransfer(Board board, game_board[n][n]);
+void boardTransfer(Board board,int game_board[n][n]);
 
-void transferBoard(Board board, game_board[n][n]);
+void transferBoard(Board board,int game_board[n][n]);

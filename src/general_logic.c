@@ -427,7 +427,7 @@ int getUserInput()
 
 }
 
-void fMove(Board board, int *row, int *col, int direction, int *player)
+void fMove(Board board, int *row, int *col, int direction)
 {
     int valid = 0;
     do
@@ -533,7 +533,7 @@ void printBoard(Board board)
     printf("\n");
 }
 
-void hMove(Board board, int *row, int *col, int direction, int *player)
+void hMove(Board board, int *row, int *col, int direction)
 {
     int valid = 1;
 
