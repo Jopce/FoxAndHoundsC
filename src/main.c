@@ -41,7 +41,7 @@ int main()
     int isPaused = 0;
     int filesSaved = 0; //how many files has the user saved //Need for menuCLI
     int foxOrHoundsTurn = 0; //Stores whoewers turn it is //1 if fox, 0 if hounds
-    int breakOut = 0; //int for breaking from Ignas loops
+    int breakOut = 0; //int for breaking from Ignas loops, also used as temporal storage
 
     //loop'ai kad zaidejas galetu sokineti tarp pasirinkimu, juos keisti
     while(1) //Igno loop'as
@@ -209,11 +209,13 @@ int main()
     
     do
     {                   //Reikia informacijos -: isPvP: 1 if playing VS another player, else 0 | foxOrHoundsTurn: 1 if fox, else 0 hounds
-        int new_move = displayBoard (game_board, player, difficulty, foxOrHoundsTurn); // igno funkcija kuri grazina skaiciuka kur paejo Fox
+        int new_move = displayBoard (board, player, difficulty, foxOrHoundsTurn, 1); // igno funkcija kuri grazina skaiciuka kur paejo Fox
 
        if(player == 0 || player == 2) //fox = 0 hound = 1 pvp = 2
        {
-           printBoard(board);
+           //printBoard(board);
+           breakOut = displayBoard (board, player, difficulty, foxOrHoundsTurn, 0);
+           
            check_lose(board, &rowW, &colW, &win, &lose);
            if(win==1 || lose == 4)
            {
@@ -236,7 +238,8 @@ int main()
         else
        {
            boardTransfer(board, game_board);
-           printBoard(board);
+           //printBoard(board);
+           breakOut = displayBoard (board, player, difficulty, foxOrHoundsTurn, 0);
            
             // bot is fox
             Move bot_move = opponent_move(game_board, difficulty, 1);
@@ -254,7 +257,8 @@ int main()
         
        if(player == 0)
        {
-           printBoard(board);
+           //printBoard(board);
+           breakOut = displayBoard (board, player, difficulty, foxOrHoundsTurn, 0);
            boardTransfer(board, game_board);
            check_lose(board, &rowW, &colW, &win, &lose);
            
@@ -278,7 +282,8 @@ int main()
        }
         else if(player == 1 || player == 2)
        {
-           printBoard(board);
+           //printBoard(board);
+           breakOut = displayBoard (board, player, difficulty, foxOrHoundsTurn, 0);
            if(player == 1)
            {
                //jokubo check lose funkc.
@@ -308,7 +313,7 @@ int main()
             //Igno Pause menu loopas
             while(1)
             {
-                isPaused = displayBoard (game_board, player, difficulty, foxOrHoundsTurn); // igno funkcija kuri grazina skaiciuka kur paejo Fox
+                isPaused = displayBoard (board, player, difficulty, foxOrHoundsTurn, 1); // igno funkcija kuri grazina skaiciuka kur paejo Fox
 
                 if(isPaused != 0)
                 {
@@ -340,7 +345,7 @@ int main()
            
             //printf("Enter a number to move the 'H' (1-2): "); // tavo CLI ignai
             //scanf("%d", &move);
-            move = displayBoard (game_board, player, difficulty, foxOrHoundsTurn);
+            move = displayBoard (board, player, difficulty, foxOrHoundsTurn, 1);
 
             hMove(board, &rowValue, &colValue, move);
             NewgenerateRowAndColNames(userChoice, &rowValue, &colValue, array2, array3);
