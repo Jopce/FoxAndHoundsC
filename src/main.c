@@ -17,7 +17,6 @@ int main()
     int win = 0;
     int lose = 0;
     int difficulty = 0;
-    int playerSelect = 0;
 
     int rowValue = 0;
     int colValue = 0;
