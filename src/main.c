@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <limits.h>
 #include "opponents.h"
 #include "file_logic.h"
 #include "mainMenuDisplay.h"
@@ -264,6 +265,15 @@ int main()
            {
                //jokubo check lose funkc.
                //jokubai galesi pritaikyt savo kazkaip nzn ir kad grazintu lose = 4 ir win = 1 jei salygos priimtos
+
+                if (evaluate(game_board) == INT_MAX)
+                {
+                    win = 1;
+                }
+                else if (evaluate(game_board) == INT_MIN)
+                {
+                    lose = 4;
+                }
            }
            else
            {
