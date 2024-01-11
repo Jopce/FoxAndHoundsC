@@ -274,7 +274,9 @@ int main()
                    break;
                }
            }
-
+           
+            //printf("Hound to move 1-4 or save 0: "); //Ignai tavo CLI
+            //scanf("%d", &userChoice);
             //Igno Pause menu loopas
             while(1)
             {
@@ -298,10 +300,7 @@ int main()
                     if(isPaused == 2) continue; //continue option
                 }
             }
-
            
-            //printf("Hound to move 1-4 or save 0: "); //Ignai tavo CLI
-            //scanf("%d", &userChoice);
            
            if(userChoice == 0)
             {
@@ -309,9 +308,11 @@ int main()
                 break;
             }
             generateRowAndColNames(userChoice, &rowValue, &colValue, array2, array3);
+
            
-            printf("Enter a number to move the 'H' (1-2): "); // tavo CLI ignai
-            scanf("%d", &move);
+            //printf("Enter a number to move the 'H' (1-2): "); // tavo CLI ignai
+            //scanf("%d", &move);
+            move = displayBoard (game_board, isPvP, difficulty, foxOrHoundsTurn);
 
             hMove(board, &rowValue, &colValue, move);
             NewgenerateRowAndColNames(userChoice, &rowValue, &colValue, array2, array3);
