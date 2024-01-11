@@ -274,8 +274,35 @@ int main()
                }
            }
 
-            printf("Hound to move 1-4 or save 0: "); //Ignai tavo CLI
-            scanf("%d", &userChoice);
+            //Igno Pause menu loopas
+            int isPaused = 0;
+
+            while(1)
+            {
+                isPaused = displayBoard (game_board, isPlayer, difficulty, foxOrHoundsTurn); // igno funkcija kuri grazina skaiciuka kur paejo Fox
+
+                if(isPaused != 0)
+                {
+                    userChoice = isPaused;
+                    break;
+                }
+                else
+                {
+                    isPaused = pauseMenu();
+
+                    if(isPaused == 0) //exit with saving
+                    {
+                        userChoice = isPaused;
+                        break;
+                    }
+                    if(isPaused == 1) continue; //exit without save? not implemented yet
+                    if(isPaused == 2) continue; //continue option
+                }
+            }
+
+           
+            //printf("Hound to move 1-4 or save 0: "); //Ignai tavo CLI
+            //scanf("%d", &userChoice);
            
            if(userChoice == 0)
             {
