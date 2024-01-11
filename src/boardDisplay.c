@@ -233,7 +233,7 @@ void sidePannel (int counter, int player, int difficulty, int foxOrHoundsTurn)
 }
 
 //when win
-void youWinScreen (int points)
+void youWinScreen ()
 {
     printRow (8*4 -1, cornerCharV2[0], lineCharV2[0], lineCharV2[0], cornerCharV2[1]);
     printf ("\n");
@@ -242,12 +242,10 @@ void youWinScreen (int points)
     printf ("%c|_   _| . | | |  | | | | |   |%c\n", lineCharV2[1], lineCharV2[1]);
     printf ("%c  |_| |___|___|  |_____|_|_|_|%c\n", lineCharV2[1], lineCharV2[1]);
     printRow (8*4 -1, cornerCharV2[2], lineCharV2[0], lineCharV2[0], cornerCharV2[3]);
-
-    printf ("\nPoints scored: %d", points);
 }
 
 //when loose
-void youLoseScreen (int points)
+void youLoseScreen ()
 {
     printRow (8*4 + 5, cornerCharV2[0], lineCharV2[0], lineCharV2[0], cornerCharV2[1]);
     printf ("\n");
@@ -256,11 +254,9 @@ void youLoseScreen (int points)
     printf ("%c|_   _| . | | |  |  |__| . |_ -| -_|%c\n", lineCharV2[1], lineCharV2[1]);
     printf ("%c  |_| |___|___|  |_____|___|___|___|%c\n", lineCharV2[1], lineCharV2[1]);
     printRow (8*4 + 5, cornerCharV2[2], lineCharV2[0], lineCharV2[0], cornerCharV2[3]);
-
-    printf ("\nPoints scored: %d", points);
 }
 
-void houndsWinScreen (int points)
+void houndsWinScreen ()
 {
     printRow (8*4 + 15, cornerCharV2[0], lineCharV2[0], lineCharV2[0], cornerCharV2[1]);
     printf ("\n");
@@ -269,11 +265,9 @@ void houndsWinScreen (int points)
     printf ("%c|     | . | | |   | . |_ -|  | | | | |   |_ -|%c\n", lineCharV2[1], lineCharV2[1]);
     printf ("%c|__|__|___|___|_|_|___|___|  |_____|_|_|_|___|%c\n", lineCharV2[1], lineCharV2[1]);
     printRow (8*4 + 15, cornerCharV2[2], lineCharV2[0], lineCharV2[0], cornerCharV2[3]);
-
-    printf ("\nPoints scored: %d", points);
 }
 
-void foxWinScreen (int points)
+void foxWinScreen ()
 {
     printRow (8*4 + 3, cornerCharV2[0], lineCharV2[0], lineCharV2[0], cornerCharV2[1]);
     printf ("\n");
@@ -282,8 +276,6 @@ void foxWinScreen (int points)
     printf ("%c|   __| . |_'_|  | | | | |   |_ -|%c\n", lineCharV2[1], lineCharV2[1]);
     printf ("%c|__|  |___|_,_|  |_____|_|_|_|___|%c\n", lineCharV2[1], lineCharV2[1]);
     printRow (8*4 + 3, cornerCharV2[2], lineCharV2[0], lineCharV2[0], cornerCharV2[3]);
-
-    printf ("\nPoints scored: %d", points);
 }
 
 int checkMove(char move_char[])
@@ -431,7 +423,7 @@ int displayBoard (int board[8][8], int player, int difficulty, int foxOrHoundsTu
 }
 
 //prints the win screen
-void Pwin_loseCLI (int *win, int *lose, int *player, int points) //logic from StarcClans Pwin_lose()
+void Pwin_loseCLI (int *win, int *lose, int *player) //logic from StarcClans Pwin_lose()
 {
     system("cls"); //clears console
     if (*player == 0)
@@ -439,12 +431,12 @@ void Pwin_loseCLI (int *win, int *lose, int *player, int points) //logic from St
         if (*win == 1)
         {
             //printf ("You Win!\n");
-            youWinScreen (points);
+            youWinScreen ();
         }
         else if (*lose == 4)
         {
             //printf ("You lose!\n");
-            youLoseScreen (points);
+            youLoseScreen ();
         }
     }
     else if (*player == 1)
@@ -452,12 +444,12 @@ void Pwin_loseCLI (int *win, int *lose, int *player, int points) //logic from St
         if (*win == 1)
         {
             //printf ("You lose!\n");
-            youLoseScreen (points);
+            youLoseScreen ();
         }
         else if(*lose == 4)
         {
             //printf ("You win!\n");
-            youWinScreen (points);
+            youWinScreen ();
         }
     }
     else if (*player == 2)
@@ -465,12 +457,12 @@ void Pwin_loseCLI (int *win, int *lose, int *player, int points) //logic from St
         if(*win == 1)
         {
             //printf ("Fox wins, Hounds lose!");
-            foxWinScreen (points);
+            foxWinScreen ();
         }
         else if(*lose == 4)
         {
             //printf ("Hounds win, Fox loses!");
-            houndsWinScreen (points);
+            houndsWinScreen ();
         }
     }
 
