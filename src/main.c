@@ -54,10 +54,10 @@ int main()
 
         while(1)
         {
-            playerSelect = menuCLI(4, filesSaved);
-            if(playerSelect == 4) break;
+            player = menuCLI(4, filesSaved);
+            if(player == 4) break;
 
-            if(playerSelect == 3) isPvP = 1;
+            if(player == 3) isPvP = 1;
 
             while(1)
             {
