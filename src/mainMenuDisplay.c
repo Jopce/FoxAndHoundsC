@@ -271,6 +271,8 @@ int pauseMenu()
 int savedGameMenu()
 {
     char spaces[] = "\t\t\t\t\t\t ";
+    char input[50];
+    int optionSelect;
 
     // Open the current directory
     DIR *dir = opendir(".");
@@ -323,7 +325,19 @@ int savedGameMenu()
     closedir(dir);
 
     //Get user input
+    ///check user input
+    while(1)
+    {
+        printf ("\n%s Select an option: ", spaces);
+        scanf ("%s", &input);
 
+        optionSelect = checkInput (input);
+
+        if (optionSelect >= 1 && optionSelect <= count) ///check if exists
+        {
+            return optionSelect;
+        }
+    }
 }
 
 void exitGame()
