@@ -32,7 +32,7 @@ void boardTransfer(Board board, int game_board[n][n])
     }
 }
 
-void Pwin_lose(int *win, int *lose, int *player)
+/*void Pwin_lose(int *win, int *lose, int *player)
 {
     if(*player == 0)
     {
@@ -67,7 +67,7 @@ void Pwin_lose(int *win, int *lose, int *player)
             printf("Hounds win, Fox loses!");
         }
     }
-}
+}*/
 
 void freeMemory(Board board, int *array2, int *array3)
 {
