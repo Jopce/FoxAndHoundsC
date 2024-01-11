@@ -125,10 +125,10 @@ int main()
     {
         // luko funkcija kuri is save file paima boarda ir difficulty
         // jeigu jo nera tai tsg grazina default boarda
-        displayLastModifiedTime();
         //printf("\n Which save you want to open \n "); // ***Ignai please CLI this one
         //scanf("%d", &save);
         save = menuCLI(game_select, filesSaved);
+        displayLastModifiedTime();
         
         processInput(&save, array2, array3, &rowW, &colW, &player, &difficulty, board); //I have not added difficulty but I can add it
 
