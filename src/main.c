@@ -33,6 +33,8 @@ int main()
 
     int game_select = 0;
     int isPaused = 0;
+    int difficulty = 0;
+    int playerSelect = 0;
     unsigned short int filesSaved = 0; //how many files has the user saved //Need for menuCLI
     unsigned short int foxOrHoundsTurn = 0; //Stores whoewers turn it is //1 if fox, 0 if hounds
     unsigned short int isPvP = 0; //is the mode selected PvP
@@ -290,7 +292,7 @@ int main()
             //Igno Pause menu loopas
             while(1)
             {
-                isPaused = displayBoard (game_board, isPlayer, difficulty, foxOrHoundsTurn); // igno funkcija kuri grazina skaiciuka kur paejo Fox
+                isPaused = displayBoard (game_board, isPvP, difficulty, foxOrHoundsTurn); // igno funkcija kuri grazina skaiciuka kur paejo Fox
 
                 if(isPaused != 0)
                 {
