@@ -111,10 +111,10 @@ void printAlighned(char text[], int spaces)
     if(temp%2 != 0) printf(" "); //if the word is odd anothe " " is required.
 }
 
-void determineField(char difficultyChar[], char isPlayerChar[], char playingAs[], int isPlayer, int difficulty, int foxOrHoundsTurn)
+void determineField(char difficultyChar[], char isPlayerChar[], char playingAs[], int player, int difficulty, int foxOrHoundsTurn)
 {
     //checks if there is 1 or 2 players
-    if (isPlayer == 1)
+    if (player == 2)
     {
         strcpy (isPlayerChar,   "Player");
     }
@@ -148,7 +148,7 @@ void determineField(char difficultyChar[], char isPlayerChar[], char playingAs[]
 }
 
 
-void sidePannel (int counter, int isPlayer, int difficulty, int foxOrHoundsTurn)
+void sidePannel (int counter, int player, int difficulty, int foxOrHoundsTurn)
 {
     unsigned short int alighment = 18; //based on the largest string
 
@@ -156,8 +156,8 @@ void sidePannel (int counter, int isPlayer, int difficulty, int foxOrHoundsTurn)
     char isPlayerChar[30] = "";
     char playingAs[30] = "";
 
-    //3 options on the pannel will change
-    determineField(difficultyChar, isPlayerChar, playingAs, isPlayer, difficulty, foxOrHoundsTurn);
+    //Three options that should change on the pannel
+    determineField(difficultyChar, isPlayerChar, playingAs, player, difficulty, foxOrHoundsTurn);
 
     //Text that will be displayed
     switch (counter)
@@ -202,7 +202,7 @@ void sidePannel (int counter, int isPlayer, int difficulty, int foxOrHoundsTurn)
         printf("| |");
         break;
     case 12:
-        if(isPlayer)
+        if(player)
         {
             printf ("| Turn:            |");
             printAlighned(playingAs, alighment);
@@ -210,7 +210,7 @@ void sidePannel (int counter, int isPlayer, int difficulty, int foxOrHoundsTurn)
         }
         else
         {
-            printf  ("|Playing as:      |");
+            printf  ("| Playing as:      |");
             printAlighned(playingAs, alighment);
             printf("| |");
         }
@@ -339,7 +339,7 @@ char* getPieceSymbol (int value)
 }
 
 // The Main function that displays the board
-int displayBoard (int board[8][8], int isPlayer, int difficulty, int foxOrHoundsTurn)
+int displayBoard (int board[8][8], int player, int difficulty, int foxOrHoundsTurn, int wantUserInput)
 {
     unsigned short int count;
     unsigned short int sidePannelOn = 1;
@@ -380,7 +380,7 @@ int displayBoard (int board[8][8], int isPlayer, int difficulty, int foxOrHounds
             if(sidePannelOn)
             {
                 printf ("\t\t\t%c", lineCharV2[1]);
-                sidePannel (count, isPlayer, difficulty, foxOrHoundsTurn);
+                sidePannel (count, player, difficulty, foxOrHoundsTurn);
                 count++;
             }
             ///-----------------
@@ -398,7 +398,7 @@ int displayBoard (int board[8][8], int isPlayer, int difficulty, int foxOrHounds
             if(sidePannelOn)
             {
                 printf ("\t\t\t%c", lineCharV2[1]);
-                sidePannel (count, isPlayer, difficulty, foxOrHoundsTurn);
+                sidePannel (count, player, difficulty, foxOrHoundsTurn);
                 count++;
             }
             ///-----------------
@@ -409,20 +409,25 @@ int displayBoard (int board[8][8], int isPlayer, int difficulty, int foxOrHounds
         infoBox(foxOrHoundsTurn);
 
         //Take user input
-        if(illegalMove == 1) printf("Illegal move, please select a new move: ");
-        else printf("Select a move: ");
-
-        scanf("%s", move_char);
-
-        //checks users input
-        move = checkMove(move_char);
-
-        if(move == 49379)
+        if(wantUserInput)
         {
-            illegalMove = 1;
+            if(illegalMove == 1) printf("Illegal move, please select a new move: ");
+            else printf("Select a move: ");
+
+            scanf("%s", move_char);
+
+            //checks users input
+            move = checkMove(move_char);
+
+            if(move == 49379)
+            {
+                illegalMove = 1;
+            }
+            else return move;
         }
-        else return move;
+        else break;
     }
+    return 101;
 }
 
 //prints the win screen
@@ -441,5 +446,3 @@ void results (int points, int PlayerVSwho, int playerWinVSbot, int playerWinVSpl
         else houndsWinScreen (points);
     }
 }
-
-
