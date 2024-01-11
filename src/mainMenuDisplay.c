@@ -332,7 +332,7 @@ int OptAvailability (int game_select, int field_Select, int filesSaved) /// ////
     case 4: //character
         if (field_Select >= 1 && field_Select <= 4)
         {
-            return field_Select;
+            return field_Select-1;
         }
         else
         {
