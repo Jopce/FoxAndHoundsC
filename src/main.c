@@ -41,7 +41,6 @@ int main()
     int isPaused = 0;
     unsigned short int filesSaved = 0; //how many files has the user saved //Need for menuCLI
     unsigned short int foxOrHoundsTurn = 0; //Stores whoewers turn it is //1 if fox, 0 if hounds
-    unsigned short int isPvP = 0; //is the mode selected PvP
     unsigned short int breakOut = 0; //int for breaking from Ignas loops
 
     //loop'ai kad zaidejas galetu sokineti tarp pasirinkimu, juos keisti
@@ -56,7 +55,11 @@ int main()
             player = menuCLI(4, filesSaved);
             if(player == 3) break;
 
-            if(player == 2) isPvP = 1;
+            if(player == 2)
+            {
+                breakOut = 1;
+                break;
+            }
 
             while(1)
             {
@@ -206,7 +209,7 @@ int main()
     
     do
     {                   //Reikia informacijos -: isPvP: 1 if playing VS another player, else 0 | foxOrHoundsTurn: 1 if fox, else 0 hounds
-        int new_move = displayBoard (game_board, isPvP, difficulty, foxOrHoundsTurn); // igno funkcija kuri grazina skaiciuka kur paejo Fox
+        int new_move = displayBoard (game_board, player, difficulty, foxOrHoundsTurn); // igno funkcija kuri grazina skaiciuka kur paejo Fox
 
        if(player == 0 || player == 2) //fox = 0 hound = 1 pvp = 2
        {
@@ -305,7 +308,7 @@ int main()
             //Igno Pause menu loopas
             while(1)
             {
-                isPaused = displayBoard (game_board, isPvP, difficulty, foxOrHoundsTurn); // igno funkcija kuri grazina skaiciuka kur paejo Fox
+                isPaused = displayBoard (game_board, player, difficulty, foxOrHoundsTurn); // igno funkcija kuri grazina skaiciuka kur paejo Fox
 
                 if(isPaused != 0)
                 {
@@ -337,7 +340,7 @@ int main()
            
             //printf("Enter a number to move the 'H' (1-2): "); // tavo CLI ignai
             //scanf("%d", &move);
-            move = displayBoard (game_board, isPvP, difficulty, foxOrHoundsTurn);
+            move = displayBoard (game_board, player, difficulty, foxOrHoundsTurn);
 
             hMove(board, &rowValue, &colValue, move);
             NewgenerateRowAndColNames(userChoice, &rowValue, &colValue, array2, array3);
