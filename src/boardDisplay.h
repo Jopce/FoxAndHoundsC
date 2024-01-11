@@ -2,4 +2,4 @@
     int displayBoard (int board[8][8], int player, int difficulty, int foxOrHoundsTurn, int wantUserInput);
 
     // determines who Won or lost the game
-    void Pwin_loseCLI (int *win, int *lose, int *player, int points) //logic from StarcClans Pwin_lose()
+    void Pwin_loseCLI (int *win, int *lose, int *player) //logic from StarcClans Pwin_lose()
