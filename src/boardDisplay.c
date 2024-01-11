@@ -111,7 +111,7 @@ void printAlighned(char text[], int spaces)
     if(temp%2 != 0) printf(" "); //if the word is odd anothe " " is required.
 }
 
-void determineField(char difficultyChar[], char isPlayerChar[], char playingAs[], int player, int difficulty, int foxOrHoundsTurn)
+void determineField (char difficultyChar[], char isPlayerChar[], char playingAs[], int player, int difficulty, int foxOrHoundsTurn)
 {
     //checks if there is 1 or 2 players
     if (player == 2)
@@ -157,7 +157,7 @@ void sidePannel (int counter, int player, int difficulty, int foxOrHoundsTurn)
     char playingAs[30] = "";
 
     //Three options that should change on the pannel
-    determineField(difficultyChar, isPlayerChar, playingAs, player, difficulty, foxOrHoundsTurn);
+    determineField (difficultyChar, isPlayerChar, playingAs, player, difficulty, foxOrHoundsTurn);
 
     //Text that will be displayed
     switch (counter)
@@ -193,32 +193,32 @@ void sidePannel (int counter, int player, int difficulty, int foxOrHoundsTurn)
         break;
     case 10:
         printf      ("| Board:           |");
-        printAlighned("8x8", alighment);
-        printf("| |");
+        printAlighned ("8x8", alighment);
+        printf ("| |");
         break;
     case 11:
         printf ("| Playing against: |");
-        printAlighned(isPlayerChar, alighment);
-        printf("| |");
+        printAlighned (isPlayerChar, alighment);
+        printf ("| |");
         break;
     case 12:
         if(player)
         {
             printf ("| Turn:            |");
-            printAlighned(playingAs, alighment);
-            printf("| |");
+            printAlighned (playingAs, alighment);
+            printf ("| |");
         }
         else
         {
             printf  ("| Playing as:      |");
             printAlighned(playingAs, alighment);
-            printf("| |");
+            printf ("| |");
         }
         break;
     case 13:
         printf      ("| Difficulty:      |");
         printAlighned(difficultyChar, alighment);
-        printf("| |");
+        printf ("| |");
         break;
     case 14:
         printf ("+-------------------------------------+");
@@ -233,7 +233,7 @@ void sidePannel (int counter, int player, int difficulty, int foxOrHoundsTurn)
 }
 
 //when win
-void BOTwinScreen(int points)
+void youWinScreen (int points)
 {
     printRow (8*4 -1, cornerCharV2[0], lineCharV2[0], lineCharV2[0], cornerCharV2[1]);
     printf ("\n");
@@ -247,7 +247,7 @@ void BOTwinScreen(int points)
 }
 
 //when loose
-void BOTloseScreen(int points)
+void youLoseScreen (int points)
 {
     printRow (8*4 + 5, cornerCharV2[0], lineCharV2[0], lineCharV2[0], cornerCharV2[1]);
     printf ("\n");
@@ -260,7 +260,7 @@ void BOTloseScreen(int points)
     printf ("\nPoints scored: %d", points);
 }
 
-void houndsWinScreen(int points)
+void houndsWinScreen (int points)
 {
     printRow (8*4 + 15, cornerCharV2[0], lineCharV2[0], lineCharV2[0], cornerCharV2[1]);
     printf ("\n");
@@ -273,7 +273,7 @@ void houndsWinScreen(int points)
     printf ("\nPoints scored: %d", points);
 }
 
-void foxWinScreen(int points)
+void foxWinScreen (int points)
 {
     printRow (8*4 + 3, cornerCharV2[0], lineCharV2[0], lineCharV2[0], cornerCharV2[1]);
     printf ("\n");
@@ -431,8 +431,50 @@ int displayBoard (int board[8][8], int player, int difficulty, int foxOrHoundsTu
 }
 
 //prints the win screen
-void results (int points, int PlayerVSwho, int playerWinVSbot, int playerWinVSplayer)
+void Pwin_loseCLI (int *win, int *lose, int *player, int points) //logic from StarcClans Pwin_lose()
 {
+    system("cls"); //clears console
+    if (*player == 0)
+    {
+        if (*win == 1)
+        {
+            //printf ("You Win!\n");
+            youWinScreen (points);
+        }
+        else if (*lose == 4)
+        {
+            //printf ("You lose!\n");
+            youLoseScreen (points);
+        }
+    }
+    else if (*player == 1)
+    {
+        if (*win == 1)
+        {
+            //printf ("You lose!\n");
+            youLoseScreen (points);
+        }
+        else if(*lose == 4)
+        {
+            //printf ("You win!\n");
+            youWinScreen (points);
+        }
+    }
+    else if (*player == 2)
+    {
+        if(*win == 1)
+        {
+            //printf ("Fox wins, Hounds lose!");
+            foxWinScreen (points);
+        }
+        else if(*lose == 4)
+        {
+            //printf ("Hounds win, Fox loses!");
+            houndsWinScreen (points);
+        }
+    }
+
+    /*
     if (PlayerVSwho == 0)// 0 - bots
     {
         if (playerWinVSbot == 1) //win
@@ -445,4 +487,5 @@ void results (int points, int PlayerVSwho, int playerWinVSbot, int playerWinVSpl
             foxWinScreen (points);
         else houndsWinScreen (points);
     }
+    */
 }
