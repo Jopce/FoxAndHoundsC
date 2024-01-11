@@ -13,6 +13,36 @@ static char cornerChar[4] = {201, 187, 200, 188};
 static char lineChar[2] = {205, 186}; // 0 - row and 1 - column
 static char lineCharV2[2] = {196, 179}; // 0 - row and 1 - column
 
+void printRowLine (int length, char Lchar, char rowChar, char conChar, char RChar)
+{
+    printf ("%c", Lchar);
+    for (int row = 1; row < length; ++row)
+    {
+        if(row%4 != 0)
+        {
+            printf ("%c", rowChar);
+        }
+        else
+            printf ("%c", conChar);
+    }
+    printf ("%c", RChar);
+}
+
+int checkInput(char input[])
+{
+    //check if the string is one symbol length
+    if (strlen(input) > 1)
+        return 49379;
+
+    int num = atoi(input); //convert input string to integer using atoi()
+
+    //check if the input is from 0 to 15
+    if (num >= 0 && num <= 15)
+        return num;
+    else
+        return 49379;
+}
+
 void gameTitle()
 {
     printf("\t\t\t\t  _____                      _    _____               _      \n");
@@ -234,7 +264,7 @@ int pauseMenu()
 
 void exitGame()
 {
-    char temp = "";
+    char temp = '\n';
 
     system("cls");
     //setlocale(LC_ALL, "lt_LT"); //Dont work
@@ -256,6 +286,72 @@ void exitGame()
 
     printf("\n\nPress any button to exit ");
     scanf("%c", &temp);
+}
+
+int OptAvailability (int game_select, int field_Select, int filesSaved) /// /////SUTVARKYK <---
+{
+    //check if different options are in the fields are available
+    switch (game_select)
+    {
+
+    case 0: //main menu
+        if (field_Select >= 1 && field_Select <= 3)
+        {
+            return field_Select;
+        }
+        else
+        {
+            return 49379;
+        }
+    case 1: //new game
+        return field_Select;
+
+    case 2: //continue
+        if (field_Select >= 1 && field_Select <= filesSaved) ///check if exists
+        {
+            return field_Select-1;
+        }
+        else if (field_Select == 6)
+        {
+            return field_Select;
+        }
+        else
+        {
+            return 49379;
+        }
+    case 3: //difficulty
+        if (field_Select >= 1 && field_Select <= 5)
+        {
+            return field_Select;
+        }
+        else
+        {
+            return 49379;
+        }
+
+    case 4: //character
+        if (field_Select >= 1 && field_Select <= 4)
+        {
+            return field_Select;
+        }
+        else
+        {
+            return 49379;
+        }
+
+    case 5: //custom difficulty
+        if (field_Select >= 0 && field_Select <= 15)
+        {
+            return field_Select;
+        }
+        else
+        {
+            return 49379;
+        }
+
+    default:
+        return 49379;
+    }
 }
 
 int menuCLI (int game_select, int filesSaved)
@@ -357,7 +453,7 @@ int menuCLI (int game_select, int filesSaved)
 
         if(field_Select != 49379)
         {
-            field_Select = OptAvailability(game_select, field_Select);
+            field_Select = OptAvailability(game_select, field_Select, filesSaved);
 
             if(field_Select != 49379)
             {
@@ -365,100 +461,4 @@ int menuCLI (int game_select, int filesSaved)
             }
         }
     }
-}
-
-int OptAvailability (int game_select, int field_Select, int filesSaved) /// /////SUTVARKYK <---
-{
-    //check if different options are in the fields are available
-    switch (game_select)
-    {
-
-    case 0: //main menu
-        if (field_Select >= 1 && field_Select <= 3)
-        {
-            return field_Select;
-        }
-        else
-        {
-            return 49379;
-        }
-    case 1: //new game
-        return field_Select;
-
-    case 2: //continue
-        if (field_Select >= 1 && field_Select <= filesSaved) ///check if exists
-        {
-            return field_Select-1;
-        }
-        else if (field_Select == 6)
-        {
-            return field_Select;
-        }
-        else
-        {
-            return 49379;
-        }
-    case 3: //difficulty
-        if (field_Select >= 1 && field_Select <= 5)
-        {
-            return field_Select;
-        }
-        else
-        {
-            return 49379;
-        }
-
-    case 4: //character
-        if (field_Select >= 1 && field_Select <= 4)
-        {
-            return field_Select;
-        }
-        else
-        {
-            return 49379;
-        }
-
-    case 5: //custom difficulty
-        if (field_Select >= 0 && field_Select <= 15)
-        {
-            return field_Select;
-        }
-        else
-        {
-            return 49379;
-        }
-
-    default:
-        return 49379;
-    }
-}
-
-int checkInput(char input[])
-{
-    //check if the string is one symbol length
-    if (strlen(input) > 1)
-        return 49379;
-
-    int num = atoi(input); //convert input string to integer using atoi()
-
-    //check if the input is from 0 to 15
-    if (num >= 0 && num <= 15)
-        return num;
-    else
-        return 49379;
-}
-
-void printRowLine (int length, char Lchar, char rowChar, char conChar, char RChar)
-{
-    printf ("%c", Lchar);
-    for (int row = 1; row < length; ++row)
-    {
-        if(row%4 != 0)
-        {
-            printf ("%c", rowChar);
-        }
-        else
-            printf ("%c", conChar);
-    }
-    printf ("%c", RChar);
 }
