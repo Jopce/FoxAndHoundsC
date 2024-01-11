@@ -210,13 +210,13 @@ int pauseMenu()
             switch (optionSelect)
             {
             case 1:
-                optionSelect = 1;
-                break;
-            case 2:
                 optionSelect = 2;
                 break;
+            case 2:
+                optionSelect = 0;
+                break;
             case 3:
-                optionSelect = 3;
+                optionSelect = 1;
                 break;
             default:
                 optionSelect = 49379;

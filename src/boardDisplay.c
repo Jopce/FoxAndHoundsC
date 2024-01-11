@@ -246,7 +246,7 @@ void infoBox (int foxOrHoundsTurn)
 
     char text[50] = "Pick a digit in \"[x]\" to move";
 
-    if (foxOrHoundsTurn == 0) //hounds turn
+    if (foxOrHoundsTurn == 1) //hounds turn
     {
         strcpy(text, "Pick a hounds number to choose it");
     }
@@ -330,7 +330,7 @@ void determineField(char difficultyChar[], char isPlayerChar[], char playingAs[]
     else strcpy (isPlayerChar,  "BOT");
 
     //check whos turn
-    if (foxOrHoundsTurn == 1) //fox = 1, hounds = 0
+    if (foxOrHoundsTurn == 0) //fox = 0, hounds = 1
         strcpy (playingAs,      "FOX");
     else
         strcpy (playingAs,      "HOUNDS");
