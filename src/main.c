@@ -235,7 +235,16 @@ int main()
            boardTransfer(board, game_board);
            printBoard(board);
            
-           //bot moves
+            // bot is fox
+            Move bot_move = opponent_move(game_board, difficulty, 1);
+
+            for (int i = 0; i < BOARD_SIZE; i++)
+            {
+                for (int j = 0; j < BOARD_SIZE; j++)
+                {
+                    game_board[i][j] = bot_move.board[i][j];
+                }
+            }
 
            transferBoard(board, game_board);
        }
@@ -250,7 +259,17 @@ int main()
            {
                break;
            }
-           //bot moves
+
+           // bot is hounds
+            Move bot_move = opponent_move(game_board, difficulty, 0);
+
+            for (int i = 0; i < BOARD_SIZE; i++)
+            {
+                for (int j = 0; j < BOARD_SIZE; j++)
+                {
+                    game_board[i][j] = bot_move.board[i][j];
+                }
+            }
 
            transferBoard(board, game_board);
        }
