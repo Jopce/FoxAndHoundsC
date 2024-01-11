@@ -9,7 +9,7 @@
 
 int main()
 {
-    int rowW, colW, col1,col2,col3,col4,row1,row2,row3,row4;
+    int rowW, colW;
 
     Board board = allocateBoard();
 
@@ -23,6 +23,7 @@ int main()
 
     int userChoice;
     int player = -1;
+    int *array1 = (int*)calloc(8, sizeof(int));
     int *array2 = (int*)calloc(4, sizeof(int));
     int *array3 = (int*)calloc(4, sizeof(int));
 
@@ -156,53 +157,54 @@ int main()
         {
             rowW = 7;
             colW = 4;
-            col1 = 7;
-            col2 = 5;
-            col3 = 3;
-            col4 = 1;
-            row1 = 0;
-            row2 = 0;
-            row3 = 0;
-            row4 = 0;
+            array1[1] = 7;
+            array1[3] = 5;
+            array1[5] = 3;
+            array1[7] = 1;
+            array1[0] = 0;
+            array1[2] = 0;
+            array1[4] = 0;
+            array1[6] = 0;
         }
         else if(player == 1)
         {
             rowW = 0;
             colW = 3;
-            col1 = 0;
-            col2 = 2;
-            col3 = 4;
-            col4 = 6;
-            row1 = 7;
-            row2 = 7;
-            row3 = 7;
-            row4 = 7;
+            array1[1] = 0;
+            array1[3] = 2;
+            array1[5] = 4;
+            array1[7] = 6;
+            array1[0] = 7;
+            array1[2] = 7;
+            array1[4] = 7;
+            array1[6] = 7;
         }
         board[rowW][colW] = 'F';
-        board[row1][col1] = 'H';
-        board[row2][col2] = 'H';
-        board[row3][col3] = 'H';
-        board[row4][col4] = 'H';
-        array2[1] = row2;
-        array2[2] = row3;
-        array2[3] = row4;
-        array3[0] = col1;
-        array3[1] = col2;
-        array3[2] = col3;
-        array3[3] = col4;
+        board[array1[0]][array1[1]] = 'H';
+        board[array1[2]][array1[3]] = 'H';
+        board[array1[4]][array1[5]] = 'H';
+        board[array1[6]][array1[7]] = 'H';
+        array2[0] = array1[0];
+        array2[1] = array1[2];
+        array2[2] = array1[4];
+        array2[3] = array1[6];
+        array3[0] = array1[1];
+        array3[1] = array1[3];
+        array3[2] = array1[5];
+        array3[3] = array1[7];
     }
     else
     {
         if(player == 1 || player == 2)
         {
-            row1 = array2[0];
-            row2 = array2[1];
-            row3 = array2[2];
-            row4 = array2[3];
-            col1 = array3[0];
-            col2 = array3[1];
-            col3 = array3[2];
-            col4 = array3[3];
+            array1[0] = array2[0];
+            array1[2] = array2[1];
+            array1[4] = array2[2];
+            array1[6] = array2[3];
+            array1[1] = array3[0];
+            array1[3] = array3[1];
+            array1[5] = array3[2];
+            array1[7] = array3[3];
         }
     }
 
