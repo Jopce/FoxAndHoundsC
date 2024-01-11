@@ -39,9 +39,9 @@ int main()
 
     int game_select = 0;
     int isPaused = 0;
-    unsigned short int filesSaved = 0; //how many files has the user saved //Need for menuCLI
-    unsigned short int foxOrHoundsTurn = 0; //Stores whoewers turn it is //1 if fox, 0 if hounds
-    unsigned short int breakOut = 0; //int for breaking from Ignas loops
+    int filesSaved = 0; //how many files has the user saved //Need for menuCLI
+    int foxOrHoundsTurn = 0; //Stores whoewers turn it is //1 if fox, 0 if hounds
+    int breakOut = 0; //int for breaking from Ignas loops
 
     //loop'ai kad zaidejas galetu sokineti tarp pasirinkimu, juos keisti
     while(1) //Igno loop'as
