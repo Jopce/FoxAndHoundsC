@@ -47,13 +47,13 @@ int main()
     //loop'ai kad zaidejas galetu sokineti tarp pasirinkimu, juos keisti
     while(1) //Igno loop'as
     {
-        game_select = menuCLI (game_select, filesSaved); // igno kazkokia funkcija
+        game_select = menuCLI (game_select); // igno kazkokia funkcija
 
         if(game_select != 1) break;
 
         while(1)
         {
-            player = menuCLI(4, filesSaved);
+            player = menuCLI(4);
             if(player == 3) break;
 
             if(player == 2)
@@ -64,7 +64,7 @@ int main()
 
             while(1)
             {
-                difficulty = menuCLI(3, filesSaved);// igno difficulty and player choosing - what character to play
+                difficulty = menuCLI(3);// igno difficulty and player choosing - what character to play
                 if(difficulty == 5) break;
 
                 if(difficulty == 4)
@@ -72,7 +72,7 @@ int main()
                     //custom difficulty options
                     while(1)
                     {
-                        difficulty = menuCLI(5, filesSaved);
+                        difficulty = menuCLI(5);
                         if(difficulty == 0) break;
                         else
                         {
