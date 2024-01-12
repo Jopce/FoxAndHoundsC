@@ -263,7 +263,7 @@ int main()
 
        if(player == 0 || player == 2) //fox = 0 hound = 1 pvp = 2
        {
-           printBoard(board);
+           //printBoard(board);
            //displayBoard (Board board, int *player, int *difficulty, int foxOrHoundsTurn, int wantUserInput)
            breakOut = displayBoard (board, &player, &difficulty, 1, 0);
            
