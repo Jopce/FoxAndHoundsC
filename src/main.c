@@ -420,7 +420,7 @@ int main()
            {
                //jokubo check lose funkc.
                //jokubai galesi pritaikyt savo kazkaip nzn ir kad grazintu lose = 4 ir win = 1 jei salygos priimtos
-                breakOut = displayBoard (board, &player, &difficulty, 0, 0);
+                breakOut = displayBoard (board, &player, &difficulty, 1, 0);
                 if (evaluate(game_board) == INT_MAX)
                 {
                     win = 1;
