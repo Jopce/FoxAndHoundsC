@@ -4,7 +4,7 @@ typedef int** Board;
 
 void Pwin_lose(int *win, int *lose, int *player);
 
-void freeMemory(Board board, int *array2, int *array3);
+void freeMemory(Board board, int *array2, int *array3, int *array1);
 
 Board allocateBoard();
 

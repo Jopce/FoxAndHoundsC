@@ -1,5 +1,7 @@
-    // player: 0 for, 1 hound, 2 player, foxOrHoundsTurn: 0 fox, 1 hounds, wantUserInput, should be 1 if you want users to enter a number
-    int displayBoard (int board[8][8], int player, int difficulty, int foxOrHoundsTurn, int wantUserInput);
+    typedef int** Board;
+    // VS_Player: 1 if playing VS another player, else 0, foxOrHoundsTurn: 1 if fox, else 0 hounds
+    int displayBoard (Board board, int *player, int *difficulty, int foxOrHoundsTurn, int wantUserInput);
 
-    // determines who Won or lost the game
-    void Pwin_loseCLI (int *win, int *lose, int *player) //logic from StarcClans Pwin_lose()
+    // Win and lose screens
+    //PlayerVSwho: 1 - player, 0 - bots | playerWinVSbot: 1 - win, 0 - lose | playerWinVSplayer: 1 - fox win, 0 - hounds win
+    void Pwin_loseCLI (int *win, int *lose, int *player);

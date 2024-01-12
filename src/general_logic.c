@@ -69,10 +69,11 @@ void Pwin_lose(int *win, int *lose, int *player)
     }
 }
 
-void freeMemory(Board board, int *array2, int *array3)
+void freeMemory(Board board, int *array2, int *array3, int *array1)
 {
     free(array2);
     free(array3);
+    free(array1);
 
     for (int i = 0; i < n; ++i)
     {

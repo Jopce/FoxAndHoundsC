@@ -10,6 +10,7 @@
 #define H3 8
 #define H4 9
 
+typedef int** Board;
 
 //Corner symbols
 static char cornerChar[4] = {201, 187, 200, 188};
@@ -111,10 +112,10 @@ void printAlighned(char text[], int spaces)
     if(temp%2 != 0) printf(" "); //if the word is odd anothe " " is required.
 }
 
-void determineField (char difficultyChar[], char isPlayerChar[], char playingAs[], int player, int difficulty, int foxOrHoundsTurn)
+void determineField(char difficultyChar[], char isPlayerChar[], char playingAs[], int isPlayer, int *difficulty, int foxOrHoundsTurn)
 {
     //checks if there is 1 or 2 players
-    if (player == 2)
+    if (isPlayer == 1)
     {
         strcpy (isPlayerChar,   "Player");
     }
@@ -127,7 +128,7 @@ void determineField (char difficultyChar[], char isPlayerChar[], char playingAs[
         strcpy (playingAs,      "HOUNDS");
 
     //checks difficulty
-    switch (difficulty)
+    switch (*difficulty)
     {
     case 0:
         strcpy (difficultyChar, "Player VS Player");
@@ -148,7 +149,7 @@ void determineField (char difficultyChar[], char isPlayerChar[], char playingAs[
 }
 
 
-void sidePannel (int counter, int player, int difficulty, int foxOrHoundsTurn)
+void sidePannel (int counter, int isPlayer, int *difficulty, int foxOrHoundsTurn)
 {
     unsigned short int alighment = 18; //based on the largest string
 
@@ -156,8 +157,8 @@ void sidePannel (int counter, int player, int difficulty, int foxOrHoundsTurn)
     char isPlayerChar[30] = "";
     char playingAs[30] = "";
 
-    //Three options that should change on the pannel
-    determineField (difficultyChar, isPlayerChar, playingAs, player, difficulty, foxOrHoundsTurn);
+    //3 options on the pannel will change
+    determineField(difficultyChar, isPlayerChar, playingAs, isPlayer, difficulty, foxOrHoundsTurn);
 
     //Text that will be displayed
     switch (counter)
@@ -193,32 +194,32 @@ void sidePannel (int counter, int player, int difficulty, int foxOrHoundsTurn)
         break;
     case 10:
         printf      ("| Board:           |");
-        printAlighned ("8x8", alighment);
-        printf ("| |");
+        printAlighned("8x8", alighment);
+        printf("| |");
         break;
     case 11:
         printf ("| Playing against: |");
-        printAlighned (isPlayerChar, alighment);
-        printf ("| |");
+        printAlighned(isPlayerChar, alighment);
+        printf("| |");
         break;
     case 12:
-        if(player)
+        if(isPlayer)
         {
             printf ("| Turn:            |");
-            printAlighned (playingAs, alighment);
-            printf ("| |");
+            printAlighned(playingAs, alighment);
+            printf("| |");
         }
         else
         {
-            printf  ("| Playing as:      |");
+            printf  ("|Playing as:      |");
             printAlighned(playingAs, alighment);
-            printf ("| |");
+            printf("| |");
         }
         break;
     case 13:
         printf      ("| Difficulty:      |");
         printAlighned(difficultyChar, alighment);
-        printf ("| |");
+        printf("| |");
         break;
     case 14:
         printf ("+-------------------------------------+");
@@ -233,7 +234,7 @@ void sidePannel (int counter, int player, int difficulty, int foxOrHoundsTurn)
 }
 
 //when win
-void youWinScreen ()
+void BOTwinScreen()
 {
     printRow (8*4 -1, cornerCharV2[0], lineCharV2[0], lineCharV2[0], cornerCharV2[1]);
     printf ("\n");
@@ -242,10 +243,11 @@ void youWinScreen ()
     printf ("%c|_   _| . | | |  | | | | |   |%c\n", lineCharV2[1], lineCharV2[1]);
     printf ("%c  |_| |___|___|  |_____|_|_|_|%c\n", lineCharV2[1], lineCharV2[1]);
     printRow (8*4 -1, cornerCharV2[2], lineCharV2[0], lineCharV2[0], cornerCharV2[3]);
+
 }
 
 //when loose
-void youLoseScreen ()
+void BOTloseScreen()
 {
     printRow (8*4 + 5, cornerCharV2[0], lineCharV2[0], lineCharV2[0], cornerCharV2[1]);
     printf ("\n");
@@ -254,9 +256,10 @@ void youLoseScreen ()
     printf ("%c|_   _| . | | |  |  |__| . |_ -| -_|%c\n", lineCharV2[1], lineCharV2[1]);
     printf ("%c  |_| |___|___|  |_____|___|___|___|%c\n", lineCharV2[1], lineCharV2[1]);
     printRow (8*4 + 5, cornerCharV2[2], lineCharV2[0], lineCharV2[0], cornerCharV2[3]);
+
 }
 
-void houndsWinScreen ()
+void houndsWinScreen()
 {
     printRow (8*4 + 15, cornerCharV2[0], lineCharV2[0], lineCharV2[0], cornerCharV2[1]);
     printf ("\n");
@@ -265,9 +268,11 @@ void houndsWinScreen ()
     printf ("%c|     | . | | |   | . |_ -|  | | | | |   |_ -|%c\n", lineCharV2[1], lineCharV2[1]);
     printf ("%c|__|__|___|___|_|_|___|___|  |_____|_|_|_|___|%c\n", lineCharV2[1], lineCharV2[1]);
     printRow (8*4 + 15, cornerCharV2[2], lineCharV2[0], lineCharV2[0], cornerCharV2[3]);
+
+    
 }
 
-void foxWinScreen ()
+void foxWinScreen()
 {
     printRow (8*4 + 3, cornerCharV2[0], lineCharV2[0], lineCharV2[0], cornerCharV2[1]);
     printf ("\n");
@@ -276,6 +281,8 @@ void foxWinScreen ()
     printf ("%c|   __| . |_'_|  | | | | |   |_ -|%c\n", lineCharV2[1], lineCharV2[1]);
     printf ("%c|__|  |___|_,_|  |_____|_|_|_|___|%c\n", lineCharV2[1], lineCharV2[1]);
     printRow (8*4 + 3, cornerCharV2[2], lineCharV2[0], lineCharV2[0], cornerCharV2[3]);
+
+    
 }
 
 int checkMove(char move_char[])
@@ -331,7 +338,7 @@ char* getPieceSymbol (int value)
 }
 
 // The Main function that displays the board
-int displayBoard (int board[8][8], int player, int difficulty, int foxOrHoundsTurn, int wantUserInput)
+int displayBoard (Board board, int *player, int *difficulty, int foxOrHoundsTurn, int wantUserInput)
 {
     unsigned short int count;
     unsigned short int sidePannelOn = 1;
@@ -372,7 +379,7 @@ int displayBoard (int board[8][8], int player, int difficulty, int foxOrHoundsTu
             if(sidePannelOn)
             {
                 printf ("\t\t\t%c", lineCharV2[1]);
-                sidePannel (count, player, difficulty, foxOrHoundsTurn);
+                sidePannel (count, *player, difficulty, foxOrHoundsTurn);
                 count++;
             }
             ///-----------------
@@ -390,7 +397,7 @@ int displayBoard (int board[8][8], int player, int difficulty, int foxOrHoundsTu
             if(sidePannelOn)
             {
                 printf ("\t\t\t%c", lineCharV2[1]);
-                sidePannel (count, player, difficulty, foxOrHoundsTurn);
+                sidePannel (count, *player, difficulty, foxOrHoundsTurn);
                 count++;
             }
             ///-----------------
@@ -431,12 +438,12 @@ void Pwin_loseCLI (int *win, int *lose, int *player) //logic from StarcClans Pwi
         if (*win == 1)
         {
             //printf ("You Win!\n");
-            youWinScreen ();
+            BOTloseScreen();
         }
         else if (*lose == 4)
         {
             //printf ("You lose!\n");
-            youLoseScreen ();
+            BOTwinScreen();
         }
     }
     else if (*player == 1)
@@ -444,12 +451,12 @@ void Pwin_loseCLI (int *win, int *lose, int *player) //logic from StarcClans Pwi
         if (*win == 1)
         {
             //printf ("You lose!\n");
-            youLoseScreen ();
+            BOTloseScreen();
         }
         else if(*lose == 4)
         {
             //printf ("You win!\n");
-            youWinScreen ();
+            BOTwinScreen();
         }
     }
     else if (*player == 2)
@@ -465,19 +472,5 @@ void Pwin_loseCLI (int *win, int *lose, int *player) //logic from StarcClans Pwi
             houndsWinScreen ();
         }
     }
-
-    /*
-    if (PlayerVSwho == 0)// 0 - bots
-    {
-        if (playerWinVSbot == 1) //win
-            BOTwinScreen( points);
-        else BOTloseScreen (points); //lose
-    }
-    else
-    {
-        if (playerWinVSplayer == 1)
-            foxWinScreen (points);
-        else houndsWinScreen (points);
-    }
-    */
 }
+
