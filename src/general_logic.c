@@ -148,7 +148,7 @@ void save_game(int *array2,int *array3, int *rowW, int *colW, int *player, int *
         return;
     }
 
-    fprintf(file, "\n%d", *player);
+    fprintf(file, "%d", *player);
 
     
     if(*player == 1 || *player == 2)
@@ -170,6 +170,8 @@ void save_game(int *array2,int *array3, int *rowW, int *colW, int *player, int *
         fprintf(file, "\n%d", *rowW);
         fprintf(file, "\n%d", *colW);
     }
+
+    fprintf(file, "\n");
             
     if(*player == 0 || *player == 1)
     {
