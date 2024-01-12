@@ -464,6 +464,6 @@ int main()
     } while (1); // luko funkcija kuri tikrina ar game over
 
     freeMemory(board, array2, array3, array1);
-    Pwin_lose(&win, &lose, &player);
+    Pwin_loseCLI(&win, &lose, &player);
     
 }
