@@ -26,7 +26,7 @@ void fMove(Board board, int *row, int *col, int direction);
 
 void printBoard(Board board);
 
-void hMove(Board board, int *row, int *col, int direction);
+void hMove(Board board, int *row, int *col, int direction, int suge);
 
 void boardTransfer(Board board,int game_board[n][n]);
 
