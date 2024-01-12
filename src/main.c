@@ -176,7 +176,7 @@ int main()
             displayLastModifiedTime();
             printf("\n Which save you want to open \n");
             scanf("%d", &save);
-            processInput(&save, array2, array3, &rowW, &colW, &player);
+            processInput(&save, array2, array3, &rowW, &colW, &player, &difficulty, board);
             break;
         }
         else if(number == 2)
