@@ -83,6 +83,7 @@ char* gameField (int counter)
     }
 }
 
+/*
 char* savesField (unsigned short int *counter, int filesSaved, unsigned short int *savesCheck)
 {
 
@@ -130,6 +131,79 @@ char* savesField (unsigned short int *counter, int filesSaved, unsigned short in
             return (" Back to Menu (6) ");
         default:
             return ("");
+        }
+    }
+}
+*/
+
+int savedGameMenu()
+{
+    char spaces[] = "\t\t\t\t\t\t ";
+    char input[50];
+    int optionSelect;
+
+    // Open the current directory
+    DIR *dir = opendir(".");
+    if (dir == NULL)
+    {
+        perror("Error opening directory");
+        exit(EXIT_FAILURE);
+    }
+
+    struct dirent *entry;
+    int count = 0;
+
+    ///Prints top part of the box
+    printf("\n\n");
+    printf("%s", spaces);
+    printRowLine(8*2 +3, cornerChar[0],  lineChar[0],  lineChar[0],  cornerChar[1]);
+    printf("\n");
+
+    printf("%s", spaces);
+    printf("%c Pick saved game: %c\n", lineCharV2[1], lineCharV2[1]);
+    printf("%s", spaces);
+    printf("%c ---------------- %c\n", lineCharV2[1], lineCharV2[1]);
+
+
+    // Loop through the directory entries
+    while ((entry = readdir(dir)) != NULL && count < 5)
+    {
+        // Check if the entry is a regular file with the format %d.txt
+        if (sscanf(entry->d_name, "%d.txt", &count) == 1)
+        {
+            // Get the last modified time
+            struct stat fileStat;
+            stat(entry->d_name, &fileStat);
+
+            // Convert the last modified time to a readable format
+            char timeString[20];
+            strftime(timeString, sizeof(timeString), "%Y-%m-%d %H:%M:%S", localtime(&fileStat.st_mtime));
+
+            // Display the information
+
+            gameTitle();
+            printf("%s File: %s, Last Modified: %s %s \n", lineCharV2[1], entry->d_name, timeString, lineCharV2[1]);
+        }
+    }
+    ///prints bottom section
+    printf("%s", spaces);
+    printRowLine(8*2 +3, cornerChar[2],  lineChar[0],  lineChar[0],  cornerChar[3]);
+
+    // Close the directory
+    closedir(dir);
+
+    //Get user input
+    ///check user input
+    while(1)
+    {
+        printf ("\n%s Select an option: ", spaces);
+        scanf ("%s", &input);
+
+        optionSelect = checkInput (input);
+
+        if (optionSelect >= 1 && optionSelect <= count) ///check if exists
+        {
+            return optionSelect;
         }
     }
 }
@@ -354,7 +428,7 @@ int OptAvailability (int game_select, int field_Select, int filesSaved) /// ////
     }
 }
 
-int menuCLI (int game_select, int filesSaved)
+int menuCLI (int game_select)
 {
     unsigned short int field_Select;
     unsigned short int counter;
@@ -370,7 +444,7 @@ int menuCLI (int game_select, int filesSaved)
         counter = 0;
 
         //clear console
-        //system("cls");
+        system("cls");
         //title
         gameTitle();
 
@@ -391,8 +465,8 @@ int menuCLI (int game_select, int filesSaved)
             case 1:
                 strcpy (text, gameField (counter)); ///should start game
                 break;
-            case 2:
-                strcpy (text, savesField (&counter, filesSaved, &savesCheck)); //saved progress options
+                //case 2:
+                //   strcpy (text, savesField (&counter, filesSaved, &savesCheck)); //saved progress options
                 break;
             case 3:
                 strcpy (text, difficultyField (counter)); //difficulty option
@@ -453,7 +527,7 @@ int menuCLI (int game_select, int filesSaved)
 
         if(field_Select != 49379)
         {
-            field_Select = OptAvailability(game_select, field_Select, filesSaved);
+            field_Select = OptAvailability(game_select, field_Select);
 
             if(field_Select != 49379)
             {
