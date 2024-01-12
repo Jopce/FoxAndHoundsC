@@ -452,7 +452,7 @@ int main()
                if(userChoice == 0)
                 {
                     save_game(array2, array3, &rowW, &colW, &player, &difficulty, board);
-                    break;
+                    freeMemory(board, array2, array3, array1);
                 }
                 generateRowAndColNames(userChoice, &rowValue, &colValue, array2, array3);
     
@@ -461,7 +461,7 @@ int main()
                 scanf("%d", &move);
     
                 hMove(board, &rowValue, &colValue, move, check);
-            }while(check == 1)
+            }while(check != 0)
             NewgenerateRowAndColNames(userChoice, &rowValue, &colValue, array2, array3);
 
         }
