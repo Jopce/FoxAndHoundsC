@@ -142,11 +142,13 @@ int main()
     }
 }*/
 
+    int number;
+
     do
     {
         printf("New game 0\nContinue game 1\nExit game 2\nYour choice: ");
-        scanf("%d", &save);
-        if(save == 0 || save == 1)
+        scanf("%d", &number);
+        if(number == 0)
         {
             printf("Fox 0 Hound 1 PvP 2: ");
             scanf("%d", &player);
@@ -169,7 +171,15 @@ int main()
             }
             break;
         }
-        else if(save == 2)
+        else if(number == 1)
+        {
+            displayLastModifiedTime();
+            printf("\n Which save you want to open \n");
+            scanf("%d", &save);
+            processInput(&save, array2, array3, &rowW, &colW, &player);
+            break;
+        }
+        else if(number == 2)
         {
             freeMemory(board, array2, array3, array1);
             return 0;
@@ -178,7 +188,7 @@ int main()
 
     //this is to start new game ima need help and time
 
-    if(save == 0)
+    if(number == 0)
     {
         for (int i = 0; i < n; i++)
         {
