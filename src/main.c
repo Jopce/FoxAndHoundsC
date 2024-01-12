@@ -440,24 +440,28 @@ int main()
                    break;
                }
            }
-           
-            printf("Hound to move 1-4 or save 0: "); //Ignai tavo CLI
-            scanf("%d", &userChoice);
-            //Igno Pause menu loopas
-           
-           
-           if(userChoice == 0)
+
+           int check = 1;
+            do
             {
-                save_game(array2, array3, &rowW, &colW, &player, &difficulty, board);
-                break;
-            }
-            generateRowAndColNames(userChoice, &rowValue, &colValue, array2, array3);
-
-           
-            printf("Enter a number to move the 'H' (1-2): "); // tavo CLI ignai
-            scanf("%d", &move);
-
-            hMove(board, &rowValue, &colValue, move);
+                printf("Hound to move 1-4 or save 0: "); //Ignai tavo CLI
+                scanf("%d", &userChoice);
+                //Igno Pause menu loopas
+               
+               
+               if(userChoice == 0)
+                {
+                    save_game(array2, array3, &rowW, &colW, &player, &difficulty, board);
+                    break;
+                }
+                generateRowAndColNames(userChoice, &rowValue, &colValue, array2, array3);
+    
+               
+                printf("Enter a number to move the 'H' (1-2): "); // tavo CLI ignai
+                scanf("%d", &move);
+    
+                hMove(board, &rowValue, &colValue, move, check);
+            }while(check == 1)
             NewgenerateRowAndColNames(userChoice, &rowValue, &colValue, array2, array3);
 
         }
