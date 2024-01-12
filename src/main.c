@@ -148,7 +148,7 @@ int main()
     {
         //printf("New game 0\nContinue game 1\nExit game 2\nYour choice: ");
         //scanf("%d", &number);
-        number = menuCLI (1);
+        number = menuCLI (0);
         if(number == 0)
         {
             //printf("Fox 0 Hound 1 PvP 2: ");
