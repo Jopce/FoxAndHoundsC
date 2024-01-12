@@ -265,7 +265,7 @@ int main()
        {
            //printBoard(board);
            //displayBoard (Board board, int *player, int *difficulty, int foxOrHoundsTurn, int wantUserInput)
-           breakOut = displayBoard (board, &player, &difficulty, 1, 0);
+           breakOut = displayBoard (board, &player, &difficulty, 0, 0);
            
            
            check_lose(board, &rowW, &colW, &win, &lose);
