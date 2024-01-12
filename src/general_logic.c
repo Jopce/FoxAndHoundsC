@@ -548,6 +548,11 @@ void hMove(Board board, int *row, int *col, int direction, int suge)
         {
             printf("Doesn't fit the board: " );
             scanf(" %d", &direction);
+            if(direction == suge)
+            {
+                suge =direction;
+                berak;
+            }
         }
         switch (direction) {
         case 1: // Down right flipped up left
@@ -558,7 +563,7 @@ void hMove(Board board, int *row, int *col, int direction, int suge)
             {
                 (*row)++;
                 (*col)++;
-                suge = 1;
+                suge = direction;
             }
             else
             {
@@ -575,7 +580,7 @@ void hMove(Board board, int *row, int *col, int direction, int suge)
             {
                 (*row)++;
                 (*col)--;
-                suge = 1;
+                suge = direction;
             }
             else
             {
@@ -587,7 +592,8 @@ void hMove(Board board, int *row, int *col, int direction, int suge)
         default:
             printf("Invalid move. Please enter a number from 1 to 2.\n");
             valid = 0;
-            suge = 1;
+            suge = direction;
+            break
         }
     }while(valid == 1);
 }
