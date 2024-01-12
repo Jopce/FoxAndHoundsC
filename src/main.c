@@ -158,7 +158,7 @@ int main()
             {
                 //printf("Bot difficulty level 1-3: ");
                 //scanf("%d", &difficulty);
-                difficulty = menuCLI(3)
+                difficulty = menuCLI(3);
                 if(difficulty == 1)
                 {
                     difficulty = 5;
