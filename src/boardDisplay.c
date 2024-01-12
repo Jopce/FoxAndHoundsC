@@ -4,7 +4,8 @@
 
 #include "boardDisplay.h"
 
-#define F 5
+#define F 70
+#define H 72
 #define H1 6
 #define H2 7
 #define H3 8
