@@ -544,7 +544,7 @@ void hMove(Board board, int *row, int *col, int direction, int suge)
 
     do
     {
-        if(suge == 1)
+        if(suge > 0)
         {
             printf("Doesn't fit the board: " );
             scanf(" %d", &direction);
