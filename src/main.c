@@ -149,7 +149,7 @@ int main()
         //printf("New game 0\nContinue game 1\nExit game 2\nYour choice: ");
         //scanf("%d", &number);
         number = menuCLI (0);
-        if(number == 0)
+        if(number == 1)
         {
             //printf("Fox 0 Hound 1 PvP 2: ");
             //scanf("%d", &player);
@@ -174,7 +174,7 @@ int main()
             }
             break;
         }
-        else if(number == 1)
+        else if(number == 2)
         {
             displayLastModifiedTime(); ///kolkas taip
             printf("\n Which save you want to open \n");
@@ -182,7 +182,7 @@ int main()
             processInput(&save, array2, array3, &rowW, &colW, &player, &difficulty, board);
             break;
         }
-        else if(number == 2)
+        else if(number == 3)
         {
             freeMemory(board, array2, array3, array1);
             return 0;
@@ -191,7 +191,7 @@ int main()
 
     //this is to start new game ima need help and time
 
-    if(number == 0)
+    if(number == 1)
     {
         for (int i = 0; i < n; i++)
         {
