@@ -536,11 +536,11 @@ void printBoard(Board board)
     printf("\n");
 }
 
-void hMove(Board board, int *row, int *col, int direction)
+void hMove(Board board, int *row, int *col, int direction, int suge)
 {
     int valid = 1;
 
-    int suge = 0;
+    suge = 0;
 
     do
     {
