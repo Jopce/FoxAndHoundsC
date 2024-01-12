@@ -453,6 +453,7 @@ int main()
                 {
                     save_game(array2, array3, &rowW, &colW, &player, &difficulty, board);
                     freeMemory(board, array2, array3, array1);
+                    return 0;
                 }
                 generateRowAndColNames(userChoice, &rowValue, &colValue, array2, array3);
     
