@@ -362,7 +362,7 @@ void exitGame()
     scanf("%c", &temp);
 }
 
-int OptAvailability (int game_select, int field_Select, int filesSaved) /// /////SUTVARKYK <---
+int OptAvailability (int game_select, int field_Select)
 {
     //check if different options are in the fields are available
     switch (game_select)
@@ -380,6 +380,7 @@ int OptAvailability (int game_select, int field_Select, int filesSaved) /// ////
     case 1: //new game
         return field_Select;
 
+        /*
     case 2: //continue
         if (field_Select >= 1 && field_Select <= filesSaved) ///check if exists
         {
@@ -393,6 +394,7 @@ int OptAvailability (int game_select, int field_Select, int filesSaved) /// ////
         {
             return 49379;
         }
+        */
     case 3: //difficulty
         if (field_Select >= 1 && field_Select <= 5)
         {
