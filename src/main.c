@@ -290,14 +290,64 @@ int main()
            printBoard(board);
            
            
-            // bot is fox
-            Move bot_move = opponent_move(game_board, difficulty, 1);
+            for (int i = 0; i < BOARD_SIZE; i++)
+            {
+                for (int j = 0; j < BOARD_SIZE; j++)
+                {
+                    if (game_board[i][j] == 48)
+                    {
+                        game_board[i][j] = 0;
+                    }
+                    else if (game_board[i][j] == 70)
+                    {
+                        game_board[i][j] = F;
+                    }
+                    else if (game_board[i][j] == 72)
+                    {
+                        game_board[i][j] = H;
+                    }
+                }
+            }
+
+            int flipped[BOARD_SIZE][BOARD_SIZE];
 
             for (int i = 0; i < BOARD_SIZE; i++)
             {
                 for (int j = 0; j < BOARD_SIZE; j++)
                 {
-                    game_board[i][j] = bot_move.board[i][j];
+                    flipped[BOARD_SIZE - 1 - i][BOARD_SIZE - 1 - j] = game_board[i][j];
+                }
+            }
+
+            // bot is fox
+            Move bot_move = opponent_move(flipped, difficulty, 1);
+
+            copy_board(bot_move.board, flipped);
+
+            for (int i = 0; i < BOARD_SIZE; i++)
+            {
+                for (int j = 0; j < BOARD_SIZE; j++)
+                {
+                    game_board[BOARD_SIZE - 1 - i][BOARD_SIZE - 1 - j] = flipped[i][j];
+                }
+            }
+
+            for (int i = 0; i < BOARD_SIZE; i++)
+            {
+                for (int j = 0; j < BOARD_SIZE; j++)
+                {
+                    if (game_board[i][j] == 0)
+                    {
+                        game_board[i][j] = 48;
+                    }
+                    else if (game_board[i][j] == F)
+                    {
+                        game_board[i][j] = 70;
+                    }
+                    else if (game_board[i][j] == H)
+                    {
+                        game_board[i][j] = 72;
+                    }
                 }
             }
 
@@ -314,16 +364,49 @@ int main()
                 break;
             }
 
+            for (int i = 0; i < BOARD_SIZE; i++)
+            {
+                for (int j = 0; j < BOARD_SIZE; j++)
+                {
+                    if (game_board[i][j] == 48)
+                    {
+                        game_board[i][j] = 0;
+                    }
+                    else if (game_board[i][j] == 70)
+                    {
+                        game_board[i][j] = F;
+                    }
+                    else if (game_board[i][j] == 72)
+                    {
+                        game_board[i][j] = H;
+                    }
+                }
+            }
+
             // bot is hounds
             Move bot_move = opponent_move(game_board, difficulty, 0);
+
+            copy_board(bot_move.board, game_board);
 
             for (int i = 0; i < BOARD_SIZE; i++)
             {
                 for (int j = 0; j < BOARD_SIZE; j++)
                 {
-                    game_board[i][j] = bot_move.board[i][j];
+                    if (game_board[i][j] == 0)
+                    {
+                        game_board[i][j] = 48;
+                    }
+                    else if (game_board[i][j] == F)
+                    {
+                        game_board[i][j] = 70;
+                    }
+                    else if (game_board[i][j] == H)
+                    {
+                        game_board[i][j] = 72;
+                    }
                 }
             }
+
 
             boardTransfer(board, game_board);
        }
