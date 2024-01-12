@@ -586,6 +586,8 @@ void hMove(Board board, int *row, int *col, int direction, int suge)
             break;
         default:
             printf("Invalid move. Please enter a number from 1 to 2.\n");
+            valid = 0;
+            suge = 1;
         }
     }while(valid == 1);
 }
