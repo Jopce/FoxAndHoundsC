@@ -146,16 +146,19 @@ int main()
 
     do
     {
-        printf("New game 0\nContinue game 1\nExit game 2\nYour choice: ");
-        scanf("%d", &number);
+        //printf("New game 0\nContinue game 1\nExit game 2\nYour choice: ");
+        //scanf("%d", &number);
+        number = menuCLI (1);
         if(number == 0)
         {
-            printf("Fox 0 Hound 1 PvP 2: ");
-            scanf("%d", &player);
+            //printf("Fox 0 Hound 1 PvP 2: ");
+            //scanf("%d", &player);
+            player = menuCLI(4);
             if(player == 0 || player == 1)
             {
-                printf("Bot difficulty level 1-3: ");
-                scanf("%d", &difficulty);
+                //printf("Bot difficulty level 1-3: ");
+                //scanf("%d", &difficulty);
+                difficulty = menuCLI(3)
                 if(difficulty == 1)
                 {
                     difficulty = 5;
@@ -173,7 +176,7 @@ int main()
         }
         else if(number == 1)
         {
-            displayLastModifiedTime();
+            displayLastModifiedTime(); ///kolkas taip
             printf("\n Which save you want to open \n");
             scanf("%d", &save);
             processInput(&save, array2, array3, &rowW, &colW, &player, &difficulty, board);
