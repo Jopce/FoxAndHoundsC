@@ -39,11 +39,11 @@ int main()
                                               {F, 0, 0, 0, 0, 0, 0, 0}};
 
 
+    int breakOut = 0; //int for breaking from Ignas loops, also used as temporal storage
 /*int game_select = 0;
     int isPaused = 0;
     int filesSaved = 0; //how many files has the user saved //Need for menuCLI
     int foxOrHoundsTurn = 0; //Stores whoewers turn it is //1 if fox, 0 if hounds
-    int breakOut = 0; //int for breaking from Ignas loops, also used as temporal storage
 
     //loop'ai kad zaidejas galetu sokineti tarp pasirinkimu, juos keisti
     while(1) //Igno loop'as
@@ -264,6 +264,8 @@ int main()
        if(player == 0 || player == 2) //fox = 0 hound = 1 pvp = 2
        {
            printBoard(board);
+           //displayBoard (Board board, int *player, int *difficulty, int foxOrHoundsTurn, int wantUserInput)
+           breakOut = displayBoard (board, &player, &difficulty, 1, 0);
            
            
            check_lose(board, &rowW, &colW, &win, &lose);
@@ -287,8 +289,9 @@ int main()
         else
        {
             transferBoard(board, game_board);
-           printBoard(board);
            
+           //printBoard(board);
+           breakOut = displayBoard (board, &player, &difficulty, 1, 0);
            
             for (int i = 0; i < BOARD_SIZE; i++)
             {
