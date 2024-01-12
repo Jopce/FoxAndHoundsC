@@ -101,8 +101,8 @@ int main()
     if (game_select == 1) //start new game
     {
         //Does this above in Ignas loop
-        int difficulty = menuCLI(3, filesSaved); // igno difficulty and player choosing what character to play
-        int playerSelect = menuCLI(4, filesSaved); // choosing what character to play
+        int difficulty = menuCLI(3); // igno difficulty and player choosing what character to play
+        int playerSelect = menuCLI(4); // choosing what character to play
         
         switch (difficulty)
         {
