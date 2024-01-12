@@ -325,6 +325,8 @@ char* getPieceSymbol (int value)
         return "[4]";
     case F:
         return " F "; // Fox symbol
+    case H:
+        return " H ";
     case H1:
         return "1H1"; // Hounds symbol
     case H2:
